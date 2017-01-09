@@ -1,0 +1,31 @@
+<%= @show_version.page_injected_html if !@show_version.page_injected_html.nil? and !@show_version.page_injected_html.empty? %>
+<% 
+   logger.debug 'shows/episodes.erb episode-thumbnail template'
+   oept = Liquid::Template.parse( PageLayout.first(:conditions => "programmatic_name = 'episode-thumbnail'" ).scheduled_version_current(@time).layout )
+
+   dl_episodes = episode_drops_from_episodes( self, @dl_episodes, @show, @show_version, @time )
+
+   logger.debug 'episode_free_status pre-load'
+   episode_free_status = []
+   episode_free_status = EpisodeFreeScheduleDate.all(:conditions => EpisodeFreeScheduleDateSet.find_ranges_with_exclusivity_ids_including( 'episode_free_schedule_dates', @episodes.collect{|e|e.id}, @time )) unless @episodes.empty?
+
+
+   logger.debug 'episode_drops creating'
+episode_drops = @episodes.collect{|e| EpisodeDrop.new(e,e.current_version,!episode_free_status.detect{|s| s.exclusivity_id.eql?(e.id) }.nil?,e.current_version.episode_still_image,e.video_content_names.collect{|vcn|vcn.video_contents}.flatten,@show,@show_version,@controller,@time) }
+episodes_pagination = pagination_buttons( @pagination )
+
+   logger.debug 'shows/episodes: render liquid layout start'
+%>
+<%= Liquid::Template.parse( @layout ).render( 
+	 {
+        'dl' => dl_episodes,
+		'show' => @show_drop,
+		'episodes' => episode_drops.collect{|d| oept.render( { 'episode' => d } ) },
+		'episodes_pagination' => episodes_pagination,
+		'page_url' => url_for(:only_path => false),
+        'username' => logged_in_username,
+        'hostname' => @controller.request.host
+ } )
+
+%>
+<% logger.debug 'shows/episodes: render liquid layout end' %>

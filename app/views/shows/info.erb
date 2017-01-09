@@ -1,0 +1,27 @@
+<h1><%= @show_version.title %></h1>
+
+<h2>About</h2>
+
+<%= @show_version.description %>
+
+<h2>Episodes</h2>
+
+<% unless @episodes.empty? %>
+
+<%= pagination_buttons(@pagination) %>
+
+<ul>
+	<% @episodes.each do |episode| %>
+		<li><%= public_image_tag( episode.scheduled_version_current_cache.episode_still_image ) if episode.scheduled_version_current_cache.episode_still_image %><%= link_to( episode.scheduled_version_current_cache.title, :controller => '/watch', :action => 'index', :id => episode.id ) %></li>
+	<% end %>
+</ul>
+
+<%= pagination_buttons(@pagination) %>
+
+<% else %>
+
+<p>There are no episodes, yet!</p>
+
+<% end %>
+
+<p><%= link_to( 'list', :action => 'list' ) %></p>

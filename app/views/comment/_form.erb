@@ -1,0 +1,8 @@
+<dl>
+	<dt><%= label_tag( 'episode_comment[title]', 'Title' ) %></dt>
+	<dd><%= text_field( 'episode_comment', 'title' ) %></dd>
+
+	<dt><%= label_tag( 'episode_comment[body]', 'Comment' ) %></dt>
+	<dd><%= text_area( 'episode_comment', 'body' ) %></dd>
+</dl>
+<div style="display:none;"><%= hidden_field( 'episode_comment', 'parent_comment_id' ) %></div>

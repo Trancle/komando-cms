@@ -1,0 +1,8 @@
+<%= render :partial => 'info', :locals => { :public_image => @public_image } %>
+
+<%= error_messages_for :public_image %>
+
+<% form_tag( { :action => 'update', :id => @public_image.id } ) do %>
+	<%= render :partial => 'alt_form' %>
+	<p><%= submit( 'save' ) %></p>
+<% end %>

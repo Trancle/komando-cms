@@ -1,0 +1,4 @@
+<h1><%= link_to( "Episode #{@episode_comment.friendly_type_name}", url_to_episode( @episode_comment.episode.show.scheduled_version_current_or_last_version, @episode_comment.episode.current_version ) ) %></h1>
+<dl class="comment">
+<%= render :partial => 'info', :locals => { :comment => @episode_comment } %>
+</dl>

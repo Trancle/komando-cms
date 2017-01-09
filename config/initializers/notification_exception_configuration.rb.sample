@@ -1,0 +1,7 @@
+class ExceptionNotificationConfiguration
+
+	def self.conf
+		{ :from => 'exceptions@vms001.wojnosystems.com', :recipients => %w(chris@wojnosystems.com), :enabled => true }
+	end
+
+end

@@ -1,0 +1,8 @@
+<p><%= @word.class.friendly_type_description %></p>
+
+<%= error_messages_for :word %>
+
+<% form_tag( :action => 'create', :word_type => @word_type ) do %>
+	<%= render :partial => 'form' %>
+	<p><%= submit( 'create' ) %></p>
+<% end %>

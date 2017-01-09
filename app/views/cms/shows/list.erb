@@ -1,0 +1,24 @@
+<% unless @show_pag.empty? %>
+
+	<%= pagination_buttons( @show_pag ) %>
+
+	<ul class="control_list alternate">
+	<% @show_pag.items_for_current_page.each do |show| %>
+		<% current_version = show.scheduled_version_current_or_last_version_cache %>
+
+		<li><span class="name"><%= link_to( h( current_version.title ), :action => 'info', :id => show.id ) %></span>
+		<ul class="actions">
+		<li class="first"><%= ( !show.eql?@show_pag.items_for_current_page.first or !show.acts_as_ordered_is_first? ) ? button( 'up', :action => 'move_show_order_up', :id => show.id ) : 'up' %></li>
+		<li><%= ( !show.eql?@show_pag.items_for_current_page.last or !show.acts_as_ordered_is_last? ) ? button( 'down', :action => 'move_show_order_down', :id => show.id ) : 'down' %></li>
+		<li><%= link_to( 'episodes', :controller => '/cms/episodes', :action => 'show', :id => show.id ) %></li></ul></li>
+
+	<% end %>
+	</ul>
+
+	<%= pagination_buttons( @show_pag ) %>
+
+<% else %>
+
+<p>There aren't any shows</p>
+
+<% end %>

@@ -1,0 +1,7 @@
+<%= error_messages_for :mfrn %>
+
+<% form_tag( { :action => 'update', :id => @mfrn.id } ) do %>
+	<%= render :partial => 'pretty_name_form' %>
+
+	<p><%= submit( 'save' ) %></p>
+<% end %>

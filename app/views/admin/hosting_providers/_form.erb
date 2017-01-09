@@ -1,0 +1,28 @@
+<p><%= label_tag( 'provider[name]', 'Provider Nick-name' ) %><%= text_field( 'provider', 'name' ) %> (<%= link_to_show_contextual_help_for( 'provider_name', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_name' ) do %>
+	<h3>Provider name</h3>
+	<p>This is a name of your choosing to help you select the correct provider when uploading video content later. You can name it whatever you wish.</p>
+<% end %>
+
+<div><%= label_tag( 'provider[description]', 'Provider Description' ) %>
+	<%= text_area( 'provider', 'description' ) %> (<%= link_to_show_contextual_help_for( 'provider_description', "What's this?" ) %>)</div>
+<% contextual_help_for( 'provider_description' ) do %>
+	<h3>Provider description</h3>
+	<p>This is an optional, free-form text area for you to further describe this provider. Ideal descriptions include comments about what types of video should be placed into this provider. You don't have to populate this field if you do not wish to do so and, again, this field has no bearing on the function of VMS. It's here to help you select the right provider later.</p>
+<% end %>
+</fieldset>
+
+<p><%= label_tag( 'provider[enable]', 'Provider Enabled' ) %>
+	<%= check_box( 'provider', 'enable' ) %> (<%= link_to_show_contextual_help_for( 'provider_enable', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_enable' ) do %>
+	<h3>Provider enable</h3>
+	<p>Enabling a provider allows videos that are hosted by this provider to appear in VMS. This is a global shutdown locaiton for this provider. Shutting down a provider will, effectively, remove all episode parts that contain content from this provider without actually removing them from the database. This is useful if your provider is having technical issues and you need to pull all video from that CDN from the site. Once the provider is, again, functional, simply re-enabled the provider to restore all the vidoes in their respective episode parts. Again, no database data is removed by disabling this.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[deprecated]', 'Provider Deprecated' ) %>
+	<%= check_box( 'provider', 'deprecated' ) %> (<%= link_to_show_contextual_help_for( 'provider_deprecated', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_deprecated' ) do %>
+	<h3>Provider deprecated</h3>
+	<p>Deprecating a provider removes this provider from the listing of available provider choices when uploading content. This is useful for transitioning to a different provider and enforcing your content managers to use the correct providers for their content. To be absolutely clear, this does <strong>not</strong> remove your videos from VMS. All existing videos are still visible. However, when uploading video, uploaders will no longer have the choice to upload video to this provider. No database information is deleted by deprecating a provider. It only removes the option to upload to this provider.</p>
+<% end %>
+

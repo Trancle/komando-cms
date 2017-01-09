@@ -1,0 +1,20 @@
+<dl>
+    <dt><%= label_tag( 'episode[required_levels]', 'Required club level' ) %></dt>
+    <dd><%= text_field( 'episode', 'required_levels', :class => 'text' ) %></dd>
+
+    <dt><%= label_tag( 'episode[published]', 'Pubished?' ) %></dt>
+    <dd><%= check_box( 'episode', 'published', :class => 'checkbox' ) %></dd>
+
+    <dt><%= label_tag( 'episode[published_datetime(1i]', 'Say published at' ) %></dt>
+    <dd><%= datetime_select( 'episode', 'published_datetime' ) %></dd>
+
+    <dt><%= label_tag('episode[comments_enabled]', 'Comments enabled?')%></dt>
+    <dd><%= check_box( 'episode', 'comments_enabled', :class => 'checkbox' ) %>
+    <p>Uncheck this box to prevent users from attaching comments (discussions and reviews) to this particular episode.</p>
+    </dd>
+
+    <dt><%= label_tag('episode[user_tagging_enabled]', 'User tagging enabled?')%></dt>
+    <dd><%= check_box( 'episode', 'user_tagging_enabled', :class => 'checkbox' ) %>
+    <p>Uncheck this box to prevent users from adding tags to this particular episode.</p>
+    </dd>
+</dl>

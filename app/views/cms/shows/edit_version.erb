@@ -1,0 +1,6 @@
+<%= error_messages_for 'show', 'show_version' %>
+
+<% form_tag( { :action => 'update_version', :id => @show.id, :version => @show_old_version.version_number_cache } ) do %>
+	<%= render :partial => 'show_version_form' %>
+	<p><%= submit( 'save' ) %></p>
+<% end %>

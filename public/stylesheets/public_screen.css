@@ -1,0 +1,46 @@
+@import url('pagination.css');
+
+body {
+	font-size: 1em;
+	font-family: Verdana, Helvetica, Tahoma, Arial;
+}
+
+a img {
+	border: none;
+}
+
+div.episode_still_image {
+	display: inline-block;
+}
+div.episode_still_image img {
+	display: block; /* Removes 3px space under image */
+}
+div.premium {
+}
+div.premium img {
+}
+dl.comment dt {
+	border-bottom: 1px solid gray;
+}
+dl.comment dd dl dd {
+	border-bottom: 1px solid red;
+}
+
+
+div.ajaxified-login {
+	position: fixed;
+	top: 50%;
+	left: 40%;
+	background-color: white;
+padding: 1em;
+}
+
+
+#admin-tools {
+	background-color: #000;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 1em;
+	margin: 1em;
+}

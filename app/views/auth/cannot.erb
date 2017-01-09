@@ -1,0 +1,5 @@
+<% @user.errors.add( :username, 'cannot be blank' ) %>
+<% drop = UserDrop.new( @user, @controller, @time ) %>
+	<%= Liquid::Template.parse( @layout ).render(
+		'user' => drop
+		) %>

@@ -1,0 +1,14 @@
+<p><%= public_image_tag( public_image ) %></p>
+
+<dl>
+<dt>Image Type</dt>
+<dd><%= public_image.class.name.underscore.humanize %></dd>
+<dt>Image Hash</dt>
+<dd><span class="hash"><%= public_image.file_hash %></span></dd>
+<dt>MIME type</dt>
+<dd><%= public_image.class::MIME_TYPE_TO_EXT[public_image.mime_type] %></dd>
+<dt>Alt Text</dt>
+<dd><%= public_image.alt_text %></dd>
+<dt>File size</dt>
+<dd><%= public_image.file_size_in_words %></dd>
+</dl>

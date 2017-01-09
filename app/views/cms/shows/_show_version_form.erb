@@ -1,0 +1,55 @@
+<script type="text/javascript" src="/javascripts/application/admin/picker_window_displays.js"></script>
+<script type="text/javascript" src="/javascripts/application/admin/picker_window_public_image.js"></script>
+
+<%= tiny_mce( %w(show_version_description show_version_availability_notes) ) %>
+
+<fieldset><legend>Version (<%= @show_version.version_number_cache || 'new' %>)</legend>
+
+<dl>
+<dt><%= label_tag( 'show_version[title]', 'Title' ) %></dt>
+<dd><%= text_field( 'show_version', 'title' ) %></dd>
+
+<dt><%= label_tag( 'show_version[description]', 'Description' ) %></dt>
+<dd><%= text_area( 'show_version', 'description' ) %></dd>
+
+<dt><%= label_tag( 'show_version[availability_notes]', 'Availability notes' ) %></dt>
+<dd><%= text_area( 'show_version', 'availability_notes' ) %>
+<p>This is an appropriate place to tell the public how often new episodes are posted. Leave this blank to disappear the availability notes on the show information page.</p></dd>
+
+<dt><%= label_tag( 'show_version[page_injected_html]', 'Injected HTML' ) %></dt>
+<dd><%= text_area( 'show_version', 'page_injected_html' ) %>
+<p>This HTML will replace default HTML that appears on the show information page. Leave it blank to use the pre-generated HTML. Using this should only be reserved for cases when it is impossible to re-render the default HTML with CSS.</p></dd>
+
+<dt><%= label_tag( 'show_version[page_injected_css]', 'Injected CSS' ) %></dt>
+<dd><%= text_area( 'show_version', 'page_injected_css' ) %>
+<p>This CSS will be inserted into the &lt;head&gt; tag of the page as the text content of the &lt;style type="text/css"&gt; tag.</p></dd>
+
+<dt><%= label_tag( 'show_version[page_injected_javascript]', 'Injected JavaScript' ) %></dt>
+<dd><%= text_area( 'show_version', 'page_injected_javascript' ) %>
+<p>This javascript will be inserted at the top of the page, just below the body tag and below any default javascript includes. Be warned, if you execute a long-running javascript code, this will cause the page to stop loading on single-threaded browsers. Ideally, these should be only includes. If you need long running processes, use PeriodicExecuter and callbacks.</p></dd>
+
+<dt><%= label_tag( 'show_version[image_still_hash]', 'Hash of image still (or partial beginning)' ) %></dt>
+<dd><div id="show_version_image_still_container"><%= image_tag( @show_version.show_still_image.virtual_path, :alt => @show_version.show_still_image.alt_text, :id => 'show_version_image_still' ) unless @show_version.show_still_image.nil? %></div>
+<div><%= text_area( 'show_version', 'image_still_hash', :class => 'sha512' ) %></div>
+<%= picker_window( 'picker_window_image_still_hash', '/cms/public_images/list.json?limits[only][type]=ShowStillImage', '/cms/public_images/count.json?limits[only][type]=ShowStillImage', 'PublicImagePickerItem', 'function( item ) { $( "show_version_image_still_hash" ).value = item.id(); if( $("show_version_image_still") == null ) { /* Create it */ $("show_version_image_still_container").appendChild( new Element( "img" ).writeAttribute("id", "show_version_image_still" ) ); } $("show_version_image_still").writeAttribute( "src", item.virtual_path() ).writeAttribute("alt", item.alt_text() ); }', 'pagination[cms%2Fpublic_images_page]', 'Show Image Stills' ) %>
+<%= javascript_tag( "jQuery( '#show_version_image_still_hash' ).focus( function(e) { jQuery('#picker_window_image_still_hash').show(); } )" ) %>
+<%= link_to_function( 'picker', "jQuery('picker_window_image_still_hash').show()"	) %>
+<noscript><p>This is a HASH (not an id). Hashes typically look like: f783bbad28dea58a606c0cf0e... and have 128 characters and numbers in them. You can find the hashes in the <%= link_to( 'public images', :controller => 'cms/public_images' ) %>. This field is pretty smart and will accept the beginning of a hash. Be careful with duplicates as it will assume you mean the first hash match.</p></noscript></dd>
+
+
+<dt><%= label_tag( 'show_version[image_splash_hash]', 'Hash of splash image (or partial beginning)' ) %></dt>
+<dd><div id="show_version_image_splash_container"><%= image_tag( @show_version.show_splash_image.virtual_path, :alt => @show_version.show_splash_image.alt_text, :id => 'show_version_image_splash' ) unless @show_version.show_splash_image.nil? %></div>
+<div><%= text_area( 'show_version', 'image_splash_hash', :class => 'sha512' ) %></div>
+<%= picker_window( 'picker_window_image_splash_hash', '/cms/public_images/list.json?limits[only][type]=ShowSplashImage', '/cms/public_images/count.json?limits[only][type]=ShowSplashImage', 'PublicImagePickerItem', 'function( item ) { $( "show_version_image_splash_hash" ).value = item.id(); if( $("show_version_image_splash") == null ) { /* Create it */ $("show_version_image_splash_container").appendChild( new Element( "img" ).writeAttribute("id", "show_version_image_splash" ) ); } $("show_version_image_splash").writeAttribute( "src", item.virtual_path() ).writeAttribute("alt", item.alt_text() ); }', 'pagination[cms%2Fpublic_images_page]', 'Show Splash Image' ) %>
+<%= javascript_tag( "jQuery( '#show_version_image_splash_hash' ).focus( function(e) { jQuery('#picker_window_image_splash_hash').show(); } )" ) %>
+<%= link_to_function( 'picker', '$("picker_window_image_splash_hash").show();'	) %>
+<noscript><p>This is a HASH (not an id). Hashes typically look like: f783bbad28dea58a606c0cf0e... and have 128 characters and numbers in them. You can find the hashes in the <%= link_to( 'public images', :controller => 'cms/public_images' ) %>. This field is pretty smart and will accept the beginning of a hash. Be careful with duplicates as it will assume you mean the first hash match.</p></noscript></dd>
+
+
+<dt><%= label_tag( 'show_version[version_comment]', 'Version comment' ) %></dt>
+<dd><%= text_area( 'show_version', 'version_comment' ) %>
+<p>This should be a short description of what you changed. This helps you identify versions later. Version comments will only appear for administrators.</p></dd>
+
+</dl>
+
+</fieldset>

@@ -1,0 +1,5 @@
+<p>You are about to remove this availability range. The show will disappear from the site during this time. Click "destroy" if you are sure you want this to happen</p>
+
+<p><%= mu_ex_date_range_show( @availability ) %></p>
+
+<p><%= button( 'destroy', :action => 'destroy_master_availability', :id => @availability.id ) %></p>

@@ -1,0 +1,40 @@
+<h1>Order for <%= ( @show.nil? ? 'the Home Page' : show_title(@show) ) %></h1>
+
+<% if @pagination.empty? %>
+<p>No episodes listed in order</p>
+<% else %>
+    <%= pagination_buttons( @pagination ) %>
+
+
+<ul class="control_list alternate">
+  <% @pagination.items_for_current_page.each do |dl| %>
+      <% ep = dl.episode %>
+      <% ep_ver = ep.current_version %>
+  <li><span class="name"><% if @show_id.eql?(0) %><%= link_to( show_title(dl.episode.show), :controller => 'cms/shows', :action => 'info', :id => dl.episode.show.id ) %>: <% end %><%= ep.id %>: <%= link_to( ep_ver.title, :controller => 'cms/episodes', :action => 'info', :id => ep.id ) %></span>
+
+    <% unless ep.available? %>
+    <% n = EpisodePublishScheduleDateSet.find_next_range( ep.id, @time ) %>
+        <% if n.nil? %>
+        NOT AVAILABLE &amp; NOT SCHEDULED TO BE AVAILABLE (WILL NEVER APPEAR!)
+         <% else %>
+        Not available, will appear at: <%= n.start_at %>
+        <% end %>
+    <% end %>
+
+    <ul class="actions">
+      <li><%= button( 'remove', { :action => 'destroy', :id => dl.id } ) %></li>
+      <li><%= ( !dl.eql?@pagination.items_for_current_page.first or !dl.acts_as_ordered_is_last? ) ? button( 'top', { :action => 'move_episode_to_top', :id => dl.id }, { :confirm => "This will make this episode appear as the latest. Are you sure you want to do this?" } ) : 'top' %></li>
+      <li><%= ( !dl.eql?@pagination.items_for_current_page.first or !dl.acts_as_ordered_is_last? ) ? button( 'up', :action => 'move_episode_order_up', :id => dl.id ) : 'up' %></li>
+      <li><%= ( !dl.eql?@pagination.items_for_current_page.last or !dl.acts_as_ordered_is_first? ) ? button( 'down', :action => 'move_episode_order_down', :id => dl.id ) : 'down' %></li>
+      <li><%= ( !dl.eql?@pagination.items_for_current_page.last or !dl.acts_as_ordered_is_first? ) ? button( 'bottom', { :action => 'move_episode_to_bottom', :id => dl.id }, { :confirm => "This will move this episode to the bottom of the list. Are you sure?" } ) : 'bottom' %></li>
+      <li><% form_tag( { :action => 'move_episode_to_location' , :id => dl.id }, { :method => 'post', :class => 'ordering' } ) do %>
+            <div><input style="text-align:right;" type="text" name="location" value="<%= dl.acts_as_ordered_count_in_my_exclusivity - dl.acts_as_ordered_order %>" /><button>Move</button></div>
+        <% end %></li>
+    </ul>
+  </li>
+  <% end %>
+</ul>
+
+
+    <%= pagination_buttons( @pagination ) %>
+<% end %>

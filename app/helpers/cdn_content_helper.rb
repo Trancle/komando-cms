@@ -1,0 +1,2 @@
+module CdnContentHelper
+end

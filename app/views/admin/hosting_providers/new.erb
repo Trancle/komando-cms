@@ -1,0 +1,55 @@
+<p>Please choose from the supported hosting providers below. Each hosting provider is different in the ways that files are uploaded to your CDN or storage and viewed by your visitors. If you make a mistake, you can always create additional providers and change-over later.<p>
+
+<p>Please pick the type of provider you wish to add</p>
+
+<h2>Provider Type Selection</h2>
+
+<h3>Hosted On Demand</h3>
+
+<ul class="alternate">
+  <li>
+    <h4>Bitgravity Hosted on Demand</h4>
+    <p>Video streaming on demand. Files are stored on a server somewhere and visitors can watch whenever you make them available in an episode.</p>
+    <p>This is BitGravity's Video Director product. Files are delivered via FTP to the CDN after being uploaded to MMS. Files are delivered to viewers via their array of HTTP servers.</p>
+    <% form_tag( :action => 'new_type' ) do %>
+        <%= hidden_field_tag( 'provider[type]', 'VideoContentHostingProviderOnDemandBitgravity' ) %>
+        <p><%= submit( 'select' ) %></p>
+    <% end %>
+
+  </li>
+  <li>
+    <h4>Limelight HTTP and Core Storage Hosted on Demand</h4>
+    <p>Video streaming on demand. Files are stored on a server somewhere and visitors can watch whenever you make them available in an episode.</p>
+    <p>This is Limelight Network's Core Storage product. Files are delivered via FTP to the CDN after being uploaded to MMS. Files are delivered to viewers via their array of Adobe Flash Streaming Servers or HTTP servers (for devices without Flash). This assumes you already have an account with password configured for both HTTP and Flash service and that your Flash and HTTP services share the same FTP storage repository. A Flash Live Stream and HTTP service that are independent of each other is no available at this time. Please see your MMS Sales Representative to make a request for this feature.</p>
+    <% form_tag( :action => 'new_type' ) do %>
+        <%= hidden_field_tag( 'provider[type]', 'VideoContentHostingProviderOnDemandLimelightCoreStorageAndHttp' ) %>
+        <p><%= submit( 'select' ) %></p>
+    <% end %>
+
+  </li>
+</ul>
+
+
+
+<h3>Hosted Live</h3>
+
+<ul class="alternate">
+  <li>
+    <h4>Bitgravity Live</h4>
+    <p>Live video streaming. These aren't files, but live broadcasts. Your audience must watch these in real-time as these are live events.</p>
+    <p>This is Bitgravity's Live product. The live stream is an Adobe Flash Streaming Media Server and an Apple HLS streaming server. Bitgravity will give you two URLs for watching the stream. Bitgravity will also give you a publishing point configured to accept a stream input using a special URL that contains your username and password (encoded as base64). Since this is using HLS and flash, users can have flash and watch the stream or an iOS device and also watch the stream.</p>
+    <% form_tag( :action => 'new_type' ) do %>
+        <%= hidden_field_tag( 'provider[type]', 'VideoContentHostingProviderLiveBitgravity' ) %>
+        <p><%= submit( 'select' ) %></p>
+    <% end %>
+  </li>
+  <li>
+    <h4>Limelight Flash Live Stream</h4>
+	<p>Live video streaming. These aren't files, but live broadcasts. Your audience must watch these in real-time as these are live events.</p>
+	<p>This is Limelight Network's Flash Live Stream product. The live stream is an Adobe Flash Streaming Media Server configured to accept a stream input using a username and password. Viewers are required to have Adobe Flash installed to watch any live streams presented via this provider.</p>
+<% form_tag( :action => 'new_type' ) do %>
+<%= hidden_field_tag( 'provider[type]', 'VideoContentHostingProviderLiveLimelightFlashLiveStream' ) %>
+	<p><%= submit( 'select' ) %></p>
+<% end %>
+   </li>
+</ul>

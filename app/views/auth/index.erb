@@ -1,0 +1,6 @@
+<%= Liquid::Template.parse( @layout ).render( 
+	 {
+		'form' => LoginFormDrop.new( self, @form_action, @username, @r, @remember_me, @error_message ),
+        'is_ssl' => @controller.request.ssl?
+	} )
+%>

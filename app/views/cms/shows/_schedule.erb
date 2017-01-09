@@ -1,0 +1,8 @@
+<h3>Which Version?</h3>
+
+<% v = 1; v = params[:show_version]['version'] if params[:show_version] %>
+<p><%= label_tag( 'show_version[version]', 'Version' ) %><%= text_field_tag( 'show_version[version]', v ) %></p>
+
+<h3>Specify the date range</h3>
+
+<%= mu_ex_date_range_form_tag( 'show_version_schedule_date' ) %>

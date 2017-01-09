@@ -1,0 +1,19 @@
+<h1>Maintenance</h1>
+<h2>Remove Unused Video</h2>
+
+<p>WARNING: You are about to permanently remove the following files and references to these files from the system. If you need them back, you will need to re-upload and re-link them wherever appropriate to get them to show up again. You cannot delete any files that are associated with an active campaign, show (if episode is available), or episode.</p>
+
+<% unless @files.empty? %>
+
+<ul>
+	<% @files.each do |file| %>
+		<li><%= link_to( file.pretty_name, :controller => '/cms/content', :action => 'info', :id => file.id ) %></li>
+	<% end %>
+</ul>
+
+<% #FIXME: removed for safety. Needs testing
+#= content_tag( :div, button( 'remove all', :action => 'remove_unused_video', :now => @now.httpdate ) ) %>
+
+<% else %>
+<p>There is nothing elegible for deletion at this time</p>
+<% end %>

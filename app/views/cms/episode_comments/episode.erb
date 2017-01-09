@@ -1,0 +1,11 @@
+<% unless @pagination.empty? %>
+<%= pagination_buttons(@pagination) %>
+<ul class="control_list">
+	<% @pagination.items_for_current_page.each do |comment| %>
+		<li><span class="name"><%= distance_of_time_in_words_to_now comment.created_at %> ago - <%= link_to( h( comment.user_or_anonymous.username ), :controller => '/admin/users', :action => 'info', :id => comment.user_or_anonymous.id ) %>: <%= link_to( h( comment.title ), :action => 'info', :id => comment.id ) %></span><ul class="actions"><li><%= link_to( 'edit', :action => 'edit', :id => comment.id ) %></li><li><%= link_to( 'remove', :action => 'confirm_destroy', :id => comment.id ) %></li></ul></li>
+	<% end %>
+</ul>
+<%= pagination_buttons(@pagination) %>
+<% else %>
+<p>There are no comments for this episode</p>
+<% end %>

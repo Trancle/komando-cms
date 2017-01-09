@@ -1,0 +1,17 @@
+<p>This is an aggregated list of comments that have been flagged for administrator review by the public at large. Ideally, this list will always be empty as you either address the reports or mark them as reviewed.</p>
+
+<% unless @pagination.empty? %>
+<%= pagination_buttons( @pagination ) %>
+<ul class="control_list alternate">
+	<% @pagination.items_for_current_page.each do |comment| %>
+		<li><span class="name">
+		<%= link_to( comment.episode.current_version_or_latest.title, :controller => '/cms/episodes', :action => 'info', :id => comment.episode.id ) %>: <%= link_to( h( strip_tags( comment.title ) ), :action => 'comment', :id => comment.id ) %> by
+		<%= link_to_if( comment.user_or_anonymous.is_a?(UserIdentified), h(comment.user_or_anonymous.username), :controller => '/admin/users', :action => 'info', :id => comment.user_or_anonymous.id ) %> (<%= pluralize( comment.report_counts, 'report' ) %>)</span>
+		<ul class="actions"><li>
+		<%= link_to( 'review comment', :action => 'comment', :id => comment.id ) %></li></ul></li>
+	<% end %>
+</ul>
+<%= pagination_buttons( @pagination ) %>
+<% else %>
+	<p>There are no comments that have been flagged for review.</p>
+<% end %>

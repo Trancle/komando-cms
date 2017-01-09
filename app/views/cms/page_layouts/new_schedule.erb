@@ -1,0 +1,16 @@
+<% if @page.scheduled_version_current.nil? %>
+
+        <p>No version is currently scheduled.</p>
+
+<% else %>
+
+        <p>Version #<%= @page.scheduled_version_current.version_number %> is currently active</p>
+
+<% end %>
+
+<p>There are <%= pluralize( @page.version_count, 'version' ) %></p>
+
+<% form_tag( :action => 'create_schedule', :id => @page.id ) do %>
+        <%= render :partial => 'schedule' %>
+        <p><%= submit( 'save' ) %></p>
+<% end %>

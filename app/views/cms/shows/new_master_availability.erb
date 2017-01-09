@@ -1,0 +1,6 @@
+<%= error_messages_for :availability %>
+
+<% form_tag( :action => 'create_master_availability', :id => @show.id ) do %>
+	<%= render :partial => 'master_availability_form' %>
+	<p><%= submit( 'create' ) %></p>
+<% end %>

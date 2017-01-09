@@ -1,0 +1,6 @@
+<%= error_messages_for :hpb %>
+
+<% form_tag( { :action => 'update', :id => @hpb.id } ) do %>
+    <%= render :partial => 'form' %>
+    <p><%= submit( 'save' ) %></p>
+<% end %>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title><%= h( Setting['vms-protected-site-head-title'].value ) + h( Setting['vms-protected-site-head-title-separator'].value ) %>Comment about: <%= h @episode.show.scheduled_version_current.title %><%= h Setting['vms-protected-site-head-title-separator'].value %><%= h @episode.current_version.title %></title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="<%= h( @episode.current_version.description ) %>"/>
+    <meta name="keywords" content="<%= h( @episode.show.keywords ) %>"/>
+
+  <!-- header-head-include -->
+  <%= Liquid::Template.parse( PageLayout.first( :conditions => "programmatic_name = 'header-head-include'" ).scheduled_version_current( @time ).layout ).render({'is_ssl' => @controller.request.ssl?}) %>
+  <!-- /header-head-include -->
+</head>
+<body>
+<%= layouts_common_body_include do; yield; end %>
+</body>
+</html>

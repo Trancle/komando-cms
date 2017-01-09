@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title><%= h( (cw_bread_crumbs_chain(@controller).collect{|crumb| h( truncate( crumb.title(@controller).to_s, 40 ) ) } << 'MMS Admin').join(' - ') ) %></title>
+
+  <%= stylesheet_link_tag( 'admin_screen.css', :media => 'all' ) %>
+  <%= stylesheet_link_tag( 'ui-lightness/jquery-ui-1.10.3.min.css', :media => 'all' ) %>
+	<meta name="description" content="VMS Administration"/>
+	<meta name="keywords" content="VMS,Christopher Richard Wojno,Wojno"/>
+  <%= javascript_include_tag 'jquery-1.8.3.min.js' %>
+  <%= javascript_include_tag 'jquery-ui-1.10.3.min.js' %>
+	<%= javascript_include_tag 'lib/simple-class.js' %>
+	<%= javascript_include_tag 'lib/tiny-mce-3.4.5/tiny_mce.js' %>
+	<%= javascript_include_tag( 'lib/cw/lazy_list.js' ) %>
+	<%= javascript_include_tag( 'application/admin/picker_window.js' ) %>
+	<%= csrf_meta_tag %>
+	<link rel="shortcut icon" href="/favicon.ico" />
+
+</head>
+<body>
+
+<% if flash[:msg] %>
+	<div class="flash_msg"><div><%= link_to( 'x', @controller.request.url ) %></div><p><%= flash[:msg] %></p></div>
+<% end %>
+
+<div id="body">
+
+<div id="header">
+<div class="control_action_menu">
+<ul><li><%= link_to( 'cms', :controller => '/cms' ) %></li><li><%= link_to( 'ads', :controller => '/ads' ) %></li><li><%= link_to( 'admin', :controller => '/admin' ) %></li><li><%= link_to( 'logout', :controller => '/auth', :action => 'logout' ) %></li></ul>
+</div>
+<% if @controller.instance_variable_defined?( :@action_nav ) %>
+<div class="action_nav">
+<h6>Actions</h6>
+<%= render_actions( self, @controller.action_nav ) %>
+</div>
+<% end %>
+</div>
+
+<%= nav_breadcrumbs( @controller ) %>
+
+<div id="page">
+<div id="article">
+
+<%= yield %>
+
+</div>
+</div>
+
+
+<hr />
+<div id="footer">
+	<p>MMS &copy; 2013 <a href="http://www.wojnosystems.com">WojnoSystems, Inc.</a></p>
+</div>
+
+</div>
+
+</body>
+</html>

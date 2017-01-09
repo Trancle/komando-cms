@@ -1,0 +1,43 @@
+<%
+=begin
+
+    Creates an HTML5 standard player
+
+<div class="vms-video" id="ID">
+<video>
+FALLBACK
+</video>
+</div>
+
+Options you can pass are:
+d => {
+    :id => [String] ID of the DIV that encompasses the player,
+    :class => [String] set of classes separated with spaces to be appended with the main class: mms-player, that appears on the DIV that encompasses the player
+    :attributes => [Hash] of key=>value attributes to put on the DIV that encompasses the player
+    :video_attributes => [Hash] of key=>value attributes to put on the VIDEO tag. Good things to put here: :poster => IMG_URL, or :controls => nil to disabled controls
+    :sources => [Array] of Hash {
+        :url => [String] URL that points to the actual video source
+        :mime_type => [String] Mime type of the file pointed to by the :url
+        :video_codec => [String] Video codec of uploaded file @ :url
+        :audio_codec => [String] Audio codec of uploaded file @ :url
+        :bitrate => [Number] indicating the bitrate of the source in kbps (kilobits per second). This is used to help auto-select the bit rate to use depending on the user's connection quality/speed
+        :height => [Number] indicating the height of the video in pixels. This is used to help the user select the size of the player
+        :attributes => [Hash] of key=>value attributes to append to the SOURCE tag
+    }
+    :fallback => [String] that is the content of the VIDEO tag that will appear if the browser does not support HTML5. If the browser supports HTML5, but not the mime-type (unable to play), this "fallback" will not appear. A Javascript is required to detect this case, and fallback to a Flash-based player or, alternatively, indicate the issue.
+}
+
+=end
+%>
+<%= tag(:div, { :id => d[:id], :class => 'mms-player' + ( d[:class].nil? ? '' : ' ' + d[:class] ) }.merge(d[:attributes] || {}), true) %>
+  <%= tag( :video, {:controls => 'controls', :'x-webkit-airplay' => 'allow', :preload => 'none'}.merge( d[:video_attributes] || {} ), true ) %>
+    <% d[:sources].each do |source| %>
+        <%= tag( 'source', { :src => source[:url], :type => source[:mime_type] + ";codecs=\"#{source[:video_codec]}, #{source[:audio_codec]}\"", 'data-bitrate' => "#{source[:bitrate]}kbps", 'data-vertical-lines' => source[:height] }.merge( source[:attributes] || {} ) ) %>
+    <% end %>
+    <% if d[:fallback].nil? %>
+    <p>It does not appear as though your web browser supports HTML5 and we use HTML5 to show this video. You should really get a more modern browser, if possible. Try Mozilla Firefox 16 or later, Google Chrome 22 or later, Microsoft Internet Explorer 9 or later, to name a few.</p>
+    <% else %>
+    <%= d[:fallback] %>
+    <% end %>
+  </video>
+</div>

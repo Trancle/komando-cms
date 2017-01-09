@@ -1,0 +1,77 @@
+#!/bin/bash
+# Created by Wojno Systems, Inc. to manage logins
+# Copyright Christopher Richard Wojno 2011
+# Starts the VMS instance(s)
+### BEGIN INIT INFO
+# Provides:          vms
+# Required-Start:    $network $syslog apache2
+# Required-Stop:     $network $syslog apache2
+# Should-Start:
+# Should-Stop:
+# X-Start-Before:
+# X-Start-After:
+# Default-Start:
+# Default-Stop:
+# X-Interactive: false
+# Short-Description: VMS
+# Description:       Provides the video management service from Wojno Systems, Inc.
+### END INIT INFO
+
+source /etc/vms/vms.conf
+
+start() {
+	echo "Starting VMS Cluster"
+
+	local c
+	for (( c=1; c <= ${vms_instances}; c++ ))
+	do
+		echo "Starting VMS instance #${c}"
+		start-stop-daemon --start --exec "${vms_lighttpd_bin}" --pidfile "${vms_pid_path}lighttpd_${c}.pid" --chuid ${vms_user}:${vms_group} --chdir "${vms_root_path}" -- -f "config/lighttpd_${c}.conf"
+		echo "Started VMS instance #${c}"
+	done
+}
+
+stop() {
+	echo "Stopping VMS Cluster"
+	local c
+	for (( c=1; c <= ${vms_instances}; c++ ))
+	do
+		echo "Stopping VMS instance #${c}"
+		start-stop-daemon --stop --exec "${vms_lighttpd_bin}" --pidfile "${vms_root_path}${vms_pid_path}lighttpd_${c}.pid"
+		echo "Stopped VMS instance #${c}"
+	done
+}
+
+restart() {
+	echo "Restarting VMS Cluster"
+	stop
+	start
+}
+
+status() {
+	# Query each instance to see if it's running
+	# Get the PIDS of each lighttpd instance claimed to be running
+	return 0
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	status)
+		echo "Not yet implemented"
+		;;
+	restart)
+		restart
+		;;
+	reload)
+		restart
+		;;
+	*)
+		echo "VMS commands: [start|stop|restart]"
+		;;
+esac
+exit $?

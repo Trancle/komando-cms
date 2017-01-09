@@ -1,0 +1,4 @@
+class AdministrationVisibilityConfig
+	# controls if the administration section of the site is visible/available through this rails instance.
+	def self.visible?; false; end
+end

@@ -1,0 +1,26 @@
+<%
+ most_recent_episodes = Episode.all(
+   Episode.find_available_episode_options(
+       { :order => 'created_at DESC', :limit => 16 }
+   ) ).map{|e|
+   EpisodeDrop.new(e,
+                   e.current_version,
+                   e.free?(@time),
+                   e.current_version.episode_still_image,
+                   e.video_content_names.collect{|vcn|vcn.video_contents}.flatten,
+                   @show,
+                   @show_version,
+                   @controller,
+                   @time)
+ }
+ %>
+<%= Liquid::Template.parse( @layout ).render(
+  'pagination' => ( @pagination.empty? ? '' : pagination_buttons( @pagination ) ),
+  'results' => @pagination.items_for_current_page.collect{|r| SearchResultDrop.new(r,@controller) },
+  'terms' => ( @terms.empty? ? nil : @terms ),
+  'terms_url_encoded' => ( @terms.empty? ? nil : url_encode(@terms) ),
+  'page_url' => url_for(:only_path => false),
+  'username' => logged_in_username,
+  'hostname' => @controller.request.host,
+  'most_recent_episodes' => most_recent_episodes
+) %>

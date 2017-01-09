@@ -1,0 +1,1 @@
+STATIC_ASSETS_URI_BASE_PATH = '//static.tld.com/websites/videos/v1'.freeze

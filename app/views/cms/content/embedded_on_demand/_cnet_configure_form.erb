@@ -1,0 +1,9 @@
+<p><%= label_tag( 'mfr[video_id]', 'CNET Video ID' ) %><%= text_field( 'mfr', 'video_id' ) %> (<%= link_to_show_contextual_help_for( 'mfr_video_id', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_video_id' ) do %>
+	<h3>CNET Video ID Help</h3>
+	<p>The CNET video ID is the special string of numbers that CNET uses to identify videos. All videos on CNET have one. When you go to a video on the CNET site (<a href="http://www.cnet.com">www.cnet.com</a>), a param named "FlashVars" will include the video's ID.</p>
+	<h3>What do they look like?</h3>
+	<p>CNET ID's are a string of numbers. When you visit the page on which you watch the video, the video's ID is in the embed code. For example, say you watch the video at the following <a href="http://cnettv.cnet.com/april-14-2011/9742-1_53-50103236.html">URL</a>. When you hover your mouse over the video, you'll see a "SHARE" button. Clicking that button will show you an "Embed this video" text field. Copy this field to a text document so you can see it better.</p>
+	<blockquote>&lt;object width="364" height="256"&gt;&lt;param name="movie" value="http://www.cnet.com/av/video/embed/player.swf" /&gt;&lt;param name="background" value="#333333" /&gt;&lt;param name="allowFullScreen" value="true" /&gt;&lt;param name="allowScriptAccess" value="true" /&gt;&lt;param name="FlashVars" value="playerType=embedded&amp;type=id&amp;value=<span class="highlight">50103236</span>" /&gt;&lt;embed src="http://www.cnet.com/av/video/embed/player.swf" type="application/x-shockwave-flash" background="#333333" width="364" height="256" allowFullScreen="true" allowScriptAccess="always" FlashVars="playerType=embedded&amp;type=id&amp;value=50103236" /&gt;&lt;/object&gt;</blockquote>
+	<p>The highlighted number above is the video's ID. Yes, it's buried.</p>
+<% end %>

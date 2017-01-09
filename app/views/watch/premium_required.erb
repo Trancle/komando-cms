@@ -1,0 +1,120 @@
+<%
+   logger.debug 'primary episode drop creation'
+   episode_drop = EpisodeDrop.new(@episode,@episode_version,true,@episode_version.episode_still_image,@episode.video_content_names.collect{|vcn|vcn.video_contents}.flatten,@show,@show_version,@controller,@time)
+
+   @redirection = url_for(:only_path => true)
+   @remember_me = false unless @remember_me
+
+
+
+
+   # START: FROM watch/viewer.erb
+   # Each episode thumbnail is rendered independently. We can, therefore, cache this for speed later if we need to do so
+   # We're not right now, but that's the plan for later
+   oept = Liquid::Template.parse( PageLayout.first(:conditions => "programmatic_name = 'episode-thumbnail'" ).scheduled_version_current(@time).layout )
+
+   episode_drop = EpisodeDrop.new(@episode,@episode.current_version,@episode.free?(@time),@episode.current_version.episode_still_image,@episode.video_content_names.collect{|vcn|vcn.video_contents}.flatten,@show,@show_version,@controller,@time)
+
+   most_recent_episodes = Episode.all(
+       Episode.exclude_episodes_with_ids(
+           Episode.find_available_episode_for_show_options(
+               @show.id,
+               { :order => 'created_at DESC', :limit => 16 }
+           ), @episode.id
+       ) ).map{|e|
+     EpisodeDrop.new(e,
+                     e.current_version,
+                     e.free?(@time),
+                     e.current_version.episode_still_image,
+                     e.video_content_names.collect{|vcn|vcn.video_contents}.flatten,
+                     @show,
+                     @show_version,
+                     @controller,
+                     @time)
+   }
+   related_episode_count = 9
+   related_episodes = @episode.related_episodes( :limit => related_episode_count ).map{|e|
+     EpisodeDrop.new(e,
+                     e.current_version,
+                     e.free?(@time),
+                     e.current_version.episode_still_image,
+                     e.video_content_names.collect{|vcn|vcn.video_contents}.flatten,
+                     @show,
+                     @show_version,
+                     @controller,
+                     @time)
+   }
+
+   if related_episodes.size < related_episode_count
+     number_to_add = related_episode_count - related_episodes.size
+     opts = Episode.random_episodes_older_than_options( Time.now - 8.days ).merge(:limit => number_to_add)
+     opts = Episode.exclude_episodes_with_ids(opts, @episode.id )
+     opts = Episode.merge_options( opts, Episode.find_available_episode_for_show_options( @show.id, {} ) )
+
+     related_episodes.concat Episode.all( opts ).map{|e|
+       EpisodeDrop.new(e,
+                       e.current_version,
+                       e.free?(@time),
+                       e.current_version.episode_still_image,
+                       e.video_content_names.collect{|vcn|vcn.video_contents}.flatten,
+                       @show,
+                       @show_version,
+                       @controller,
+                       @time)
+     }
+   end
+
+   other_episodes_pagination_rendered = pagination_buttons( @other_episode_pagination )
+
+   episode_drops = episode_drops_from_episodes( @controller, @other_episode_pagination.items_for_current_page, @show, @show_version, @time )
+
+   random_drops = episode_drops_from_episodes( @controller, @random_episodes, @show, @show_version, @time )
+
+   # just the ID, no title
+   essential_page_url =  url_for( :id => @episode.id, :only_path => false)
+   essential_page_url = essential_page_url[0...essential_page_url.rindex('/')]
+   # END: FROM watch/viewer.erb
+
+
+
+
+   rvars = {
+       'login_token' => '<div style="display:none;">' + tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) + '</div>',
+       'redirect_back_after_login' => "<div style=\"display:none;\">" + hidden_field_tag( 'r', @redirection ) + "</div>",
+       'required_levels' => @episode.required_levels,
+       'is_logged_in' => @controller.is_logged_in?,
+       'cas_url' => url_for(:controller => 'auth', :action => 'cas_authenticate', :r => url_for(:only_path => false)),
+       'rememeber_me' => @remember_me,
+
+
+
+
+
+       'episode' => episode_drop,
+       'episode_mfrn_id' => @current_video_name.id,
+       'other_episode_thumbnails' => episode_drops.map{|d| oept.render( { 'episode' => d } ) },
+       'other_episodes' => episode_drops,
+       'other_episode_pagination' => other_episodes_pagination_rendered,
+       'random_episodes' => random_drops,
+       'next_episode' => @episode_next_drop,
+       'previous_episode' => @episode_previous_drop,
+       'requires_html5_fallback' => (@current_video_name.video_contents.first.is_a?(VideoContentHostedLive) or @current_video_name.video_contents.first.is_a?(VideoContentHostedOnDemand)),
+       'player' => '<div id="video_player_object">' + render_player( @current_video_name, @episode ) + '</div>',
+       'comments' => '<div id="comments">' + render( :partial => 'comments' ) + '</div>',
+       'page_url' => url_for(:only_path => false),
+       'essential_page_url' => essential_page_url,
+       'now' => @time,
+       'now_as_i' => @time.to_i,
+       'username' => logged_in_username,
+       'hostname' => @controller.request.host,
+       'is_ssl' => @controller.request.ssl?,
+       'most_recent_episodes' => most_recent_episodes,
+       'related_episodes' => related_episodes,
+       'player_type' => @current_video_name.video_contents.first.class.name,
+       'episode_current_page' => @episode_current_page,
+       'episode_item_number' => @episode_item_number,
+       'episode_number_of_pages' => @number_of_pages
+   }
+%>
+<%= Liquid::Template.parse( @layout ).render( rvars )
+%>

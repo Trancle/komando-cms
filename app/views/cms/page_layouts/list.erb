@@ -1,0 +1,11 @@
+<% unless @pl_pag.empty? %>
+<%= pagination_buttons( @pl_pag ) %>
+<ul class="control_list alternate">
+	<% @pl_pag.items_for_current_page.each do |page| %>
+		<li><span class="name"><%= link_to( page.programmatic_name, :action => 'info', :id => page.id ) %> (<%= page.name %>)</span></li>
+	<% end %>
+</ul>
+<%= pagination_buttons( @pl_pag ) %>
+<% else %>
+	<p>There are no page layouts, which is... not right...</p>
+<% end %>

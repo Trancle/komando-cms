@@ -1,0 +1,23 @@
+development:
+  cas:
+    base_url: http://10.0.0.226/
+  komapi:
+    url:        ''
+    key_id:     ''
+    key_secret: ''
+
+production:
+  cas:
+    base_url: http://10.0.0.226/
+  komapi:
+    url:        ''
+    key_id:     ''
+    key_secret: ''
+
+test:
+  cas:
+    base_url: http://10.0.0.226/
+  komapi:
+    url:        ''
+    key_id:     ''
+    key_secret: ''

@@ -1,0 +1,7 @@
+{
+    "id": <%= show.id %>,
+    "title": "<%= show_version.title.to_json %>",
+    "description": "<%= show.description.to_json %>",
+    "total_length_as_hh_mm_ss_colon_separators": "<%= show.total_length_as_hh_mm_ss.to_json %>",
+    "url_to_show": "<%= url_to_show(show_version).to_json %>"
+}

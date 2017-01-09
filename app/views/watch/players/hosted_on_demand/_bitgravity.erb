@@ -1,0 +1,29 @@
+<%
+   # Required Args:
+   # stream_type = %(Streaming LiveStream)
+   # media_url = URL for CDN
+   player_url = @controller.request.protocol + @controller.request.host_with_port + "/player.swf"
+   unique_player_id = 1 if unique_player_id.nil?
+
+   video = video_contents.first
+   http_uri =  video.http_url
+   bitrate =  video.bitrate
+
+flash = <<EOF
+   <object type="application/x-shockwave-flash" data="#{player_url}" id="unique_player_id_required_by_ie_stupidness_#{unique_player_id}">
+  <param name="movie" value="#{player_url}" />
+  <param name="allowScriptAccess" value="always" />
+  <param name="flashvars" value="urls=#{CGI.escape( "[{\"u\":\"#{http_uri}\",\"r\":#{bitrate}}]" )}" />
+  <param name="quality" value="high" />
+  <param name="allowFullScreen" value="true" />
+  <param name="bgcolor" value="#000000" />
+  <p>Sorry, but you need Adobe <a href="http://get.adobe.com/flashplayer" rel="external">Flash Player</a> to view our content. Please <a href="http://get.adobe.com/flashplayer" rel="external">download</a> it and install it.</p>
+</object>
+EOF
+
+   html_options = {
+           :preload => 'none'
+   }
+%>
+<%= hosted_on_demand_and_live_with_fallback_html( managed_file_resource_name, video_contents.map{|vc| { 'url' => http_uri, 'mime_type' => vc.mime_type, 'bitrate' => vc.bitrate, 'height' => vc.height } }, video_contents, flash, episode, html_options ) %>
+

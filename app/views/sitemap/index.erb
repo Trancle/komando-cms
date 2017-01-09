@@ -1,0 +1,17 @@
+<%=	@xml.instruct!
+@xml.urlset( :xmlns => 'http://www.sitemaps.org/schemas/sitemap/0.9' ) {
+	@urls.each do |url|
+		@xml.url {
+			@xml.loc( url_for( ( url.url_opts || {} ).merge( :only_path => false ) ) )
+			case url.result.class.name
+				when 'Episode'
+					@xml.lastmod( url.result.current_version.updated_at.xmlschema )
+				when 'Show'
+					@xml.lastmod( url.result.scheduled_version_current_cache.updated_at.xmlschema )
+			end
+			@xml.changefreq( url.changefreq )
+			@xml.priority( url.priority )
+		}
+	end
+}
+%>

@@ -1,0 +1,7 @@
+<p>Warning, this will permanently disassociate this content with this episode (you can add it back later, if you wish); however, all play counts for this episode part, as well as ad insertion locations will be irrevocably destroyed.</p>
+
+<%= render :partial => 'info', :locals => {:episode_part => @episode_part} %>
+
+<h3>Review</h3>
+
+<p><%= button( 'destroy', :action => 'destroy', :id => @episode_part.id ) %></p>

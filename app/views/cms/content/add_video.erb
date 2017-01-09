@@ -1,0 +1,22 @@
+<p>You're about to create a new video component for the Video Content named: "<%= h @mfrn.pretty_name %>."</p>
+
+<p>Remember, one Video Content may have multiple videos associated with it with various encodings and bit rates. This Content item currently has <%= pluralize( @mfrn.video_contents.size, 'video' ) %> associated with it.</p>
+
+
+<h3>Video content embedded on demand</h3>
+
+<p>Video content we probably don't produce because this content is hosted at other websites. We're embedding via a URL or explicity embed text.</p>
+
+<%= button( 'select - Embedded on Demand', :action => 'add_video_content_embedded_on_demand', :id => @mfrn.id ) %>
+
+<h3>Video content hosted on demand</h3>
+
+<p>Video content we produce that is stored on our systems. It is not live. These are typically pre-recorded and uploaded for Video On Demand use.</p>
+
+<%= button( 'select - Hosted on Demand', :action => 'add_video_content_hosted_on_demand', :id => @mfrn.id ) %>
+
+<h3>Video content hosted live</h3>
+
+<p>Video content for live streaming. This is not typically stored in the system, but has a URL that points to a CDN re-stream. This re-stream is used to distribute the live stream in a scalable fashion.</p>
+
+<%= button( 'select - Hosted Live', :action => 'add_video_content_hosted_live', :id => @mfrn.id ) %>

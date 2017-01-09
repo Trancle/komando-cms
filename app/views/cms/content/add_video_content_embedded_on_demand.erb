@@ -1,0 +1,11 @@
+<p>You're about to create a new video component for the Video Content named: "<%= h @mfrn.pretty_name %>."</p>
+
+<p>To properly generate embedding tags, please specify the source of the embed code. If the source is not supported, choose "HTML" to insert the embed code provided by the source from which you are embedding.</p>
+
+<%= error_messages_for :managed_file_resource %>
+
+<ul>
+	<% VideoContentEmbeddedOnDemand.supported_embed_services.push('HTML').each do |t| %>
+	<li><%= button( t, :action => 'new_video_content_embedded_on_demand', :id => @mfrn.id, :video_content_type => 'VideoContentEmbeddedOnDemand' + t ) %></li>
+	<% end %>
+</ul>

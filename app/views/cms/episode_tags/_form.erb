@@ -1,0 +1,31 @@
+<dl>
+  <dt><%= label_tag('tag[tag]', 'Tag')%></dt>
+  <dd><%= input( 'tag', 'tag', :class => 'text' ) %>
+    <p>The tags. Separate each tag with a comma. Start and end spaces will be removed from each tag. Spelling will not be corrected. All tags are converted to lower-case letters.</p>
+  </dd>
+  <script type="text/javascript">
+      $( "#tag_tag" ).autocomplete({
+          source: function( request, response ) {
+              var prefix = '';
+              var comma = request.term.lastIndexOf(',');
+              if( comma != -1 ) {
+                prefix = request.term.slice(0,comma) + ', ';
+              }
+              jQuery.ajax({
+                url: '<%= url_for(:controller => 'episode_tags', :action => 'suggest.json') %>',
+                  type: 'GET',
+                  data: { tags: request.term }
+              }).done( function(e) {
+                  var a = new Array();
+                  $(e).each( function(i,elem) {
+                      a.push( prefix + elem)
+                  });
+                  response( a );
+              }).fail( function(e) {
+                  // failure
+                  response('');
+              });
+          }
+      });
+  </script>
+</dl>

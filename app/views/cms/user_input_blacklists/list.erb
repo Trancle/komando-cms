@@ -1,0 +1,11 @@
+<% unless @word_pag.empty? %>
+<%= pagination_buttons( @word_pag ) %>
+<ul class="control_list alternate">
+	<% @word_pag.items_for_current_page.each do |word| %>
+		<li><span class="name"><%= link_to( h( word.value ), :action => 'info', :id => word.id ) %> (<%= word.friendly_type_name %> match)</span><ul class="actions"><li><%= link_to( 'edit', :action => 'edit', :id => word.id ) %></li><li><%= link_to( 'remove', :action => 'destroy_confirm', :id => word.id ) %></li></ul></li>
+	<% end %>
+</ul>
+<%= pagination_buttons( @word_pag ) %>
+<% else %>
+	<p>There are no words on the blacklist. This is probably a bad thing.</p>
+<% end %>

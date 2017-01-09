@@ -1,0 +1,9 @@
+<%
+only_ep_attributes = [:created_at,:id,:published_datetime,:show_id,:updated_at]
+ep_procs = []
+ep_procs << Proc.new{ |options| options[:builder].tag!('url-to-self',url_for( url_to_episode( @episode.show.scheduled_version_current_or_last_version, @episode.current_version )) ) }
+only_version_attributes = [:created_at,:description,:episode_number,:episode_still_image_id,:id,:season_number,:title,:updated_at,:url_title]
+%><%= @episode.to_xml( :only => only_ep_attributes, :methods => [:is_free], :procs => ep_procs ) do |ep|
+	ep << @episode.current_version.to_xml( :skip_instruct => true, :only => only_version_attributes, :methods => [:still_image_virtual_path,:still_image_alt] )
+end
+%>

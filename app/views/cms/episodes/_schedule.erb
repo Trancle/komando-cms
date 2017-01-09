@@ -1,0 +1,7 @@
+<h3>Which Version?</h3>
+
+<p><%= label_tag( 'episode_version[version]', 'Version' ) %><%= text_field_tag( 'episode_version[version]', @episode_version ) %></p>
+
+<h3>Specify the date range</h3>
+
+<%= mu_ex_date_range_form_tag( 'episode_version_schedule_date' ) %>

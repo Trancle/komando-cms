@@ -1,0 +1,26 @@
+    <dt>ID</dt>
+    <dd><%= @user.id %></dd>
+
+    <dt>UUID</dt>
+    <dd><%= @user.uuid || text_field('user','uuid') %></dd>
+
+    <dt><%= label('user','type','Type (UserAdministrator for admins') %></dt>
+    <dd><%= text_field('user','type') %></dd>
+
+    <dt><%= label('user','username','Username') %></dt>
+    <dd><%= text_field('user','username') %></dd>
+
+    <dt><%= label('user','email','Email') %></dt>
+    <dd><%= text_field('user','email') %></dd>
+
+    <dt><%= label('user','uid','UID') %></dt>
+    <dd><%= text_field('user','uid') %></dd>
+
+    <dt><%= label('user','enabled','Enabled?') %></dt>
+    <dd><%= check_box('user','enabled') %></dd>
+
+    <dt>Last Login timestamp</dt>
+    <dd><%= @user.last_login_timestamp || 'never' %></dd>
+
+    <dt><%= label('user','password','Password') %></dt>
+    <dd><%= password_field_tag('user[password]') %></dd>

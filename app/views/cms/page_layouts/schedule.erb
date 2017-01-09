@@ -1,0 +1,16 @@
+<p>Version scheduling for all time.</p>
+
+<% unless @pl_sched_pag.empty? %>
+<%= pagination_buttons( @pl_sched_pag ) %>
+<ul class="alternate">
+<% @pl_sched_pag.items_for_current_page.each do |schedule| %>
+        <li><%= mu_ex_date_range_show( schedule ) %> (Version #<%= schedule.scheduled_version.version.version_number %>)</li>
+<% end %>
+</ul>
+<%= pagination_buttons( @pl_sched_pag ) %>
+
+<% else %>
+
+<p>No schedules</p>
+
+<% end %>

@@ -1,0 +1,19 @@
+<h1>Maintenance</h1>
+<h2>Remove Unreferenced Video</h2>
+
+<% unless @contents.empty? %>
+
+<ul>
+	<% @contents.each do |file| %>
+		<li><%= file.hash %> (<%= file.type %>)
+<%= content_tag( :div, button( 'remove', :action => 'remove_unreferenced_video_content', :id => file.id ) ) %>
+	</li>
+	<% end %>
+</ul>
+
+<% #FIXME: removed for safety. Needs testing
+#= content_tag( :div, button( 'remove all', :action => 'remove_unreferenced_video_content', :now => @now.httpdate ) ) %>
+
+<% else %>
+<p>There is nothing elegible for deletion at this time</p>
+<% end %>

@@ -1,0 +1,9 @@
+<%= error_messages_for 'show', 'show_version' %>
+
+<% form_tag( { :action => 'create' } ) do %>
+	<%= render :partial => 'show_version_form' %>
+	<%= render :partial => 'form' %>
+	<p><%= submit( 'create' ) %></p>
+<% end %>
+
+<%= content_tag( 'p', link_to( 'cancel', :action => 'list' ) ) %>

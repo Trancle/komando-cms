@@ -1,0 +1,2 @@
+class ResizedImagesCachePathVirtual; def self.pathname; Pathname.new('resized_images_cache'); end; end
+class ResizedImagesCachePathPhysical; def self.pathname; Pathname.new(RAILS_ROOT).join('public') + ResizedImagesCachePathVirtual.pathname; end; end

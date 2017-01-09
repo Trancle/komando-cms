@@ -1,0 +1,84 @@
+<p><%= label_tag( 'mfr[video_id]', 'Vimeo Video ID' ) %><%= text_field( 'mfr', 'video_id' ) %> (<%= link_to_show_contextual_help_for( 'mfr_video_id', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_video_id' ) do %>
+	<h3>Vimeo Video ID Help</h3>
+	<p>The video ID is the special string of numbers that Vimeo uses to identify videos. All videos on Vimeo have one. When you go to a video on the site (<a href="http://www.vimeo.com">www.vimeo.com</a>), the URL (the text in your browser's address bar) will include the video's ID.</p>
+	<h3>What do they look like?</h3>
+	<p>Vimeo ID's are a string of numbers and both capital and lower case letters. When you visit the page on which you watch the video, the video's ID is indicated in the query variable "v." For example, say you watch the video at the following URL:</p>
+	<blockquote>http://vimeo.com/<span class="highlight">17853047</span></blockquote>
+	<p>The ID for that video is the last part of the URL after the last forward slash (/): <span class="highlight">17853047</span>. You don't need anything else, just the ID.</p>
+<% end %>
+
+
+<div id="checking_vimeo_msg" style="display:none;">
+	<p>I'm checking that Vimeo ID: <%= spinner_named('checking_vimeo_id_spinner') %></p>
+</div>
+<div id="vimeo_id_ok_msg" style="display:none;">
+	<p>Vimeo ID exists and is playable. I've also filled in the duration for you, below</p>
+</div>
+<div id="vimeo_id_bad_msg" style="display:none;">
+	<p>That Vimeo ID isn't valid or the video is not playable</p>
+</div>
+<div id="vimeo_id_check_failed_msg" style="display:none;">
+	<p>Hmmm. I wasn't able to check Vimeo for some reason. Maybe Vimeo is having connectivity issues?</p>
+</div>
+<%= javascript_tag( 
+<<EOF
+jQuery('#mfr_video_id').blur( function(e) {
+	if( jQuery('#mfr_video_id').val() != "" ) {
+		jQuery('#checking_vimeo_msg').show();
+		jQuery('#vimeo_id_ok_msg').hide();
+		jQuery('#vimeo_id_bad_msg').hide();
+		jQuery('#vimeo_id_check_failed_msg').hide();
+		var target = 'https://vimeo.com/api/v2/video/' + (new String(jQuery('#mfr_video_id').val())) + '.json';
+
+		jQuery.ajax({ url: target, dataType: 'jsonp' }).fail( function( jqXHR, textStatus, errorThrown ) {
+		 	 jQuery('#checking_vimeo_msg').hide();
+			 jQuery('#vimeo_id_check_failed_msg').show();
+		 } ).done( function( msg ) {
+			 		var obj;
+			 		jQuery('#checking_vimeo_msg').hide();
+			 		/* Check if Video can be played */
+					if( Object.prototype.toString.call(msg) == '[object String]' ) {
+						eval('obj = ' + msg);
+					} else {
+						obj = msg;
+					}
+					jQuery('#mfr_colonized_length').val( obj[0]['duration'] );
+					jQuery('#vimeo_id_ok_msg').show();
+			 } );
+	}
+} );
+EOF
+		) %>
+
+
+
+<p><%= label_tag( 'mfr[auto_play]', 'Auto-Play?' ) %><%= check_box( 'mfr', 'auto_play', :class => 'checkbox' ) %> (<%= link_to_show_contextual_help_for( 'mfr_auto_play', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_auto_play' ) do %>
+	<h3>Vimeo AutoPlay</h3>
+	<p>When the visitor arrives on the page to watch this embedded video, if checked it will start playing immediately. If not checked, this video will load, but wait for the user to explicitly play the video. It is, generally, considered courteous to disable auto-play.</p>
+<% end %>
+
+<p><%= label_tag( 'mfr[show_video_title]', 'Show Video Title?' ) %><%= check_box( 'mfr', 'show_video_title', :class => 'checkbox' ) %> (<%= link_to_show_contextual_help_for( 'mfr_show_video_title', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_show_video_title' ) do %>
+	<h3>Vimeo Video Title</h3>
+	<p>The title of the video will be displayed if this option is checked. To remove the title, uncheck this option.</p>
+<% end %>
+
+<p><%= label_tag( 'mfr[show_video_byline]', 'Show Video Byline?' ) %><%= check_box( 'mfr', 'show_video_byline', :class => 'checkbox' ) %> (<%= link_to_show_contextual_help_for( 'mfr_show_video_byline', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_show_video_byline' ) do %>
+	<h3>Vimeo Video Byline</h3>
+	<p>If checked, the player will display the "byline" or the uploader of the video. Leave unchecked to remove this from the player.</p>
+<% end %>
+
+<p><%= label_tag( 'mfr[show_user_portrait]', 'Show User Portrait?' ) %><%= check_box( 'mfr', 'show_user_portrait', :class => 'checkbox' ) %> (<%= link_to_show_contextual_help_for( 'mfr_show_user_portrait', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_show_user_portrait' ) do %>
+	<h3>Vimeo User Portrait</h3>
+	<p>If checked, the player will display the portrait of the uploader of the video. Leave unchecked to remove this from the player.</p>
+<% end %>
+
+<p><%= label_tag( 'mfr[loop_video]', 'Loop?' ) %><%= check_box( 'mfr', 'loop_video', :class => 'checkbox' ) %></p>
+
+	<h3>Vimeo Parameter Settings</h3>
+	<p>To see Vimeo's documentation about each of Vimeo's embed parameters, see the <a href="http://vimeo.com/api/docs/player">Vimeo Player Documentation</a> page.</p>
+

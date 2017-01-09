@@ -1,0 +1,17 @@
+<dl>
+<% @user.class.column_names.reject{|n| n.eql?'id' }.each do |name| %>
+	<dt><%= name.humanize %></dt>
+	<dd>
+	<%= case name
+		when 'email'
+			mail_to( @user.email )
+		when 'type'
+			@user.class.name.underscore.humanize
+		when 'enabled'
+			yes_or_no( @user.enabled )
+		else
+			h( @user.send( name ) )
+	 end %>
+	</dd>
+<% end %>
+</dl>

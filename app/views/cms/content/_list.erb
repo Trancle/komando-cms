@@ -1,0 +1,33 @@
+<% unless @mfrn_pag.empty? %>
+
+<%= pagination_buttons(@mfrn_pag) %>
+
+<ul class="control_list alternate">
+<% @mfrn_pag.items_for_current_page.each do |mfrn| %>
+	<li>
+	<ul class="actions">
+		<li><%= link_to 'info', :action => 'info', :id => mfrn.id %></li>
+	</ul>
+	<div class="control_item_title"><h5>Name</h5><p><%= link_to_if !mfrn.mfr.nil?, mfrn.pretty_name, :action => 'info', :id => mfrn.id %></p></div>
+	<% unless mfrn.mfr.nil? %>
+		<ul>
+			<% mfrn.video_contents.each do |vc| %>
+			<li>
+		<%= render :partial => 'cms/content/video_content_basic_info', :locals => { :mfrn => mfrn, :mfr => vc } %>
+			</li>
+			<% end %>	
+		</ul>
+	<% else %>
+		<p>No video associated with this content</p>
+	<% end %>
+	</li>
+<% end %>
+</ul>
+
+<%= pagination_buttons(@mfrn_pag) %>
+
+<% else %>
+
+<p>There aren't any uploaded files</p>
+
+<% end %>

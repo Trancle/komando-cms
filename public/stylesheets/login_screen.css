@@ -1,0 +1,7 @@
+@import url('public_screen.css');
+label {
+	display: inline-block;
+	width: 10em;
+	padding-right: 0.5em;
+	text-align:right;
+}

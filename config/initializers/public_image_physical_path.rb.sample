@@ -1,0 +1,4 @@
+PublicImage.class_eval do
+  # Ensure ends with /
+  def self.base_path; RAILS_ROOT + '/public/managed_file_resource_images/'; end
+end

@@ -1,0 +1,63 @@
+<% options_class = nil unless options_class
+skip_reporting = false unless skip_reporting
+%><%= tag(:dt,  {:id => "episode-comment-info-title-#{comment.id}" }.merge( :class => options_class ), true ) %>
+
+
+<span class="username"><%= h comment.user_or_anonymous.username %></span>
+said 
+<span class="time-ago-in-words">
+<% if comment.parent_comment_id.nil? %>
+<%= distance_of_time_in_words_to_now( comment.created_at ) %> ago: 
+<% else %>
+<%= distance_of_time_in_words( comment.created_at, comment.parent.created_at ) %> later: 
+<% end %>
+</span>
+
+<span class="title">
+<%= h strip_tags( comment.title ) %>
+</span>
+
+</dt>
+<%= tag(:dd,  {:id => "episode-comment-info-details-#{comment.id}" }.merge( :class => options_class ), true ) %>
+
+
+<!-- reporting: provide for javascript and non-javascript compatability -->
+<div class="report-comment-link-container">
+<% unless skip_reporting %>
+<% if_has_javascript do %>
+<ul id="report-comment-links-<%= comment.id %>"><li class="first"><%= link_to_function( 'spam', "episode_comment_report_report_comment( '#{comment.id}', 'spam', 'report-comment-spinner-#{comment.id}', 'report-comment-links-#{comment.id}', 'report-comment-update-#{comment.id}' )" ) %></li><li><%= link_to_function( 'offensive', "episode_comment_report_report_comment( '#{comment.id}', 'offensive', 'report-comment-spinner-#{comment.id}', 'report-comment-links-#{comment.id}', 'report-comment-update-#{comment.id}' )" ) %></li><li class="last"><%= link_to_function( 'off-topic', "episode_comment_report_report_comment( '#{comment.id}', 'off-topic', 'report-comment-spinner-#{comment.id}', 'report-comment-links-#{comment.id}', 'report-comment-update-#{comment.id}' )" ) %></li></ul><%= spinner_named( "report-comment-spinner-#{comment.id}" ) %><div id="report-comment-update-<%= comment.id %>"></div>
+<% end %>
+<noscript>
+<ul><li class="first"><%= link_to( 'spam', :controller => 'comment', :action => 'new_episode_comment_spam_report', :id => comment.id ) %></li><li><%= link_to( 'offensive', :controller => 'comment', :action => 'new_episode_comment_offensive_report', :id => comment.id ) %></li><li class="last"><%= link_to( 'off-topic', :controller => 'comment', :action => 'new_episode_comment_off_topic_report', :id => comment.id ) %></li></ul>
+</noscript>
+<% end %>
+</div>
+
+
+
+
+<!-- Comment Reply Control -->
+<% if comment.can_post_reply?( @controller ) %>
+<% reply_to_comment_id = comment.id
+reply_to_comment_id = comment.parent_comment_id if comment.parent_comment_id %>
+<div class="episode-comment-reply-container">
+<% if_has_javascript do %>
+<p><%= link_to_function( 'reply', "$('#new-episode-comment').show(); $('#episode_comment_parent_comment_id').val( #{reply_to_comment_id} )" ) %></p>
+<% end %>
+<noscript>
+<p><%= link_to( 'reply', episode_comment_path( :action => 'new_episode_discussion', :id => comment.episode.id, :episode_comment => {:parent_comment_id => reply_to_comment_id} ) ) %></p>
+</noscript>
+</div>
+<% end %>
+
+
+<div class="comment-body"><%= simple_format( h( strip_tags( comment.body ) ) ) %></div>
+
+<% unless comment.children.empty? %>
+	<dl class="child-comments">
+		<% comment.last_children( 10 ).each_with_index do |child,index| %>
+			<%= render :partial => 'comment/info', :locals => { :comment => child, :options_class => html_list_first_or_last_class( comment.children, child ) + ' row-' + ( (index%2).eql?(0) ? 'a' : 'b' ) }  %>
+		<% end %>
+	</dl>
+<% end %>
+</dd>

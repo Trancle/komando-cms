@@ -1,0 +1,19 @@
+<%
+# Unfortunately, the live stream is ONLY supported via Flash... sad, but no CDN supports HLS transcoding of a live stream and the TriCaster only supports Flash Media Encoder
+
+# Required Args:
+# stream_type = %(Streaming LiveStream)
+# media_url = URL for CDN
+player_url = @controller.request.protocol + @controller.request.host_with_port + "/player.swf"
+unique_player_id = 1 if unique_player_id.nil?
+%>
+
+<object type="application/x-shockwave-flash" data="<%= player_url %>" id="unique_player_id_required_by_ie_stupidness_<%= unique_player_id %>">
+<param name="movie" value="<%= player_url %>" />
+<param name="allowScriptAccess" value="always" />
+<param name="flashVars" value="urls=[<%= URI.escape( "{ \"u\": \"#{managed_file_resource_name.video_contents.first.stream_uri}\", \"r\": #{managed_file_resource_name.video_contents.first.bitrate} }" ) %>]" />
+<param name="quality" value="high" />
+<param name="allowFullScreen" value="true" />
+<param name="bgcolor" value="#000000" />
+<p>Sorry, but you need Adobe <a href="http://get.adobe.com/flashplayer" rel="external">Flash Player</a> to view our content. Please <a href="http://get.adobe.com/flashplayer" rel="external">download</a> it and install it.</p>
+</object>

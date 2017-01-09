@@ -1,0 +1,7 @@
+<p>Set the date and time below to preview this episode. You will be re-directed to the episode page and this system will pretend it's the date and time indicated.</p>
+
+<% form_tag( { :action => 'perform_preview', :id => @episode.id }, {:method => :get} ) do %>
+	<% @preview_time = CW::StandAloneTimeHelper.new( :t => Time.now.tomorrow ) %>
+	<div><%= datetime_select( 'preview_time', 't' ) %></div>
+	<p><%= submit( 'preview' ) %></p>
+<% end %>

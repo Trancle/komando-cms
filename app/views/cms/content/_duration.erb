@@ -1,0 +1,16 @@
+<p><%= label_tag( 'mfr[colonized_length]', 'Duration (hh:mm:ss.ms)' ) %><%= text_field('mfr', 'colonized_length' ) %> (<%= link_to_show_contextual_help_for( 'mfr_colonized_length', 'What\'s this?' ) %>)</p>
+<% contextual_help_for( 'mfr_colonized_length' ) do %>
+	<h3>Duration</h3>
+	<p>The duration is the total length of time of the video. This is to give the viewer an exact amount of time it will take to watch this piece of content. You may specify hours, minutes, seconds, and miliseconds. You must always include the number of seconds, at the very minimum. Don't worry about conversions, this system is intelligent enought to convert times separated by colons into seconds.</p>
+	<h4>Examples</h4>
+	<dl>
+		<dt>10 second clip</dt>
+		<dd>Simply specify: "10"</dd>
+		<dt>1.5 minute clip</dt>
+		<dd>Simply specify: "90" or "1:30"</dd>
+		<dt>1 hour, 25 minute, 43 second tutorial</dt>
+		<dd>Simply specify: "1:25:43"</dd>
+		<dt>8 and 1/4 second clip</dt>
+		<dd>Simply specify: "8.25"</dd>
+	</dl>
+<% end %>

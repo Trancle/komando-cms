@@ -1,0 +1,19 @@
+<%
+r = Com::WojnoSystems::Builder::JSON::Base.new
+r.array!(:shows) do |x|
+	@pagination.items_for_current_page.each do |show|
+	    version = show.scheduled_version_current_or_last_version
+		e = Com::WojnoSystems::Builder::JSON::Base.new
+		e.created_at show.created_at.utc.iso8601
+		e.updated_at show.updated_at.utc.iso8601
+		e.id! show.id
+		e.title version.title
+		e.description version.description
+		e.url_to_show url_for( url_to_show( version ) )
+		e.show_title version.title
+		x << e
+	end
+end
+r.number_of_pages @pagination.count_pages
+r.page_number params[:page] || 1
+%><%= r %>

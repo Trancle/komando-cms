@@ -1,0 +1,19 @@
+<% unless @pagination.empty? %>
+
+	<%= pagination_buttons( @pagination ) %>
+
+	<ul class="control_list">
+	<% @pagination.items_for_current_page.each do |version| %>
+		<li><span class="name"><%= version.version_number_cache %>: <%= h version.title %>: <%= truncate( version.description ) %></span><ul class="actions"><li><%= truncate version.version_comment %></li><li><%= link_to( 'create from', :action => 'edit_version', :id => @episode.id, :version => version.version_number_cache ) %></li><li><%= button_to( 'publish', :action => 'mark_version_as_current', :id => version.id ) unless version.id.eql?(@episode.current_version_id) %></li></ul></li>
+	<% end %>
+	</ul>
+
+	<%= pagination_buttons( @pagination ) %>
+
+<% else %>
+
+<p>There aren't any versions</p>
+
+<% end %>
+
+<p><%= link_to( 'info', :action => 'info', :id => @episode.id ) %></p>

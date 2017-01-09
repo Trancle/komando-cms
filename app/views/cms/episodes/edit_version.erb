@@ -1,0 +1,7 @@
+<%= error_messages_for( 'episode', 'episode_version' ) %>
+
+<% form_tag( { :action => 'update_version', :id => @episode.id, :version => @episode_old_version.version_number_cache } ) do %>
+	<%= render :partial => 'episode_version_form' %>
+    <p><%= submit( 'save' ) %></p>
+    <p><%= submit( 'save and publish', :name => 'save_and_publish' ) %></p>
+<% end %>

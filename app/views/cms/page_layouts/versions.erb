@@ -1,0 +1,13 @@
+<% unless @pl_v_pag.empty? %>
+<%= pagination_buttons( @pl_v_pag ) %>
+<ul class="control_list alternate">
+	<% @pl_v_pag.items_for_current_page.each do |version| %>
+		<li><span class="name">Version <%= version.version_number %></span><ul class="actions"><li><%= version.version_comment %></li><li>?admin_page_layout_preview_version_id=<%= version.version_number %></li><li><%= link_to( 'create from', :action => 'edit_version', :id => @page.id, :version => version.version_number ) %></li><li><%= link_to( 'schedule', :action => 'new_schedule', :id => @page.id, 'page_version[version]' => version.version_number ) %></li></ul></li>
+	<% end %>
+</ul>
+<%= pagination_buttons( @pl_v_pag ) %>
+<% else %>
+	<p>There are no versions</p>
+<% end %>
+
+<%= content_tag( :p, link_to( 'info', :action => 'info', :id => @page.id ) ) %>

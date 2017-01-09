@@ -1,0 +1,63 @@
+<h2><%= @mfrn.pretty_name %></h2>
+
+<% unless @mfrn.video_contents.empty? %>
+
+
+<% @mfrn.video_contents.each do |mfr| %>
+
+<h3>Content Details</h3>
+
+	<%= render( :partial => path_to_info_partial( mfr ), :locals => { :mfr => mfr } ) %>
+	<dl>
+	<dt>Created at:</dt>
+	<dd><%= mfr.created_at %> (<%= distance_of_time_in_words_to_now( mfr.created_at ) %> ago)</dd>
+
+	<dt>Exists at CDN?</dt>
+
+	<% if mfr.respond_to?:exists_at_cdn? %>
+
+	<% if @check_exists_at_cdn %>
+	<dd><%= ( mfr.video_content_hosting_provider.exists?( mfr ) ) ? ( '<span class="ok">yes</span>' ) : ( '<span class="warning">no</span>' ) %>
+	<% else %>
+	<dd>
+	<% if_has_javascript do %>
+<p id="check_exists_at_cdn_result_<%= mfr.id %>"><a href="#">check</a></p>
+<script type="text/javascript">
+  $('#check_exists_at_cdn_result_<%= mfr.id %> a').click( function(e) {
+
+      $('#check_exists_at_cdn_result_<%= mfr.id %>').hide();
+      $('#check_exists_at_cdn_spinner_<%= mfr.id %>').show();
+
+      jQuery.ajax( {
+          url: '<%= url_for( :action => 'check_exists_at_cdn', :id => mfr.id ) %>',
+          method: 'get'
+      } ).success( function(e) {
+                  $('#check_exists_at_cdn_result_<%= mfr.id %>').html = e.data;
+                  $('#check_exists_at_cdn_spinner_<%= mfr.id %>').hide();
+                  $('#check_exists_at_cdn_result_<%= mfr.id %>').show();
+              } );
+
+  });
+</script>
+		<%= spinner_named( "check_exists_at_cdn_spinner_#{mfr.id}" ) %>
+	<% end %>
+	<noscript><p><%= link_to( 'check', :check_exists_at_cdn => true ) %></p></noscript>
+	<% end %>
+	<p>Checking if this file exists at the CDN takes time. So it's not done automatically to help speed up your work.</p>
+	</dd>
+
+	<% else %>
+
+		<dd><p>This video isn't hosted. It can't, and won't, ever exist at a CDN.</p></dd>
+
+	<% end %>
+
+	</dl>
+
+<% end %>
+
+<% else %>
+
+<p>There is no content attached to this content piece.</p>
+
+<% end %>

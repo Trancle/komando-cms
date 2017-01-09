@@ -1,0 +1,46 @@
+<% unless @episode_pag.empty? %>
+
+<%= pagination_buttons( @episode_pag ) %>
+
+<ul class="control_list alternate">
+	<% @episode_pag.items_for_current_page.each do |episode| %>
+		<% current_version = episode.current_version_or_latest %>
+
+		<li><span class="name"><% p = []; p << current_version.season_number; p << current_version.episode_number; p << ' ' + link_to( current_version.title, :action => 'info', :id => episode.id ); %><%= p.compact.join(':') %></span>
+
+      available at: <% if episode.available? %>now
+      <% else %>
+        <% if current_version.stub.episode_publish_schedule_dates.empty? and current_version.stub.episode_publish_schedule_dates.first %>
+          never
+          <%else%>
+          <% if current_version.stub.episode_publish_schedule_dates.first %>
+          <%= current_version.stub.episode_publish_schedule_dates.first.start_at %>
+          <% else %>
+          now
+          <% end %>
+          <%end%>
+      <% end %>
+        <% if current_version.stub.episode_parts.empty? %><div class="fieldWithErrors">! Missing episode parts!</div><% end %>
+
+        <ul class="actions">
+          <% unless @show.is_a?(ShowOfTag) %>
+		<li><%= ( !episode.eql?@episode_pag.items_for_current_page.first or !episode.acts_as_ordered_is_last? ) ? button( 'top', { :action => 'move_episode_to_top', :id => episode.id }, { :confirm => "This will make this episode appear as the latest. Are you sure you want to do this?" } ) : 'top' %></li>
+		<li><%= ( !episode.eql?@episode_pag.items_for_current_page.first or !episode.acts_as_ordered_is_last? ) ? button( 'up', :action => 'move_episode_order_up', :id => episode.id ) : 'up' %></li>
+		<li><%= ( !episode.eql?@episode_pag.items_for_current_page.last or !episode.acts_as_ordered_is_first? ) ? button( 'down', :action => 'move_episode_order_down', :id => episode.id ) : 'down' %></li>
+		<li><%= ( !episode.eql?@episode_pag.items_for_current_page.last or !episode.acts_as_ordered_is_first? ) ? button( 'bottom', { :action => 'move_episode_to_bottom', :id => episode.id }, { :confirm => "This will move this episode to the bottom of the list. Are you sure?" } ) : 'bottom' %></li>
+		<li><% form_tag( { :action => 'move_episode_to_location' , :id => episode.id }, { :method => 'post', :class => 'ordering' } ) do %>
+			<div><input style="text-align:right;" type="text" name="location" value="<%= episode.acts_as_ordered_count_in_my_exclusivity - episode.acts_as_ordered_order %>" /><button>Move</button></div>
+        <% end %>
+		<% end %></li>
+		</ul></li>
+
+	<% end %>
+</ul>
+
+<%= pagination_buttons( @episode_pag ) %>
+
+<% else %>
+
+<p>This show has no episodes.</p>
+
+<% end %>

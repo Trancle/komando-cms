@@ -1,0 +1,26 @@
+<% svc = @episode.current_version_or_latest %>
+<dl>
+	<dt>Title</dt>
+	<dd><%= h svc.title %></dd>
+
+	<dt>Description</dt>
+	<dd><div class="info_image"><%= ( svc.episode_still_image.nil? ) ? ( '<p>No Image</p>' ) : ( image_tag( svc.episode_still_image.virtual_path, :style => 'float:left;' ) ) %></div><%= h( svc.description ) %></dd>
+
+	<dt>Season Number</dt>
+	<dd><%= ( svc.season_number.nil? ) ? ( 'No season specified' ) : ( h( svc.season_number ) ) %></dd>
+
+	<dt>Episode Number</dt>
+	<dd><%= ( svc.episode_number.nil? ) ? ( 'No episode number specified' ) : ( h( svc.episode_number ) ) %></dd>
+
+	<dt>URL Path</dt>
+	<dd><%= url_for( url_to_episode(@episode.show.scheduled_version_current(@time),svc) ) %></dd>
+
+	<dt>Version Number</dt>
+	<dd><%= @episode.current_version_or_latest.version_number_cache %></dd>
+
+	<dt>Version Created</dt>
+	<dd><%= svc.created_at %></dd>
+
+	<dt>Version Created By</dt>
+	<dd><%= h svc.editor_or_deleted.username %><%= ' - ' + mail_to( svc.editor_or_deleted.email ) unless svc.editor_or_deleted.class.name.eql?'UserDeleted' %></dd>
+</dl>

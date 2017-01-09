@@ -1,0 +1,30 @@
+<dl>
+  <dt>Block Type</dt>
+  <dd><%= h @hpb.class.name.underscore.humanize %></dd>
+
+  <dt><%= label_tag( 'hpb[machine_name]', 'Machine Name' ) %></dt>
+  <dd><%= text_field( 'hpb', 'machine_name', :class => 'text' ) %><p>lower-case letters or numbers or underscore. No spaces</p></dd>
+
+  <dt><%= label_tag( 'hpb[block]', 'Block Style' ) %></dt>
+  <dd><%= text_field( 'hpb', 'block_style', :class => 'text' ) %></dd>
+
+  <dt><%= label_tag( 'hpb[episode_limit]', 'Number of Episodes to Display' ) %></dt>
+  <dd><%= text_field( 'hpb', 'episode_limit', :class => 'text' ) %></dd>
+
+  <dt><%= label_tag( 'hpb[visible]', 'Visible' ) %></dt>
+  <dd><%= check_box( 'hpb', 'visible', :class => 'checkbox' ) %></dd>
+
+<% case @hpb.class.name
+   when 'HomePageBlockShowDl' %>
+      <dt><%= label_tag( 'hpb[show_id]', 'Show ID of the Show DL Episodes' ) %></dt>
+      <dd><%= text_field( 'hpb', 'show_id', :class => 'text', :value => @hpb.show_id ) %></dd>
+<% when 'HomePageBlockFiltered' %>
+      <dt><%= label_tag( 'hpb[show_id]', 'Numerical ID of the Show to include filtered episodes' ) %></dt>
+      <dd><%= text_field( 'hpb', 'show_id', :class => 'text' ) %></dd>
+      <dt><%= label_tag( 'hpb[order_by_string]', 'Order by string' ) %></dt>
+      <dd><%= text_field( 'hpb', 'order_by_string', :class => 'text' ) %></dd>
+<% else %>
+      <dt>Type Error</dt>
+    <dd>Unrecognized block type.</dd>
+<% end #case %>
+ </dl>

@@ -1,0 +1,16 @@
+<p>You may now configure your new provider with the core information required to successfully upload and watch content that uses this provider</p>
+
+<%= error_messages_for 'provider' %>
+
+<% form_tag( :action => 'create' ) do %>
+	<div class="hidden"><%= hidden_field( 'provider', 'type' ) %></div>
+
+	<h2>General Configuration</h2>
+	<%= render :partial => 'form', :locals => { :provider => @provider } %>
+
+	<h2>Type-specific customizations</h2>
+	<%= render :partial => "admin/hosting_providers/#{VideoContentHostingProvider.subclass_name( @provider.class.name ).underscore}/#{VideoContentHostingProvider.sub_subclass_name( @provider.class.name ).underscore}_form", :locals => { :provider => @provider } %>
+
+	<p><%= submit( 'create' ) %></p>
+
+<% end %>

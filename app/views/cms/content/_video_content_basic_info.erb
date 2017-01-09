@@ -1,0 +1,18 @@
+<dl>
+	<dt>This is a</dt><dd><%= h mfr.class.name.underscore.humanize %></dd>
+	<dt>Usage (linkage)</dt><dd>
+	<% if mfr.count_episodes > 0 %>
+	<ul>
+		<% mfr.episodes( 10 ).each do |ep| %>
+			<li>Episode: <%= episode_name_link( ep ) %></li>
+		<% end %>
+		<% if mfr.count_episodes > 10 %>
+		<li>(used <%= mfr.count_episodes - 10 %> more times)</li>
+		<% end %>
+	</ul>
+	<% else %>
+	This content is never used on your site
+	<% end %>
+	</dd>
+	<dt>Created</dt><dd><time><%= mfr.created_at %><time></dd>
+</dl>

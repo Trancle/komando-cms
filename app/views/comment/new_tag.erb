@@ -1,0 +1,11 @@
+<% unless @tags.empty? %>
+<ul>
+	<% @tags[:failed].reject{|t| t.errors.empty?}.each_pair do |tag,v| %>
+		<li><%= tag.errors.full_messages.join(', ') %></li>
+	<% end %>
+</ul>
+<% end %>
+<% form_tag( :action => 'create_tag', :id => @episode.id ) do %>
+	<dl><dt><%= label_tag( 'tags', 'Tags' ) %></dt><dd><%= text_field_tag( 'tags' ) %></dd></dl>
+	<p><%= submit( 'add' ) %></p>
+<% end %>

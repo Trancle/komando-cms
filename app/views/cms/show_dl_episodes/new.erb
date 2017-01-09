@@ -1,0 +1,9 @@
+<%= error_messages_for :dl %>
+
+<% form_tag( { :action => 'create', :id => @show_id } ) do %>
+    <dl>
+      <dt><%= label_tag( 'dl[episode_id]', 'Episode ID' ) %></dt>
+      <dd><%= text_field( 'dl', 'episode_id', :class => 'text' ) %></dd>
+    </dl>
+      <p><%= submit( 'save' ) %></p>
+<% end %>

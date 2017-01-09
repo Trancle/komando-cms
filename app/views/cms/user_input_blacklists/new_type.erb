@@ -1,0 +1,9 @@
+<% form_tag( :action => 'new' ) do %>
+<fieldset><legend>User Blacklist Type</legend>
+	<p>Select the type of matching. Information submitted by users will be matched with the selected type, word by word.</p>
+
+	<%= type_selection_list_tag( 'word_type', UserInputBlacklist::VALID_SUBCLASSES ) %>
+
+</fieldset>
+	<p><%= submit( 'next' ) %></p>
+<% end %>

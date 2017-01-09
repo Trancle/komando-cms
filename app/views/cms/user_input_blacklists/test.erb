@@ -1,0 +1,9 @@
+<%= render :partial => 'info' %>
+
+<% form_tag( :action => 'test_result', :id => @word.id ) do %>
+	<dl>
+	<dt><%= label_tag( 'value', 'Test word' ) %></dt>
+	<dd><%= text_field_tag( 'value', @value ) %></dd>
+	</dl>
+	<p><%= submit( 'test' ) %></p>
+<% end %>

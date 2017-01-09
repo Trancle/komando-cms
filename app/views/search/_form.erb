@@ -1,0 +1,9 @@
+<%
+skip_label = false if skip_label.nil?
+label_text = nil if label_text.nil?
+submit_text = nil if submit_text.nil?
+%>
+<% form_tag( { :controller => 'search', :action => 'find' }, { :method => 'GET' } ) do %>
+	<p><%= label_tag('q',label_text || 'For what are you looking?') unless skip_label %><%= text_field_tag( 'q', (@terms || '') ) %></p>
+	<p><%= submit( submit_text || 'go' ) %></p>
+<% end %>

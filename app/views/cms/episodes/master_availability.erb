@@ -1,0 +1,19 @@
+<p>General availability is a scheduled time during which this episode is available on the site, for both premium and free users. Thus, the premium/free restriction scheduling must be WITHIN this range. Any overflow and the epiosde will not appear on the site.</p>
+
+<h3>Master Availability</h3>
+
+<p>Presently, this episode will appear only on the site and be available for watching only during the following time frames:</p>
+
+<% unless @availabilities.empty? %>
+
+<ul class="control_list alternate">
+	<% @availabilities.each do |availability| %>
+		<li><span class="name"><%= mu_ex_date_range_show( availability ) %></span><ul class="actions"><li><%= link_to( 'edit', :action => 'edit_master_availability', :id => availability.id ) %></li><li><%= link_to( 'destroy', :action => 'destroy_master_availability_confirm', :id => availability.id ) %></li></ul></li>
+	<% end %>
+</ul>
+
+<% else %>
+
+	<p>This episode will never be seen. Try creating a master schedule!</p>
+
+<% end %>

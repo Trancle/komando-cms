@@ -1,0 +1,186 @@
+MMS Liquid Template Drop Documentation
+======================================
+
+The following is an inclusive listing of drops and their methods.
+
+Episode Drop
+-----------
+episode_id: ID of the episode (integer)
+
+total_length_in_seconds: Length of the episode in seconds (string)
+
+total_length_in_seconds_as_i: Length of the episode in seconds (integer)
+
+total_length_in_words: Length of the episode as "about 3 minutes" (string)
+
+total_length_as_hh_mm_ss: Length of the episode as [1,45,20] (array) 1 hour, 45 minutes, 20 seconds
+
+total_length_as_hh_mm_ss_colon_separators: Length of the episode as "1:45:20" (string) 1 hour, 45 minutes, 20 seconds
+
+title: Unescaped title of the current version of the episode (string)
+
+description: Unescaped description of the current version of the episode (string)
+
+episode_number: Episode number (integer)
+
+season_number: Season number (integer)
+
+free_days_available_remaining: How many more days it's scheduled to remain free (integer)
+
+is_free: true if the episode is presently free, false if membership required (boolean)
+
+days_available_remaining: How many more days it's scheduled to remain available (viewable)  (integer)
+
+show: The Show Drop that this episode is a part of
+
+still_image_tag: HTML5 tag linking to the actual still image (the original, unmodified) for this episode (string)
+
+still_image_ext: File extension for this image, excluding period (string)
+
+still_image_hash: File hash of this image (string)
+
+url_to_watch: relative URL to watch this episode (string)
+
+published_datetime: When this episode was originally published (datetime)
+
+tag_list: Comma space (, ) separated list of tags associated with this episode (string)
+
+tags: list of TagDrop for this episode (array(TagDrop))
+
+
+Home Page Block Drop
+-----------------
+machine_name: name provided by designers for this drop (string)
+
+block_style: string provided by designers to specify how this block should appear (string)
+
+type: Type of HomePageBlock. Will be one of: HomePageBlockShowDl or HomePageBlockFiltered (string)
+
+show_id: The Show ID that this block represents. 0 for the home page, or any other positive number to indicate which show ID (integer)
+
+episode_limit: How many episodes that this block will contain. This is set by the designers (integer)
+
+episodes: Array of EpisodeDrop objects. You can loop through these to display the episodes (array(EpisodeDrop))
+
+
+Login Form Drop
+-------------
+error_message:  A plain string with the login error message (returned in the event login fails for normal reasons such as a bad username or password (string)
+
+error_message?: True if there is an error message, false if not (boolean)
+
+redirection?: True if a redirect will be used, false if not (boolean)
+
+remember_me?: True if user selected to be remembered, false if not (boolean)
+
+open: Start of the form tag. Includes the <form> tag, the CSRF cookie field, and the redirection field. (string)
+
+close: Closes the HTML from the open tag above (string)
+
+username_text_field: Text field (input type="text") for the username (string)
+
+password_password_field: Text field (input type="password") for the password (string)
+
+remember_me_check_box_field: Checkbox (input type="checkbox") for the remember me field (string)
+
+username_field_id: What MMS is expecting the name of the input tag for the username should be (string)
+
+password_field_id What MMS is expecting the name of the input tag for the password should be (string)
+
+remember_me_field_id: What MMS is expecting the name of the input tag for the remember me should be (string)
+
+
+Search Result Drop
+----------------
+Collects the search results, which could be shows or episodes.
+url_to_content: relative URL to the content of the result (show or episode) (string)
+
+image_hash: Hash of the still image of the episode, or the splash image of the show (string)
+
+image_ext: File extension (without the period) of the image of the image_hash (string)
+
+title: Unescaped title of the current version of the episode or show (string)
+
+description: Unescaped description of the current version of the episode or show (string)
+
+result_type: The type of result. "Episode" for an episode, "Show" for a show (string)
+
+confidence: 0-100 confidence/relevance of the result. 100 being high, 0 being low. (string)
+
+
+Show Drop
+---------
+Contains a show object
+
+show_id: The ID of the show (integer)
+
+related_shows: Array of ShowDrop of the related shows. Related shows aren't being used, currently (array(ShowDrop))
+
+title: Unescaped title of the current version of the show (string)
+
+description: Unescaped description of the current version of the show (string)
+
+keywords: a comma separated list of keywords that represent this show. These are not tags, but will include the tags when tagging is enabled for shows (string)
+
+availability_notes: Text of the availability notes field of the show. This is unescaped (string)
+
+still_image_tag: HTML5 tag linking to the actual still image (the original, unmodified) for this show (string)
+
+still_image_ext: File extension for this image, excluding period (string)
+
+still_image_hash: File hash of this image (string)
+
+splash_image_tag: HTML5 tag linking to the actual splash image (the original, unmodified) for this episode (string)
+
+splash_image_ext: File extension for this image, excluding period (string)
+
+splash_image_hash: File hash of this image (string)
+
+url_to_show_page: Relative url for this show's main episode listing page (string)
+
+url_to_watch_latest_episode: Relative URL to watch this show's latest episode (if it has one, otherwise goes to the show itself) (string)
+
+
+Tag Drop
+--------
+Contains a tag.
+
+tag: The string of the tag (string)
+
+
+User Drop
+---------
+errors: Errors that are on the user object. Useful for having users edit their own accounts (array(string))
+
+username: The username of the user (string)
+
+
+
+Tags
+====
+These tags help you write liquid templates. There are standard ones over @ https://github.com/Shopify/liquid/wiki/Liquid-for-Designers but this document only covers the MMS-specific ones.
+
+Resize Image Tag
+----------------
+Given an image hash uploaded using the public images uploader, will automatically resize and compress that image and cache it for later use. Returns a relative URL to the resized image. You can call this with multiple sizes. Each time it's encountered, the image will be resized if required. If already resized, it simply returns the URL.
+
+Example use:
+{{ 'd41d8cd98f00b204e9800998ecf8427e' | resize_img: 'jpg',200,100 }}
+
+Outputs:
+"/resized_images_cache/d41/d8c/d98f00b204e9800998ecf8427e-200.jpg"
+
+The "resized_images_cache" path may vary, depending on your installation configuration (see config/initializers/resized_images_cache_path.rb). The first 2 sub-folders are the first 6 digits of the hash provided.
+
+The 'jpg' is the file extension for this image.
+
+The first number, 200, is the desired width. The second is the desired height.
+
+If you want to wrap this into an image tag (<img>), you must do so yourself in the liquid template.
+
+
+URL Escape
+----------
+Escapes a string.
+
+url_escape: Converts any non-URL characters into their percent equivalents: e.g. space => %20

@@ -1,0 +1,4 @@
+<% form_tag( :action => 'create_episode_comment_report', :id => @episode_comment.id ) do %>
+	<div style="display:none"><%= hidden_field_tag( 'episode_report[reason]', episode_comment_type ) %></div>
+	<p><%= submit(episode_comment_type) %></p>
+<% end %>

@@ -1,0 +1,15 @@
+<p>A ban schedule allows you to select a date range during which the indicated user, <%= h @user.username %>, is not allowed to comment or tag content. Administrators cannot be banned.</p>
+
+<p>Presently, <%= h @user.username %> <strong>is <%= 'un' if @user.user_input_banned? %>able</strong> to comment.</p>
+
+<% unless @ban_pag.empty? %>
+<%= pagination_buttons(@ban_pag) %>
+<ul class="control_list alternate">
+	<% @ban_pag.items_for_current_page.each do |ban| %>
+		<li><span class="name"><%= mu_ex_date_range_show(ban) %></span><ul class="actions"><li><%= link_to( 'edit', :action => 'edit', :id => ban.id ) %></li><li><%= link_to( 'unban', :action => 'destroy_confirm', :id => ban.id ) %></li></ul></li>
+	<% end %>
+</ul>
+<%= pagination_buttons(@ban_pag) %>
+<% else %>
+<p>This user has no ban schedules</p>
+<% end %>

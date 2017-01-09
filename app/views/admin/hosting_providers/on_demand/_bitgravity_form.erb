@@ -1,0 +1,106 @@
+<p>This is BitGravity's HTTP progressive streaming product called "Video Director" and it's backing store: "Website Accelerator." Files are delivered via FTP to the CDN after being uploaded to VMS. Files are delivered to viewers via their array of HTTP Progressive Streaming Servers. This assumes you already have an account with password configured.</p>
+
+<p>If you are unsure of any of this information or if your services are configured as above, please verify before proceeding. This affects how VMS communicates with your CDN. If the configuration or information provided below is wrong, VMS will get confused and will be unable to upload your content and your visitors will not be able to watch your videos!</p>
+
+<fieldset><legend>Origin</legend>
+<p><%= label_tag( 'provider[origin_ftp_username]', 'FTP Username' ) %>
+	<%= text_field( 'provider', 'origin_ftp_username' ) %> (<%= link_to_show_contextual_help_for( 'provider_origin_ftp_username', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_origin_ftp_username' ) do %>
+	<h3>Provider FTP Username</h3>
+	<p>This is the username provided to you by BitGravity for access to the FTP site. If you do not have one, please contact BitGravity for it.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[origin_ftp_password]', 'FTP Password' ) %>
+	<%= text_field( 'provider', 'origin_ftp_password' ) %> (<%= link_to_show_contextual_help_for( 'provider_origin_ftp_password', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_origin_ftp_password' ) do %>
+	<h3>Provider FTP Password</h3>
+	<p>This is the password provided to you by BitGravity for access to the FTP site. If you do not have one, please contact BitGravity for it.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[origin_ftp_host]', 'FTP Hostname' ) %>
+	<%= text_field( 'provider', 'origin_ftp_host' ) %> (<%= link_to_show_contextual_help_for( 'provider_origin_ftp_host', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_origin_ftp_host' ) do %>
+	<h3>Provider FTP Hostname</h3>
+	<p>This is the name or IP address of a server provided to you by BitGravity Networks to while your files are to be FTP'ed. If you do not have one, please contact BitGravity for it.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[origin_ftp_path_prefix]', 'FTP Host Base Path' ) %>
+	<%= text_field( 'provider', 'origin_ftp_path_prefix' ) %> (<%= link_to_show_contextual_help_for( 'provider_origin_ftp_path_prefix', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_origin_ftp_path_prefix' ) do %>
+	<h3>Provider FTP Host Path Prefix</h3>
+	<p>The "host path prefix" is the directory on the FTP server that VMS will stash your content. This allows you to use the same CDN for multiple instnaces of VMS or for multiple purposes. BitGravity also requires that content requiring tokenized access security be placed in the '/secure' directory by default (this can be changed if you request it). This system will automatically prepend the Secure Path Prefix (below), so do not include it here. For example, if you want a path prefix of "/vms" under the secure folder "/secure", files will be uploaded to the "/secure/vms" folder and look like: "/secure/vms/ab/cd/ef....mp4". Just specify "/vms" in this field and "/secure" in the Secure Path Prefix</p>
+<% end %>
+
+</fieldset>
+
+
+
+
+<fieldset><legend>HTTP Distribution</legend>
+<p><%= label_tag( 'provider[download_http_host]', 'Distribution Server Name' ) %>
+	<%= text_field( 'provider', 'download_http_host' ) %> (<%= link_to_show_contextual_help_for( 'provider_download_http_host', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_download_http_host' ) do %>
+	<h3>Provider HTTP Distribution Server</h3>
+	<p>This is the hostname of where your users' browsers will go to pull your video content so they are able to watch it. This can be a DNS CNAME if you'd like it to include your domain name. BitGravity will provide this to you. Please consult them if you do not have one.</p>
+<% end %>
+
+
+  <p><%= label_tag( 'provider[company_id]', 'Company ID' ) %>
+    <%= text_field( 'provider', 'company_id' ) %> (<%= link_to_show_contextual_help_for( 'provider_company_id', "What's this?" ) %>)</p>
+  <% contextual_help_for( 'provider_company_id' ) do %>
+      <h3>BitGravity Company ID</h3>
+      <p>BitGravity will provide you with a company ID. This ID uniquely identifies your organization and the files associated with your organization. If you do not have one, please contact BitGravity or consult the Dashboard.</p>
+  <% end %>
+
+
+</fieldset>
+
+
+
+
+<fieldset><legend>Secure Tokenized Asset Access</legend>
+<p><%= label_tag( 'provider[secure]', 'Allow only special links to access files?' ) %>
+	<%= check_box( 'provider', 'secure' ) %> (<%= link_to_show_contextual_help_for( 'provider_secure', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_secure' ) do %>
+	<h3>Require Tokenized Urls</h3>
+	<p>This turns on all the special security settings. If you have paid for protecting your content, you will need to enable this setting to enable the security settings below. Disabling this setting allows users to access your content without time or IP address constraints. People will be able to embed your videos without your consent. Do <strong>NOT</strong> toggle this unless you know you want to do so.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[protect_secret]', 'Token Secret' ) %>
+	<%= text_field( 'provider', 'protect_secret' ) %> (<%= link_to_show_contextual_help_for( 'provider_protect_secret', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_protect_secret' ) do %>
+	<h3>Token Secret</h3>
+	<p>This is a password. This is provided to you by BitGravity. This secret is used to generate the special URLs that stop users from accessing your content without your implicit consent (via your website running VMS). You may leave this blank if you are not using Media Vault (enabled above).</p>
+<% end %>
+
+  <p><%= label_tag( 'provider[protect_path_prefix]', 'Secure Path Prefix' ) %>
+    <%= text_field( 'provider', 'protect_path_prefix' ) %> (<%= link_to_show_contextual_help_for( 'provider_protect_path_prefix', "What's this?" ) %>)</p>
+  <% contextual_help_for( 'provider_protect_path_prefix' ) do %>
+      <h3>Secure Path Prefix</h3>
+      <p>This path is prepended to the FTP Path Prefix above when uploading and downloading files. This is usually required by BitGravity to designate which files are protected with Tokens. You can make this whatever you'd like. Leave blank if BitGravity has designated everything as requiring a token to be downloaded.</p>
+  <% end %>
+
+<fieldset><legend>Time restrictions</legend>
+<p><%= label_tag( 'provider[protect_enforce_time]', 'Token: Enforce time?' ) %>
+	<%= check_box( 'provider', 'protect_enforce_time' ) %> (<%= link_to_show_contextual_help_for( 'provider_protect_enforce_time', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_protect_enforce_time' ) do %>
+	<h3>Token: Enforce time?</h3>
+	<p>When enabled (and it is highly recommended that you do so if you're using Media Vault), every request to the video page has a set life-span. If disabled, videos are downloadable forever later. DO NOT DISABLE THIS SETTING (even for a short while) if you plan to limit the amount of time a user is able to watch the video. This time restriction prevents video theft as well as the link is only good for a, ideally, short period of time. If you disable this, even temporarily, a clean URL, without time limits, will be exposed. The ONLY way to re-enforce the time limits for sure is to change your Token Secret after re-enabling this setting. Please note: you MUST arrange for this change with BitGravity and have them change it at the same time you change this value. If you do not coordinate the change, an outage will occur.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[protect_time_interval_in_seconds]', 'Media Vault Security: Time Interval (Seconds)' ) %>
+	<%= text_field( 'provider', 'protect_time_interval_in_seconds' ) %> (<%= link_to_show_contextual_help_for( 'provider_protect_time_interval_in_seconds', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_protect_time_interval_in_seconds' ) do %>
+	<h3>Token: Time Interval</h3>
+	<p>If the time is being enforced, this controls how long users have to initiate a connection with BitGravity before the link is no longer valid. This should be set to a "reasonable" value. Typically, 5 minutes (300 seconds) is a good setting for short videos. Ideally, it should be long enough for your user to play the entire video, plus a few minutes for pausing and advertisements. If you set this too short, the progressive loading will fail. Progressive loading allows your viewers to skip scrub to an arbitrary time within your video.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[protect_time_clock_skew_in_seconds]', 'Media Vault Security: Time Clock Skew Buffer (Seconds)' ) %>
+	<%= text_field( 'provider', 'protect_time_clock_skew_in_seconds' ) %> (<%= link_to_show_contextual_help_for( 'provider_protect_time_clock_skew_in_seconds', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_protect_time_clock_skew_in_seconds' ) do %>
+	<h3>Provider Media Vault Security: Clock Skew</h3>
+	<p>Specify the number of seconds to pad in before the start time and after the end time. This allows for a configurable amount of clock skew between servers. This time skew will exists between the VMS server and BitGravity's core servers. If your users cannot see a video every so often, odds are, this may be the issue. Try adding 10-20 seconds of skew.</p>
+<% end %>
+</fieldset>
+
+</fieldset>

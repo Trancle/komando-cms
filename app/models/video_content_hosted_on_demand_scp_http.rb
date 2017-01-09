@@ -1,0 +1,2 @@
+class VideoContentHostedOnDemandScpHttp < VideoContentHostedOnDemand
+end

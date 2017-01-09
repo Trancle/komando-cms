@@ -1,0 +1,9 @@
+<p>Use the form below to set the time you'd like to pretend it is. You will be taken to the show's page and it will appear as it would at the time specified.</p>
+
+<h2>Now</h2>
+
+<% form_tag( { :action => 'perform_preview', :id => @show.id } ) do %>
+<% @preview_time = CW::StandAloneTimeHelper.new( :t => Time.now.tomorrow ) %>
+<div><%= datetime_select( 'preview_time', 't' ) %></div>
+<p><%= submit( 'preview' ) %></p>
+<% end %>

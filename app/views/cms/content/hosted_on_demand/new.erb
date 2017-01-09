@@ -1,0 +1,15 @@
+<%= error_messages_for :mfr %>
+
+<% form_tag( { :action => 'create_video_content_hosted_on_demand', :id => @mfrn.id }, :multipart => true ) do %>
+	<div style="display:none;"><%= hidden_field( 'mfr', 'type' ) %></div>
+	<div style="display:none;"><%= hidden_field( 'mfr', 'video_content_hosting_provider_id', :value => @provider.id ) %></div>
+
+	<%= render :partial => path_to_configure_form_partial( @mfr ) %>
+
+	<h3>Duration</h3>
+
+	<%= render :partial => 'duration' %>
+
+	<p><%= submit( 'create' ) %></p>
+
+<% end %>

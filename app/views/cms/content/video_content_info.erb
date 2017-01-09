@@ -1,0 +1,57 @@
+<h3>Basic Details</h3>
+
+	<%= render :partial => 'cms/content/video_content_basic_info', :locals => { :mfrn => @mfrn, :mfr => @mfr } %>
+	
+<dl>
+	<% if @mfr.respond_to?:exists_at_cdn? %>
+	<dt>Available?</dt>
+	<% if @check_exists_at_cdn %>
+	<dd><%= ( @mfr.exists_at_cdn? ) ? ( '<span class="ok">yes</span>' ) : ( '<span class="warning">no</span>' ) %>
+	<% else %>
+	<dd>
+	<% if_has_javascript do %>
+          <p id="check_exists_at_cdn_result_<%= @mfr.id %>"><a href="#">check</a></p>
+          <script type="text/javascript">
+              $('#check_exists_at_cdn_result_<%= @mfr.id %> a').click( function(event) {
+		event.preventDefault();
+
+                  $('#check_exists_at_cdn_result_<%= @mfr.id %>').hide();
+                  $('#check_exists_at_cdn_spinner_<%= @mfr.id %>').show();
+
+                  var get = jQuery.get(
+                      '<%= url_for( :action => 'check_exists_at_cdn', :id => @mfr.id ) %>'
+                  );
+		 get.done( function(e) {
+                              $('#check_exists_at_cdn_result_<%= @mfr.id %>').empty();
+                              $('#check_exists_at_cdn_result_<%= @mfr.id %>').append( e );
+                              $('#check_exists_at_cdn_spinner_<%= @mfr.id %>').hide();
+                              $('#check_exists_at_cdn_result_<%= @mfr.id %>').show();
+                    } ).fail( function(e) {
+} ).always( function(e) {
+});
+
+              });
+          </script>
+		<%= spinner_named( "check_exists_at_cdn_spinner_#{@mfr.id}" ) %>
+	<% end %>
+	<noscript><p><%= link_to( 'check', :check_exists_at_cdn => true ) %></p></noscript>
+	<% end %>
+	<p>Checking if this file exists at the CDN takes time. So it's not done automatically to help speed up your work.</p>
+	</dd>
+</dl>
+
+	<% end %>
+
+<h3>Preview</h3>
+<p>If you don't see the video playing below, you'll probably not see it on the site either when the episode goes live. Make sure you can play the video below. Note: the size of the video below will not necessarily be the same as what appears on your site.</p>
+  <style type="text/css">
+    video, object {
+        width: 100%;
+        height: 100%;
+    }
+  </style>
+  <%= javascript_include_tag 'application' %>
+<div style="max-width: 800px; height: 100%;"><%= render_player( @mfrn ) %></div>
+<script type="text/javascript">
+    com_wojnosystems_html5_to_flash_fallback( "#html5_player_mfrn_id_<%= @mfrn.id %>" );
+</script>

@@ -1,0 +1,6 @@
+<%= error_messages_for :episode_part %>
+
+<% form_tag( { :action => 'create', :episode_id => @episode.id } ) do %>
+	<%= render :partial => 'episode_part_form' %>
+	<p><%= submit( 'save' ) %></p>
+<% end %>

@@ -1,0 +1,5 @@
+class CwAuthenticationManagerConfig; def self.authentication_mechanism; "CwAuthenticationFile"; end; end
+class CwAuthorizationManagerConfig; def self.authorization_mechanism; "CwAuthorizationFile"; end; end
+
+class CwAuthenticationFileConfig; def self.path_to_credential_file_from_rails_root; 'config/auth.yml'; end; end
+class CwAuthorizationFileConfig; def self.path_to_credential_file_from_rails_root; 'config/auth.yml'; end; end

@@ -1,0 +1,36 @@
+<h1>CMS Dashboard</h1>
+
+<dl>
+	<dt><%= link_to( 'Video Content', :controller => '/cms/content' ) %></dt>
+	<dd><p>Upload, embed, and manage uploaded/embedded videos</p></dd>
+
+	<dt><%= link_to( 'Shows and Episodes', :controller => '/cms/shows' ) %></dt>
+	<dd><p>Manage your shows and the episodes within them</p></dd>
+
+  <dt><%= link_to( 'Public Images', :controller => '/cms/public_images' ) %></dt>
+  <dd><p>Upload and manage images you display to the public</p></dd>
+
+  <dt><%= link_to( 'Home page DL Order', :controller => '/cms/show_dl_episodes/list/0' ) %></dt>
+  <dd><p>Manage the rotating episodes area of the home page</p></dd>
+
+  <dt><%= link_to( 'Home Page Blocks', :controller => '/cms/home_page_blocks' ) %></dt>
+  <dd><p>Manage the order and composition of the blocks that appear on the home page.</p></dd>
+
+	<dt><%= link_to( 'Page Layouts', :controller => '/cms/page_layouts' ) %></dt>
+	<dd><p>Configure how your pages look</p></dd>
+
+	<dt><%= link_to( 'User input blacklist', :controller => '/cms/user_input_blacklists' ) %></dt>
+	<dd><p>Add or remove words that are forbidden to appear in user-generated content</p></dd>
+
+	<dt><%= link_to( 'Recent Comments', :controller => '/cms/recent_comments' ) %></dt>
+	<dd><p>Review your recent comments; newest are listed first</p></dd>
+
+	<dt><%= link_to( 'Flagged Comments', :controller => '/cms/flagged_comments' ) %></dt>
+	<dd><p>Review your flagged comments. Approve or reject the comments</p></dd>
+
+	<dt><%= link_to( 'Show Categories', :controller => '/cms/show_categories' ) %></dt>
+	<dd><p>Categorize your shows</p></dd>
+
+	<!--<dt><%= link_to( 'Home Page Lineups', :controller => '/cms/home_page_lineups' ) %></dt>
+	<dd><p>Manage which and the order of videos that appear on your home page (/)</p></dd>-->
+</dl>

@@ -1,0 +1,13 @@
+<h1>Emergency Login</h1>
+
+<p>There seems to be something wrong with the customizable login form. VMS is falling back to a standardized login.</p>
+
+<% if @error_message %>
+<p><%= h @error_message %>
+<% end %>
+
+<% form_tag( {:controller => 'auth', :action => 'login'}, :method => :post ) do %>
+<%= render :partial => 'form', :locals => { :user => @user, :remember_me => @remember_me, :redirection => @r, :username => @username } %>
+<%= hidden_field_tag( 'use_emergency_login', true ) %>
+<%= submit_tag( 'login' ) %>
+<% end %>

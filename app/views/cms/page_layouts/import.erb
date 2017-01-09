@@ -1,0 +1,8 @@
+<% form_tag(:action => 'import') do %>
+    <p><%= label_tag( :import, 'Import JSON (from export)' ) %>
+         <textarea name="import" class="textarea"></textarea>
+    </p>
+
+    <p><%= submit_tag( 'import') %></p>
+
+<% end %>

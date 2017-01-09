@@ -1,0 +1,13 @@
+<p>Please select which type of video content you'd like to search for. Only the type you've selected will appear in the results listing.</p>
+
+<% if @type_pag.empty? %>
+<p>No video content has been uploaded</p>
+<% else %>
+<%= pagination_buttons @type_pag %>
+<ul>
+<% @type_pag.items_for_current_page.collect{|t| t.type_before_type_cast.to_s }.each do |t| %>
+	<li><%= link_to( t.underscore.humanize, :action => 'list', :id => t ) %></li>
+<% end %>
+</ul>
+<%= pagination_buttons @type_pag %>
+<% end %>

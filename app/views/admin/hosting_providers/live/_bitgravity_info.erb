@@ -1,0 +1,42 @@
+<h3>Configuration for watching from BitGravity CDN: Connectivity</h3>
+<dl>
+		<dt>HLS URL</dt>
+		<dd><%= h provider.hls_url %></dd>
+
+		<dt>HTTP URL</dt>
+		<dd><%= h provider.http_url %></dd>
+
+  <dt>Universal URL</dt>
+  <dd><%= h provider.universal_url %></dd>
+</dl>
+
+<h3>Configuration for watching from CDN: Security</h3>
+
+<dl>
+	<dt>Media Vault Secret</dt>
+	<dd><%= confidential_field_data( 'provider', 'secure_secret' ) { '"' + @provider.secure_secret.to_s + '" (no quotes)' } %> (<%= confidential_field_reveal_control( 'provider', 'secure_secret' ) %>)</dd>
+
+
+  <dt>Time interval in seconds to allow video to be watched since page is loaded</dt>
+  <dd><%= h provider.time_interval_in_seconds %></dd>
+
+  <dt>Allowed Countries</dt>
+  <dd><%= h provider.allowed_countries %></dd>
+
+  <dt>Disallowed Countries</dt>
+  <dd><%= h provider.disallowed_countries %></dd>
+
+  <dt>Allowed Metros</dt>
+  <dd><%= h provider.allowed_metros %></dd>
+
+  <dt>Disallowed Metros</dt>
+  <dd><%= h provider.disallowed_metros %></dd>
+
+
+
+	<dt>Enforce IP Address?</dt>
+	<dd><%= h provider.enforce_ip %></dd>
+
+	<dt>Enforce User Agent String?</dt>
+	<dd><%= h provider.enforce_user_agent %></dd>
+</dl>

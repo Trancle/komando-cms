@@ -1,0 +1,4 @@
+# Allows anyone to configure the temporary directory to which files are uploaded
+# You should also update the PassengerUploadBufferDir and PassengerTemporaryDir
+# Assumes you're symlinking:  RAILS_ROOT/tmp/tmp-app  to some place that can contain all your uploaded files. Keep in mind, you'll need 3-times the size of the largest files to ensure that the files are processed correctly.
+ENV['TMPDIR'] = Rails.root.join('tmp/app-tmp')

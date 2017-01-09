@@ -1,0 +1,3 @@
+# domain is the domain that you're sending FROM and is typically the hostname of the app
+ActionMailer::Base.smtp_settings = { :address => 'wojnosystems.com', :domain => 'vms001.wojnosystems.com' }
+ActionMailer::Base.delivery_method = :smtp

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>All Shows @ <%= h( Setting['vms-protected-site-head-title'].value ) %></title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="description" content="A listing of all shows"/>
+	<meta name="keywords" content="video,show,shows,all"/>
+
+  <!-- header-head-include -->
+  <%= Liquid::Template.parse( PageLayout.first( :conditions => "programmatic_name = 'header-head-include'" ).scheduled_version_current( @time ).layout ).render({                                                                                                                                                                        'is_ssl' => @controller.request.ssl?}) %>
+  <!-- /header-head-include -->
+
+  <!-- shows-header-include -->
+  <%= Liquid::Template.parse( PageLayout.first( :conditions => "programmatic_name = 'shows-header-include'" ).scheduled_version_current( @time ).layout ).render( { 'show' => @show_drop, 'is_ssl' => @controller.request.ssl? } ) %>
+  <!-- /shows-header-include -->
+
+</head>
+<body>
+<%= layouts_common_body_include do; yield; end %>
+</body>
+</html>

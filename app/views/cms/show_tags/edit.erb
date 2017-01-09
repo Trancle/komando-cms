@@ -1,0 +1,6 @@
+<%= error_messages_for :episode_tag %>
+
+<% form_tag( { :action => 'replace', :id => @show.id } ) do %>
+    <%= render :partial => 'form' %>
+    <p><%= submit( 'replace' ) %></p>
+<% end %>

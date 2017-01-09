@@ -1,0 +1,10 @@
+<h1>Edit User</h1>
+
+<%= error_messages_for 'user' %>
+
+<% form_tag({:action => 'edit'}) do -%>
+    <dl>
+      <%= render :partial => 'form' %>
+      <dd><p><button>save</button></p></dd>
+    </dl>
+<% end %>

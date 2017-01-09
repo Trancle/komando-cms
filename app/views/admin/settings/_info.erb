@@ -1,0 +1,38 @@
+<dl>
+	<dt>Name</dt>
+	<dd><%= h @setting.name %></dd>
+
+	<dt>Programmatic Name</dt>
+	<dd><%= h @setting.programmatic_name %></dd>
+
+	<dt>Description</dt>
+	<dd><%= h @setting.description %></dd>
+
+	<dt>Value</dt>
+	<dd><%= case @setting.class.name
+		when 'SettingBoolean'
+			yes_or_no( @setting.value_typed )
+		when 'SettingString'
+			"'#{@setting.value}'"
+		else
+			@setting.value
+		end || h( '<nil>' )
+	%></dd>
+
+	<dt>Previous Value</dt>
+	<dd><%= case @setting.class.name
+		when 'SettingBoolean'
+			yes_or_no( @setting.previous_value_typed )
+		when 'SettingString'
+			"'#{@setting.previous_value}'"
+		else
+			@setting.previous_value
+		end || h( '<nil>' )
+	%></dd>
+
+	<dt>Created at</dt>
+	<dd><%= @setting.created_at %></dd>
+
+	<dt>Updated at</dt>
+	<dd><%= @setting.updated_at %></dd>
+</dl>

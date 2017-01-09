@@ -1,0 +1,33 @@
+<dl>
+	<dt>Task</dt>
+	<dd><%= task_request.task_class_name %></dd>
+
+	<dt>Created at</dt>
+	<dd><%= task_request.created_at %></dd>
+
+	<dt>Process ID</dt>
+	<dd><%= (task_request.pid.nil?) ? ('none') : (task_request.pid) %><%= '(currently running)' if task_request.running? %></dd>
+
+	<dt>Options</dt>
+	<dd><%= simple_format( task_request.options ) %></dd>
+
+	<dt>Delay Until</dt>
+	<dd><%= ( task_request.delay_until.nil? ) ? ('no delay') : (task_request.delay_until) %></dd>
+
+	<dt>Tries so far</dt>
+	<dd><%= task_request.tries %></dd>
+
+	<dt>Tries allotted before permanent failure</dt>
+	<dd><%= task_request.try_limit %></dd>
+
+	<dt>Completed at</dt>
+	<% if task_request.completed_at.nil? %>
+	<dd>This task is not yet complete<% if task_request.failed? %> and has, in fact, failed. It will never complete<% end %></dd>
+	<% else %>
+	<dd><%= task_request.completed_at %></dd>
+
+	<dt>Result Text</dt>
+	<dd><pre><%= strip_tags( h( task_request.result_text || '<No result text>' ) ) %></pre></dd>
+	<% end %>
+
+</dl>

@@ -1,0 +1,6 @@
+<p>Please select what type of setting you'll be making.</p>
+
+<% form_tag( :action => 'new' ) do %>
+	<%= render :partial => 'setting_type_select_form' %>
+	<p><%= submit('next') %></p>
+<% end %>

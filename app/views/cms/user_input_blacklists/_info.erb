@@ -1,0 +1,13 @@
+<dl>
+	<dt>Type</dt>
+	<dd><%= @word.friendly_type_name %></dd>
+
+	<dt>Value</dt>
+	<dd><%= h @word.value %></dd>
+
+	<dt>Enabled?</dt>
+	<dd><%= yes_or_no( @word.enabled ) %></dd>
+
+	<dt>Comment</dt>
+	<dd><%= h @word.comment %></dd>
+</dl>

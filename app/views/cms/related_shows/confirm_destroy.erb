@@ -1,0 +1,8 @@
+<h1>Related Show to another show</h1>
+
+<h2><%= show_link_name( @show ) %></h2>
+
+<p>You are about to unlink this show from <%= show_link_name( @link.related_show ) %>. You can always put it back later.</p>
+
+<div><%= button( 'unlink', :action => 'destroy', :id => @link.id ) %></div>
+<%= content_tag( 'p', link_to( 'cancel', :action => 'show', :id => @show.id ) ) %>

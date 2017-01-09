@@ -1,0 +1,6 @@
+<%= error_messages_for :comment %>
+
+<% form_tag( :action => 'update', :id => @comment.id ) do %>
+	<%= render :partial => 'form' %>
+	<p><%= submit( 'save' ) %></p>
+<% end %>

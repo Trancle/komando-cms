@@ -1,0 +1,4 @@
+	<% redirection = '' unless redirection; remember_me = false unless remember_me; username = '' unless username %><div style="display:none;"><%= hidden_field_tag( 'r', redirection ) %></div>
+	<p><%= label_tag( 'username', 'E-mail Address' ) %><%= text_field_tag( 'username', user.email || username ) %></p>
+	<p><%= label_tag( 'password', 'Password' )%><%= password_field_tag( 'password' )%></p>
+	<p><%= label_tag( 'remember_me', 'Remember me?' )%><%= check_box_tag( 'remember_me', '1', remember_me, :class => 'checkbox' )%></p>

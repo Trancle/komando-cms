@@ -1,0 +1,101 @@
+<p>This is BitGravity's Live HTTP Stream product. An RTMP(T) stream is pushed to their Flash Streaming Media Servers and is then distributed to their server farm for your users to download to watch your live streaming content. That stream is also replicated to an Apple HLS streaming server so iOS users can enjoy your video as well.</p>
+
+<p>Admittedly, debugging poor configurations is rather difficult with Flash live streams. It usually either works or it does not work. Very little in the way of error messages exists. Unfortunately, this is the way Adobe Flash streams work.</p>
+
+
+<p><%= label_tag( 'provider[hls_url]', 'HLS URL' ) %>
+	<%= text_field( 'provider', 'hls_url' ) %> (<%= link_to_show_contextual_help_for( 'provider_hls_url', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_hls_url' ) do %>
+	<h3>HLS URL</h3>
+	<p>The URL provided by BitGravity for HLS streams. These URL's end in .m3u8. You can generate an example by using their Secure Live URL Generator. Do not include any parameters, such as e= or h=. These will be generated for you as they change for each person requesting to watch the video. Also, do not include the last component part after the last slash. This is known as the feed name.</p>
+<% end %>
+
+
+<p><%= label_tag( 'provider[http_url]', 'HTTP URL' ) %>
+  <%= text_field( 'provider', 'http_url' ) %> (<%= link_to_show_contextual_help_for( 'provider_http_url', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_hls_url' ) do %>
+    <h3>HTTP URL</h3>
+    <p>The URL provided by BitGravity for HTTP streams (which includes the Flash players and HTML5 video players). These URL's have no file extension. You can generate an example by using their Secure Live URL Generator. Do not include any parameters, such as e= or h=. These will be generated for you as they change for each person requesting to watch the video. Also, do not include the last component part after the last slash. This is known as the feed name.</p>
+<% end %>
+
+
+<p><%= label_tag( 'provider[universal_url]', 'Universal URL' ) %>
+  <%= text_field( 'provider', 'universal_url' ) %> (<%= link_to_show_contextual_help_for( 'provider_universal_url', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_universal_url' ) do %>
+    <h3>HTTP URL</h3>
+    <p>The universal URL provided by BitGravity. You can find it on the Products and Services page in the BitGravity Dashboard under the "BG Live Secure Link Generator" and use the "Universal" URL. Do not include the feed name, the question mark (?) or any thing that follows it. Ensure there is not trailing slash either.</p>
+<% end %>
+
+
+<fieldset><legend>Security</legend>
+
+<p><%= label_tag( 'provider[secure_secret]', 'Secret' ) %>
+	<%= text_field( 'provider', 'secure_secret' ) %> (<%= link_to_show_contextual_help_for( 'provider_secure_secret', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_secure_secret' ) do %>
+	<h3>Secret</h3>
+	<p>This is a password. This is provided to you by Bitgravity. This secret is used to generate the special URLs that stop users from accessing your content without your implicit consent (via your website running MMS). You must use this field to get the security options.</p>
+<% end %>
+
+
+  <p><%= label_tag( 'provider[time_interval_in_seconds]', 'Time interval in seconds' ) %>
+    <%= text_field( 'provider', 'time_interval_in_seconds' ) %> (<%= link_to_show_contextual_help_for( 'provider_time_interval_in_seconds', "What's this?" ) %>)</p>
+  <% contextual_help_for( 'provider_time_interval_in_seconds' ) do %>
+      <h3>Time interval in seconds</h3>
+      <p>The number of seconds to allow a user to watch the video stream for after the page is loaded by the user. Set this to the duration of your stream, plus a few extra minutes. So, if your show is 3 hours, add 10 minutes: 3600*3 + 60*10 = 11400.</p>
+  <% end %>
+
+
+  <p><%= label_tag( 'provider[allowed_countries]', 'Allowed Countries' ) %>
+    <%= text_field( 'provider', 'allowed_countries' ) %> (<%= link_to_show_contextual_help_for( 'provider_allowed_countries', "What's this?" ) %>)</p>
+  <% contextual_help_for( 'provider_allowed_countries' ) do %>
+      <h3>Allowed Countries</h3>
+      <p>Comma-separated list of country codes to only allow the stream to be watched from. See Bitgravity documentation for the allowed values.</p>
+  <% end %>
+
+
+  <p><%= label_tag( 'provider[disallowed_countries]', 'Disallowed Countries' ) %>
+    <%= text_field( 'provider', 'disallowed_countries' ) %> (<%= link_to_show_contextual_help_for( 'provider_disallowed_countries', "What's this?" ) %>)</p>
+  <% contextual_help_for( 'provider_disallowed_countries' ) do %>
+      <h3>Disallowed Countries</h3>
+      <p>Comma-separated list of country codes to explicitly deny the stream to be watched from. See Bitgravity documentation for the allowed values.</p>
+  <% end %>
+
+
+  <p><%= label_tag( 'provider[allowed_metros]', 'Allowed Metros' ) %>
+    <%= text_field( 'provider', 'allowed_metros' ) %> (<%= link_to_show_contextual_help_for( 'provider_allowed_metros', "What's this?" ) %>)</p>
+  <% contextual_help_for( 'provider_allowed_metros' ) do %>
+      <h3>Allowed Metros</h3>
+      <p>Comma-separated list of metro codes to only allow the stream to be watched from. See Bitgravity documentation for the allowed values.</p>
+  <% end %>
+
+
+  <p><%= label_tag( 'provider[disallowed_metros]', 'Disallowed Metros' ) %>
+    <%= text_field( 'provider', 'disallowed_metros' ) %> (<%= link_to_show_contextual_help_for( 'provider_disallowed_metros', "What's this?" ) %>)</p>
+  <% contextual_help_for( 'provider_disallowed_metros' ) do %>
+      <h3>Disallowed Metros</h3>
+      <p>Comma-separated list of metros codes to explicitly deny the stream to be watched from. See Bitgravity documentation for the allowed values.</p>
+  <% end %>
+
+
+
+
+
+
+
+<p><%= label_tag( 'provider[enforce_ip]', 'Enforce IP Address?' ) %>
+	<%= check_box( 'provider', 'enforce_ip' ) %> (<%= link_to_show_contextual_help_for( 'provider_enforce_ip', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_enforce_ip' ) do %>
+	<h3>Enforce IP Address?</h3>
+	<p>When enabled, each video requester's IP address is captured by MMS and integrated into the video request sent to Bitgravity. This should prevent people from embedding your content as with referrer protection. However, each request is tied to each user (via his or her IP) rather than a referrer header, which can be faked. This makes it much more difficult to share content. If disabled, the requester's IP address is ignored.</p>
+<% end %>
+
+
+
+  <p><%= label_tag( 'provider[enforce_user_agent]', 'Enforce User Agent?' ) %>
+    <%= check_box( 'provider', 'enforce_user_agent' ) %> (<%= link_to_show_contextual_help_for( 'provider_enforce_user_agent', "What's this?" ) %>)</p>
+  <% contextual_help_for( 'provider_enforce_user_agent' ) do %>
+      <h3>Enforce User Agent?</h3>
+      <p>When enabled, each video requester's browser User Agent string is captured by MMS and integrated into the video request sent to Bitgravity. This should help prevent people from embedding your content. However, each request is tied to each user agent, which can be faked. However, this makes it much more difficult to share content. If disabled, the requester's User Agent string is ignored.</p>
+  <% end %>
+
+</fieldset>

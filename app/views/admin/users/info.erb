@@ -1,0 +1,8 @@
+<%= render :partial => 'info' %>
+
+<dl>
+	<dd><%= h @user.username %> <strong><%= @user.user_input_banned? ? 'is' : 'is not' %></strong> banned</dd>
+</dl>
+
+
+<p><%= link_to('edit', :action => 'edit', :id => @user.id) %></p>

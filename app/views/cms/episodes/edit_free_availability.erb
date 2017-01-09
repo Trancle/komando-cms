@@ -1,0 +1,6 @@
+<%= error_messages_for :availability %>
+
+<% form_tag( :action => 'update_free_availability', :id => @availability.id ) do %>
+	<%= render :partial => 'master_availability_form' %>
+	<p><%= submit( 'save' ) %></p>
+<% end %>

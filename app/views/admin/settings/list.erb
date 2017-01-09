@@ -1,0 +1,17 @@
+<% unless @pagination.empty? %>
+
+<%= pagination_buttons( @pagination ) %>
+
+<ul class="control_list alternate">
+	<% @pagination.items_for_current_page.each do |setting| %>
+		<li><span class="name"><%= link_to( h( setting.name ), :action => 'info', :id => setting.id ) %></span><ul class="actions"><li><%= link_to( 'edit', :action => 'edit', :id => setting.id ) %></li><% unless setting.protected? %><li><%= link_to( 'destroy', :action => 'confirm_destroy', :id => setting.id ) %></li><% end %></ul></li>
+	<% end %>
+</ul>
+
+<%= pagination_buttons( @pagination ) %>
+
+<% else %>
+
+<p>There are no settings</p>
+
+<% end %>

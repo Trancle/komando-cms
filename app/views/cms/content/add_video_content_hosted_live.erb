@@ -1,0 +1,16 @@
+<p>You're about to create a new video component for the Video Content named: "<%= h @mfrn.pretty_name %>."</p>
+
+<p>Please select from one of the providers listed below</p>
+
+<% unless @pagination.empty? %>
+<%= pagination_buttons( @pagination ) %>
+
+<ul>
+<% @pagination.items_for_current_page.each do |provider| %>
+	<li><%= button( provider.name, :action => 'new_video_content_hosted_live', :id => @mfrn.id, :video_content_hosting_provider_id => provider.id ) %></li>
+<% end %>
+</ul>
+
+<% else %>
+<p>No providers have been configured. To create video using a provider of this type, please configure <%= link_to( 'a provider now', :action => 'new', :controller => 'admin/hosting_providers' ) %></p>
+<% end %>

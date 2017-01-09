@@ -1,0 +1,15 @@
+<dl>
+	<dt>Name</dt>
+	<dd><%= h @page.name %></dd>
+	<dt>Created</dt>
+	<dd><%= @page.created_at %></dd>
+</dl>
+
+<h2>Current Layout</h2>
+
+<pre><%= h(@page.scheduled_version_current_or_last_version.layout) %></pre>
+
+<h2>Description</h2>
+
+<div><%= @page.description %></div>
+

@@ -1,0 +1,115 @@
+<p><%= label_tag( 'mfr[video_id]', 'YouTube Video ID' ) %><%= text_field( 'mfr', 'video_id' ) %> (<%= link_to_show_contextual_help_for( 'mfr_video_id', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_video_id' ) do %>
+	<h3>YouTube Video ID Help</h3>
+	<p>The YouTube video ID is the special string of letters and numbers that YouTube uses to identify videos. All videos on YouTube have one. When you go to a video on the youtube site (<a href="http://www.youtube.com">www.youtube.com</a>), the URL (the text in your browser's address bar) will include the video's ID.</p>
+	<h3>What do they look like?</h3>
+	<p>YouTube ID's are a string of numbers and both capital and lower case letters. When you visit the page on which you watch the video, the video's ID is indicated in the query variable "v." For example, say you watch the video at the following URL:</p>
+	<blockquote>http://www.youtube.com/watch?v=<span class="highlight">x1DDQQPs1f8</span>&amp;fmt=22</blockquote>
+	<p>The ID for that video is the text after the "v=" and up to, but <strong>not</strong> including any ampersands (&amp;): <span class="highlight">x1DDQQPs1f8</span>. You don't need anything else, just the ID.</p>
+<% end %>
+
+
+<div id="checking_you_tube_msg" style="display:none;">
+	<p>I'm checking that YouTube ID: <%= spinner_named('checking_you_tube_id_spinner') %></p>
+</div>
+<div id="you_tube_id_ok_msg" style="display:none;">
+	<p>YouTube ID exists and is playable. I've also filled in the duration for you, below</p>
+</div>
+<div id="you_tube_id_bad_msg" style="display:none;">
+	<p>That YouTube ID isn't valid or the video is not playable</p>
+</div>
+<div id="you_tube_id_check_failed_msg" style="display:none;">
+	<p>Hmmm. I wasn't able to check YouTube for some reason. Maybe YouTube is having connectivity issues?</p>
+</div>
+<%= javascript_tag( 
+<<EOF
+jQuery('#mfr_video_id').blur( function(e) {
+	if( jQuery('#mfr_video_id').val() != "" ) {
+		jQuery('#checking_you_tube_msg').show();
+		jQuery('#you_tube_id_ok_msg').hide();
+		jQuery('#you_tube_id_bad_msg').hide();
+		jQuery('#you_tube_id_check_failed_msg').hide();
+		jQuery.ajax({ url: 'https://gdata.youtube.com/feeds/api/videos/' + (new String(jQuery('#mfr_video_id').val())) + '?v=2&alt=json'}).fail( function( jqXHR, textStatus ) {
+		 	 jQuery('#checking_you_tube_msg').hide();
+			 jQuery('#you_tube_id_check_failed_msg').show();
+		 } ).done( function( msg ) {
+			 		var obj;
+					var access;
+					var allowed = true;
+			 		jQuery('#checking_you_tube_msg').hide();
+			 		/* Check if Video can be played */
+					if( Object.prototype.toString.call(msg) == '[object String]' ) {
+						eval('obj = ' + msg);
+					} else {
+						obj = msg;
+					}
+					access = obj['entry']['yt$accessControl'];
+					jQuery.each( access, function(i,element) {
+							if( element['action'] == 'embed' || element['action'] == 'syndicate' ) {
+								if( element['permission'] != 'allowed' ) {
+									allowed = false;
+								}
+							}
+						}	);
+			 		if( allowed ) {
+						jQuery('#mfr_colonized_length').val( obj['entry']['media$group']['yt$duration']['seconds'] );
+			 			jQuery('#you_tube_id_ok_msg').show();
+					} else {
+			 			jQuery('#you_tube_id_bad_msg').show();
+					}
+			 } );
+	}
+} );
+EOF
+		) %>
+
+
+<p><%= label_tag( 'mfr[auto_play]', 'Auto-Play?' ) %><%= check_box( 'mfr', 'auto_play', :class => 'checkbox' ) %> (<%= link_to_show_contextual_help_for( 'mfr_auto_play', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_auto_play' ) do %>
+	<h3>YouTube AutoPlay</h3>
+	<p>When the visitor arrives on the page to watch this embedded video, if checked it will start playing immediately. If not checked, this video will load, but wait for the user to explicitly play the video. It is, generally, considered courteous to disable auto-play.</p>
+<% end %>
+<p><%= label_tag( 'mfr[show_related_videos]', 'Show Related Videos?' ) %><%= check_box( 'mfr', 'show_related_videos', :class => 'checkbox' ) %> (<%= link_to_show_contextual_help_for( 'mfr_show_related_videos', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_show_related_videos' ) do %>
+	<h3>YouTube Related Videos</h3>
+	<p>When a video finishes playing, YouTube will automatically create a listing of related videos for the viewer to watch. This listing cannot be controlled or customized. If you choose to enable this feature, your visitors will be directed away from your website to YouTube. If you disable this feature, viewers will only be asked if they'd like to watch the video again.</p>
+<% end %>
+<p><%= label_tag( 'mfr[show_video_information]', 'Show Video Information?' ) %><%= check_box( 'mfr', 'show_video_information', :class => 'checkbox' ) %> (<%= link_to_show_contextual_help_for( 'mfr_show_video_information', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_show_video_information' ) do %>
+	<h3>YouTube Video Information</h3>
+	<p>When a video is not playing, the title of the video will be displayed if this option is checked. To remove the title, uncheck this option.</p>
+<% end %>
+<p><%= label_tag( 'mfr[start_offset_in_seconds]', 'Start offset in seconds' ) %><%= text_field( 'mfr', 'start_offset_in_seconds' ) %> (<%= link_to_show_contextual_help_for( 'mfr_start_offset_in_seconds', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_start_offset_in_seconds' ) do %>
+	<h3>YouTube Start Offset</h3>
+	<p>YouTube allows you to, optionally, provide a location other than the beginning of a video from which to start playback. To specify where to begin, determine by playing the YouTube video at what point you'd like to begin playback. Convert hours to minutes and add to minutes. Convert that minutes to seconds and add to the seconds. Then, list the resulting number of seconds that you'd like to skip here. If you leave this blank or specify a number less than or equal to zero, the video playback will begin at the start of the video.</p>
+<% end %>
+<fieldset>
+<legend>Auto-Hide Progress Bar and Player Controls</legend>
+<p>Here, you have the option of hiding the progress (seek) bar and controls such as the volume and pause/play.</p>
+<p><%= label_tag( 'mfr[auto_hide_controls_0]', 'Both always visible' ) %><%= radio_button( 'mfr', 'auto_hide_controls', 0, :class => 'radio' ) %></p>
+<p><%= label_tag( 'mfr[auto_hide_controls_1]', 'Auto-hide both' ) %><%= radio_button( 'mfr', 'auto_hide_controls', 1, :class => 'radio' ) %></p>
+<p><%= label_tag( 'mfr[auto_hide_controls_2]', 'Auto-hide progress bar' ) %><%= radio_button( 'mfr', 'auto_hide_controls', 2, :class => 'radio' ) %></p>
+</fieldset>
+
+<p><%= label_tag( 'mfr[show_video_information]', 'Display Controls?' ) %><%= check_box( 'mfr', 'display_controls', :class => 'checkbox' ) %> (<%= link_to_show_contextual_help_for( 'mfr_display_controls', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_display_controls' ) do %>
+	<h3>YouTube Display Controls</h3>
+	<p>If checked, will show the controls of the player so that the viewer can control volume and playback. If unchecked, you must either supply a player using JavaScript and the YouTube API or automate playback. This is not currently supported by VMS.</p>
+<% end %>
+
+<p><%= label_tag( 'mfr[cc_load_policy]', 'Display Closed Captions?' ) %><%= check_box( 'mfr', 'cc_load_policy', :class => 'checkbox' ) %></p>
+
+<p><%= label_tag( 'mfr[loop_video]', 'Loop?' ) %><%= check_box( 'mfr', 'loop_video', :class => 'checkbox' ) %></p>
+
+<p><%= label_tag( 'mfr[show_video_annotations]', 'Show video annotations?' ) %><%= check_box( 'mfr', 'show_video_annotations', :class => 'checkbox' ) %></p>
+
+<p><%= label_tag( 'mfr[modest_branding]', 'Modest Branding (hide YouTube logo)?' ) %><%= check_box( 'mfr', 'modest_branding', :class => 'checkbox' ) %> (<%= link_to_show_contextual_help_for( 'mfr_modest_branding', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_modest_branding' ) do %>
+	<h3>YouTube Modest Branding</h3>
+	<p>If checked, will hide the YouTube logo on the player. If left unchecked, a clickable YouTube logo will appear in the control bar of the player.</p>
+<% end %>
+
+	<h3>YouTube Parameter Settings</h3>
+	<p>To see Google's documentation about each of YouTube's embed parameters, see the <a href="http://code.google.com/apis/youtube/player_parameters.html">YouTube Embedded Player Parameters</a> documentation page.</p>
+

@@ -1,0 +1,5 @@
+require File.dirname(__FILE__) + '/cw_scheduled_version/base.rb'
+require File.dirname(__FILE__) + '/cw_scheduled_version/date_range.rb'
+require File.dirname(__FILE__) + '/cw_scheduled_version/stub.rb'
+require File.dirname(__FILE__) + '/cw_scheduled_version/version.rb'
+require File.dirname(__FILE__) + '/cw_scheduled_version/migration.rb'

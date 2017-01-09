@@ -1,0 +1,107 @@
+<h3>Configuration for transferring to CDN: FTP</h3>
+<dl>
+		<dt>FTP Username</dt>
+		<dd><%= h provider.origin_ftp_username %></dd>
+
+		<dt>FTP Password</dt>
+		<dd><%= confidential_field_data( 'provider', 'origin_ftp_password' ) { '"' + @provider.origin_ftp_password.to_s + '" (no quotes)' } %> (<%= confidential_field_reveal_control( 'provider', 'origin_ftp_password' ) %>)</dd>
+
+		<dt>FTP Hostname</dt>
+		<dd><%= h provider.origin_ftp_host %></dd>
+
+		<dt>FTP Port</dt>
+		<dd><%= h provider.origin_ftp_port %></dd>
+
+		<dt>FTP Host Base Path</dt>
+		<dd><%= h provider.origin_ftp_host_path %></dd>
+
+		<dt>Sample FTP Path</dt>
+		<dd>
+			<dl>
+			<dt>Sample File Hash</dt>
+			<dd>254aa41e372f57f9ecacca049b81422b8a58718485b4dfbcd58d4a2e588e6f22</dd>
+			<dt>Sample File Extension</dt>
+			<dd>.mp4</dd>
+			<dt>FTP Path</dt>
+			<dd><%= provider.ftp_uri %>/<%= provider.file_hash_and_extension_to_array( '254aa41e372f57f9ecacca049b81422b8a58718485b4dfbcd58d4a2e588e6f22', 'mp4' ).join('/') %></dd>
+			</dl>
+		</dd>
+</dl>
+
+<h3>Configuration for watching from CDN: Connectivity</h3>
+
+<dl>
+	<dt>Flash Server Name</dt>
+	<dd><%= h provider.download_flash_host %></dd>
+
+	<dt>Flash Application Name</dt>
+	<dd><%= h provider.download_flash_application_name %></dd>
+
+	<dt>Flash Path Prefix (appears after Application Name)</dt>
+	<dd><%= h provider.download_flash_path_prefix %></dd>
+
+	<dt>Sample Flash URI</dt>
+	<dd>
+		<p>This is there to help determine where any configuration problems may occur</p>
+		<dl>
+		<dt>Sample File Hash</dt>
+		<dd>254aa41e372f57f9ecacca049b81422b8a58718485b4dfbcd58d4a2e588e6f22</dd>
+		<dt>Sample File Extension</dt>
+		<dd>.mp4</dd>
+		<dt>Flash URI</dt>
+		<dd><%= provider.flash_uri %>/<%= provider.file_hash_and_extension_to_array( '254aa41e372f57f9ecacca049b81422b8a58718485b4dfbcd58d4a2e588e6f22', 'mp4' ).join('/') %></dd>
+		</dl>
+	</dd>
+
+	<dt>HTTP Server Name</dt>
+	<dd><%= h provider.download_http_host %></dd>
+
+	<dt>HTTP Application Name</dt>
+	<dd><%= h provider.download_http_application_name %></dd>
+
+	<dt>HTTP Path Prefix (appears after Application Name)</dt>
+	<dd><%= h provider.download_http_path_prefix %></dd>
+
+	<dt>Maximum Directory Depth</dt>
+	<dd><%= provider.storage_folder_max_depth %></dd>
+
+	<dt>Maximum Directory Name Length</dt>
+	<dd><%= provider.storage_folder_max_name_length %></dd>
+
+	<dt>Sample HTTP URI</dt>
+	<dd>
+		<p>This is there to help determine where any configuration problems may occur</p>
+		<dl>
+		<dt>Sample File Hash</dt>
+		<dd>254aa41e372f57f9ecacca049b81422b8a58718485b4dfbcd58d4a2e588e6f22</dd>
+		<dt>Sample File Extension</dt>
+		<dd>.mp4</dd>
+		<dt>HTTP URI</dt>
+		<dd><%= provider.http_uri %>/<%= provider.file_hash_and_extension_to_array( '254aa41e372f57f9ecacca049b81422b8a58718485b4dfbcd58d4a2e588e6f22', 'mp4' ).join('/') %></dd>
+		</dl>
+	</dd>
+</dl>
+
+
+<h3>Configuration for watching from CDN: Security</h3>
+
+<dl>
+	<dt>Use Media Vault?</dt>
+	<dd><%= h provider.use_media_vault? %></dd>
+
+	<% if provider.use_media_vault? %>
+	<dt>Media Vault Secret</dt>
+	<dd><%= confidential_field_data( 'provider', 'media_vault_secret' ) { '"' + @provider.media_vault_secret.to_s + '" (no quotes)' } %> (<%= confidential_field_reveal_control( 'provider', 'media_vault_secret' ) %>)</dd>
+
+	<dt>Media Vault Security: Enforce time?</dt>
+	<dd><%= h provider.media_vault_security_enforce_time %></dd>
+
+	<% if provider.media_vault_security_enforce_time %>
+	<dt>Media Vault Security: Time Interval (Seconds)</dt>
+	<dd><%= h provider.media_vault_security_time_interval_in_seconds %></dd>
+
+	<dt>Media Vault Security: Time Clock Skew Buffer (Seconds)</dt>
+	<dd><%= h provider.media_vault_security_time_clock_skew_in_seconds %></dd>
+	<% end %>
+	<% end %>
+</dl>

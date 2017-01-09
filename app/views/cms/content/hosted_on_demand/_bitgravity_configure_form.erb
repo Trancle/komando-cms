@@ -1,0 +1,107 @@
+<% if @mfr.new_record? %>
+
+<p>Acceptable Extensions</p>
+
+<ul>
+	<% @mfr.only_mime_types.each do |type| %>
+		<li><%= @mfr.class::MIME_TYPE_TO_EXT[type] %></li>
+	<% end %>
+</ul>
+
+<dl>
+<dt><%= label_tag( 'mfr[file_path]', 'File' ) %></dt>
+<dd><%= file_field( 'mfr', 'file_path', { :size => nil, :accept => @mfr.only_mime_types.join(',') } ) %><p>(<%= link_to_show_contextual_help_for( 'mfr_file_path', "What's this?" ) %>)
+</p>
+<% contextual_help_for( 'mfr_file_path' ) do %>
+	<h3>File</h3>
+	<p>This is the file you want to upload to Limelight so your viewers can watch it. Only .mp4's are accepted at this time.</p>
+<% end %>
+</dd>
+<% else %>
+<dl>
+
+<dt><%= label_tag( 'mfr[original_name]', 'Original upload name' ) %></dt>
+<dd><%= text_field( 'mfr', 'original_name' ) %></dd>
+
+<% end %>
+
+<dt><%= label_tag('mfr[bitrate]', 'Bitrate' ) %></dt>
+<dd><%= text_field( 'mfr', 'bitrate', :style => 'text-align:right' ) %><p>kbps (kilobits per second)  (<%= link_to_show_contextual_help_for( 'mfr_bitrate', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_bitrate' ) do %>
+	<h3>Bitrate</h3>
+	<p>This is your average bitrate with which you encoded this video. At this time, VMS is unable to automatically determine this value for you. You can find this information:</p>
+	<dl>
+		<dt>OSX</dt>
+		<dd>Select the file in Finder and click "More information"</dd>
+		<dt>Windows 7</dt>
+		<dd>Right-click the file in Explorer and click "Properties" and select the "Details" tab.</dd>
+	</dl>
+<% end %>
+	</dd>
+</dl>
+
+<fieldset><legend>Codecs</legend>
+<dl>
+<dt><%= label_tag('mfr[audio_codec]', 'Audio Codec' ) %></dt>
+<dd><%= text_field( 'mfr', 'audio_codec' ) %>
+<p>(<%= link_to_show_contextual_help_for( 'mfr_audio_codec', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_audio_codec' ) do %>
+	<h3>Audio Codec</h3>
+	<p>This is the codec you used to format your audio in your video file. This information is really difficult to extract and you must remember it when you compressed or formatted your video file. Some common ones include:</p>
+	<dl>
+		<dt>AAC Low Complexity</dt>
+		<dd>mp4a.40.2</dd>
+	</dl>
+<% end %>
+	</dd>
+
+<dt><%= label_tag('mfr[video_codec]', 'Video Codec' ) %></dt>
+<dd><%= text_field( 'mfr', 'video_codec' ) %>
+<p>(<%= link_to_show_contextual_help_for( 'mfr_video_codec', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_video_codec' ) do %>
+	<h3>Video Codec</h3>
+	<p>This is the codec you used to format your video in your file. This information is really difficult to extract and you must remember it when you compressed or formatted your video file. Some common ones include:</p>
+	<dl>
+		<dt>H.264 Baseline Profile (for mobile and stationary devices)</dt>
+		<dd>avc1.42E01E</dd>
+		<dt>H.264 Main Profile (not for mobile devices)</dt>
+		<dd>avc1.4D401E</dd>
+		<dt>H.264 High Profile (dedicated players and high-end graphics cards)</dt>
+		<dd>avc1.64001E</dd>
+	</dl>
+<% end %>
+	</dd>
+</dl>
+</fieldset>
+
+<dl>
+<dt><%= label_tag('mfr[frames_per_second]', 'Frames per second (fps)' ) %></dt>
+<dd><%= text_field( 'mfr', 'frames_per_second', :style => 'text-align:right' ) %>
+<p>(<%= link_to_show_contextual_help_for( 'mfr_frames_per_second', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_frames_per_second' ) do %>
+	<h3>Frames per Second</h3>
+	<p>This is your video's frames per second. This is configured by you when you created, compressed, and/or transcoded your video (whichever you did last). You may enter a decimal value here, though frames per second (FPS) is almost always in integer (no decimal numbers).</p>
+<% end %>
+	</dd>
+
+
+
+<dt><%= label_tag('mfr[width]', 'Width (px)' ) %></dt>
+<dd><%= text_field( 'mfr', 'width' ) %>
+<p>(<%= link_to_show_contextual_help_for( 'mfr_width', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_width' ) do %>
+	<h3>Width (px)</h3>
+	<p>The number of pixels (or lines) that this video consumes on the x or horizontal axis.</p>
+<% end %>
+	</dd>
+
+
+<dt><%= label_tag('mfr[height]', 'Height (px)' ) %></dt>
+<dd><%= text_field( 'mfr', 'height' ) %>
+<p>(<%= link_to_show_contextual_help_for( 'mfr_height', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_height' ) do %>
+	<h3>Height (px)</h3>
+	<p>The number of pixels (or lines) that this video consumes on the y or vertical axis.</p>
+<% end %>
+	</dd>
+</dl>

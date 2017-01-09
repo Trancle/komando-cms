@@ -1,0 +1,7 @@
+<dl>
+	<dt>Length (seconds)</dt>
+	<dd><%= mfr.colonized_length %>s (<%= mfr.length_in_seconds %>s or about <%= mfr.length_in_words %>)</dd>
+
+	<dt><%= ( (mfr.is_url?) ? ('URI (URL)') : ('Embed Code') ) %></dt>
+	<dd><pre><%= h mfr.type_information %></pre></dd>
+</dl>

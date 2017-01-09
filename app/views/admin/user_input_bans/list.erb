@@ -1,0 +1,11 @@
+<% unless @user_pag.empty? %>
+<%= pagination_buttons(@user_pag) %>
+<ul class="alternate">
+<% @user_pag.items_for_current_page.each do |user| %>
+<li><%= link_to( user.username, :action => 'user', :id => user.id ) %></li>
+<% end %>
+</ul>
+<%= pagination_buttons(@user_pag) %>
+<% else %>
+<p>No users are currently banned. What good little users you have!</p>
+<% end %>

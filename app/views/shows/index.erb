@@ -1,0 +1,16 @@
+<%
+   oept = Liquid::Template.parse( PageLayout.first(:conditions => "programmatic_name = 'show-thumbnail'" ).scheduled_version_current(@time).layout )
+
+   shows_pagination = pagination_buttons( @pagination )
+%>
+<%= Liquid::Template.parse( @layout ).render(
+            {
+                    'shows' => @show_drops.collect{|d| oept.render( { 'show' => d } ) },
+                    'shows_pagination' => shows_pagination,
+                    'page_url' => url_for(:only_path => false),
+                    'username' => logged_in_username,
+                    'hostname' => @controller.request.host   ,
+                    'is_ssl' => @controller.request.ssl?
+            } )
+
+%>

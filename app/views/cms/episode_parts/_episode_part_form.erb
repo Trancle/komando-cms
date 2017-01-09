@@ -1,0 +1,34 @@
+<script type="text/javascript" src="/javascripts/application/admin/picker_window_displays.js"></script>
+<script type="text/javascript" src="/javascripts/application/admin/picker_window_video_content_name.js"></script>
+
+<dl>
+<dt><%= label_tag( 'episode_part[name]', 'Name' ) %></dt>
+<dd><%= text_field( 'episode_part', 'name', :value => @episode_part.name || 'Part 1' ) %></dd>
+
+<dt><%= label_tag( 'episode_part[video_content_name_id]', 'Video content name ID' ) %></dt>
+<dd>
+<p id="episode_part_video_content_name_title_container"><%= ( @episode_part.video_content_name.nil? ? 'No content selected' : h(@episode_part.video_content_name.pretty_name ) ) %></p>
+<%= text_field( 'episode_part', 'video_content_name_id' ) %>
+<div>
+<div id="picker" class="picker"></div>
+  <script type="text/javascript">
+    $('#picker').picker_window( { listUri: '/cms/content/list.json', onPaintItem: function( me, elem, i, page ) {
+        var n = page[i].video_content_name.pretty_name;
+        $(elem).text( n );
+    }, onPick: function(elem,index,item) {
+      $('#episode_part_video_content_name_id').val(item.video_content_name.id);
+        $('#episode_part_video_content_name_title_container').text(item.video_content_name.pretty_name);
+    } } );
+  </script>
+
+  <p><a href="#" id="pick-start">picker</a><script type="text/javascript">
+      var elem = $("#pick-start").parent();
+      $(elem).click(function (e) {
+                  e.preventDefault();
+                  $('#picker').picker_window('show');
+              }
+      );
+  </script></p>
+</div>
+</dd>
+</dl>

@@ -1,0 +1,75 @@
+<p>This is Limelight Network's Flash Live Stream product. An RTMP(T) stream is pushed to their Flash Streaming Media Servers and is then distributed to their server farm for your users to download to watch your live streaming content.</p>
+
+<p>You must install Limelight's Flash Streaming Media plug-in for your Adobe Flash Encoding Server (or product that uses the encoding server internally). This must be installed on the machine that records your video. This also requires that you use the Microsoft Windows operating system. Contact Limelight for assistance with this matter.</p>
+
+<p>Admittedly, debugging poor configurations is rather difficult with Flash live streams. It usually either works or it does not work. Very little in the way of error messages exists. Unfortunately, this is the way Adobe Flash streams work.</p>
+
+
+<p><%= label_tag( 'provider[stream_protocol]', 'Stream Protocol' ) %>
+	<%= select( 'provider', 'stream_protocol', @provider.valid_stream_protocol_options ) %> (<%= link_to_show_contextual_help_for( 'provider_stream_protocol', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_stream_protocol' ) do %>
+	<h3>Stream Protocol</h3>
+	<p>Selects the streaming protocol that your users will download the stream as. The best pick is RTMPT as it allows the file to be streamed over HTTP and avoids firewall blockage. It's not quite as efficient as plain RTMP, but it's better than having it blocked by your user's ISPs.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[stream_host]', 'Stream Hostname (RTMP host)' ) %>
+	<%= text_field( 'provider', 'stream_host' ) %> (<%= link_to_show_contextual_help_for( 'provider_stream_host', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_stream_host' ) do %>
+	<h3>Stream Hostname (RTMP host)</h3>
+	<p>The hostname is the place where your streaming server is hosted by Limelight. This is issued to you by Limelight. Limelight calls this the "RTMP host." Users will connect to this server (or servers) to stream you live content. Additionally, you will connect your streaming device or Flash Media Encoder software to this system to create streams. Don't worry, Limelight ensures that stream publishers provide passwords, so you need not worry about others using your stream to push their content. Don't put in a trailing slash.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[stream_application_name]', 'Stream Application Name (RTMP application name)' ) %>
+	<%= text_field( 'provider', 'stream_application_name' ) %> (<%= link_to_show_contextual_help_for( 'provider_stream_application_name', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_stream_application_name' ) do %>
+	<h3>Stream Application Name (RTMP application name)</h3>
+	<p>This is the name of the instance provided to you for live streaming. Limelight calls this the "RTMP Application Name." You will receive this from limelight. There is no need to include beginning or trailing slashes.</p>
+<% end %>
+
+
+<fieldset><legend>Media Vault</legend>
+<p><%= label_tag( 'provider[media_vault_enable]', 'Use Media Vault?' ) %>
+	<%= check_box( 'provider', 'media_vault_enable' ) %> (<%= link_to_show_contextual_help_for( 'provider_media_vault_enable', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_media_vault_enable' ) do %>
+	<h3>Provider Media Vault Enable</h3>
+	<p>This turns on all the special security settings for Media Vault. If you have Media Vault, you will need to enable this setting to enable the security settings below. Disabling this setting allows users to access your content without time, IP address, or referrer constraints. People will be able to embed your videos without your consent. Do <strong>NOT</strong> toggle this unless you know you want to do so.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[media_vault_secret]', 'Media Vault Secret' ) %>
+	<%= text_field( 'provider', 'media_vault_secret' ) %> (<%= link_to_show_contextual_help_for( 'provider_media_vault_secret', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_media_vault_secret' ) do %>
+	<h3>Provider Media Vault Secret</h3>
+	<p>This is a password. This is provided to you by Limelight. This secret is used to generate the special URLs that stop users from accessing your content without your implicit consent (via your website running VMS). You may leave this blank if you are not using Media Vault (enabled above).</p>
+<% end %>
+
+<p><%= label_tag( 'provider[media_vault_security_enforce_referrer]', 'Media Vault Security: Enforce Referrer?' ) %>
+	<%= check_box( 'provider', 'media_vault_security_enforce_referrer' ) %> (<%= link_to_show_contextual_help_for( 'provider_media_vault_security_', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_media_vault_security_enforce_referrer' ) do %>
+	<h3>Provider Media Vault Security: Enforce Referrer?</h3>
+	<p>The Referrer field is an HTTP header. When people visit your page and the link is generated and this feature is enabled, only people that access your content through your VMS instance are able to watch the video. Should people embed the video code other sites, the video will not play. If disabled, the refferer is not included or checked.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[media_vault_security_enforce_ip]', 'Media Vault Security: Enforce IP Address?' ) %>
+	<%= check_box( 'provider', 'media_vault_security_enforce_ip' ) %> (<%= link_to_show_contextual_help_for( 'provider_media_vault_security_enforce_ip', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_media_vault_security_enforce_ip' ) do %>
+	<h3>Provider Media Vault Security: Enforce IP Address?</h3>
+	<p>When enabled, each video requester's IP address is captured by VMS and integrated into the video request sent to Limelight. This should prevent people from embedding your content as with referrer protection. However, each request is tied to each user (via his or her IP) rather than a referrer header, which can be faked. This makes it much more difficult to share content. If disabled, the requester's IP address is ignored.</p>
+<% end %>
+
+<fieldset><legend>Time restrictions</legend>
+<p><%= label_tag( 'provider[media_vault_security_enforce_time]', 'Media Vault Security: Enforce time?' ) %>
+	<%= check_box( 'provider', 'media_vault_security_enforce_time' ) %> (<%= link_to_show_contextual_help_for( 'provider_media_vault_security_enforce_time', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_media_vault_security_enforce_time' ) do %>
+	<h3>Provider Media Vault Security: Enforce time?</h3>
+	<p>When enabled (and it is highly recommended that you do so if you're using Media Vault), every request to the video page has a set life-span. If disabed, videos are downloadable forever later. DO NOT DISABLE THIS SETTING (even for a short while) if you plan to limit the amount of time a user is able to watch the video. This time restriction prevents video theft as well as the link is only good for a, ideally, short period of time. If you disable this, even temporarily, a clean URL, without time limits, will be exposed. The ONLY way to re-enforce the time limits for sure is to change your Media Vault Secret after re-enabling this setting. Please note: you MUST arrange for this change with Limelight and have them change it at the same time you change this value. If you do not coordinate the change, an outage will occur.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[media_vault_security_time_interval_in_seconds]', 'Media Vault Security: Time Interval (Seconds)' ) %>
+	<%= text_field( 'provider', 'media_vault_security_time_interval_in_seconds' ) %> (<%= link_to_show_contextual_help_for( 'provider_media_vault_security_time_interval_in_seconds', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_media_vault_security_time_interval_in_seconds' ) do %>
+	<h3>Provider Media Vault Security: </h3>
+	<p>If the time is being enforced, this controls how long users have to initiate a connection with Limelight before the link is no longer valid. This should be set to a "reasonable" value. Typically, 5 minutes (300 seconds) is a good setting for short videos. Ideally, it should be long enough for your user to play the entire video, plus a few minutes for pausing and advertisements. If you set this too short, the progressive loading will fail. Progressive loading allows your viewers to skip scrub to an arbitrary time within your video.</p>
+<% end %>
+</fieldset>
+
+</fieldset>

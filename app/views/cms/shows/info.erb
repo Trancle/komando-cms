@@ -1,0 +1,69 @@
+<h3>Summary and Control</h3>
+
+<dl>
+	<dt>URL</dt>
+	<dd><%= url_for( url_to_show( @show.scheduled_version_current_or_last_version_cache ) ) %></dd>
+
+	<dt>Availability</dt>
+	<dd><%= ( @show.available? ) ? ( 'Available' ) : ( 'Not available' ) %></dd>
+
+	<dt>Published?</dt>
+	<dd><%= yes_or_no @show.published %></dd>
+
+  <dt>Key Words</dt>
+  <dd><%= ( @show.keywords.nil? or @show.keywords.empty? ) ? ( 'no keywords specified' ) : ( '<pre>' + h( @show.keywords ) + '</pre>' ) %></dd>
+
+  <dt>Tags</dt>
+  <dd><%= ( @show.tags_as_string.nil? or @show.tags_as_string.empty? ) ? ( 'no tags specified' ) : ( '<pre>' + h( @show.tags_as_string ) + '</pre>' ) %></dd>
+
+	<dt>Episodes</dt>
+	<dd>
+		<ul>
+			<li>Publicly Available: <%= pluralize( @show.count_public_episodes, 'episode' ) %></li>
+			<li>Premium Available: <%= pluralize( @show.count_premium_episodes, 'episode' ) %></li>
+			<li>Total Available: <%= pluralize( @show.count_available_episodes, 'episode' ) %></li>
+			<li>Total Unavailable: <%= pluralize( @show.count_episodes, 'episode' ) %></li>
+			<li>Comments are <%= @show.are_episode_comments_enabled? ? 'enabled' : 'disabled' %></li>
+			<li>User tagging is <%= @show.is_episode_user_tagging_enabled? ? 'enabled' : 'disabled' %></li>
+		</ul>
+	</dd>
+
+	<dt>Versioning</dt>
+	<dd>
+		<ul>
+			<li>Current version: <% if @show.scheduled_version_current_cache.nil? %>
+			is not scheduled
+			<% else %>
+				<%= @show.scheduled_version_current_cache.version_number_cache %>, created by <%= link_to( @show.scheduled_version_current_cache.editor.username, :controller => '/admin/users', :action => 'info', :id => @show.scheduled_version_current_cache.editor.id ) %> @ <%= @show.scheduled_version_current_cache.editor.updated_at %>
+			<% end %></li>
+			<li>There are <%= pluralize( @show.versions.count, 'version') %> total</li>
+		</ul>
+	</dd>
+
+	<dt>Related Shows</dt>
+	<dd>
+		<% unless @show.related_shows.empty? %>
+			<ul>
+				<% @show.related_shows.each do |rshow| %>
+					<li><%= h rshow.scheduled_version_current_or_last_version_cache.title %></li>
+				<% end %>
+			</ul>
+		<% else %>
+			<p>There are no explicity related shows and implicit relations aren't yet implemented. Therefore, the user will never see any related shows.</p>
+		<% end %>
+	</dd>
+
+	<!-- <dt>Categories</dt>
+	<dd>
+		<% unless @show.categories.empty? %>
+		<ul class="control_list">
+			<% @show.link_categorizeable_with_categories.each do |link| %>
+				<li><span class="name"><%= link.category.name %></span><ul class="actions"><li><%= button( 'unlink', :action => 'unlink_show_from_show_category', :id => link.id ) %></li></ul></li>
+			<% end %>
+		</ul>
+		<% else %>
+			<p>Show is not liked to any categories</p>
+		<% end %>
+		<p><%= link_to( 'link to category', :action => 'new_link_show_with_show_category', :id => @show.id) %></p>
+	</dd>-->
+</dl>

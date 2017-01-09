@@ -1,0 +1,6 @@
+<p>Enter the Episode's numberical ID below to jump to that episode.</p>
+
+<% form_tag( {:action => 'info'}, {:method => 'get'} ) do %>
+	<p><%= text_field_tag( 'id', '' ) %></p>
+	<p><%= submit( 'Jump' )%></p>
+<% end %>

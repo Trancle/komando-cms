@@ -1,0 +1,9 @@
+<%= render :partial => 'info' %>
+
+<dl>
+	<dt>Test Value</dt>
+	<dd><%= h @value %></dd>
+
+	<dt>Result</dt>
+	<dd>This word <strong>will<%= ' not' unless @blacklisted %></strong> be blacklisted.</dd>
+</dl>

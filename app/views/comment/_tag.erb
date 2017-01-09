@@ -1,0 +1,9 @@
+<% unless tag_cloud.empty? %>
+<ul>
+<% tag_cloud.each_pair do |t,c| %>
+	<li><%= h t %>(<%= c %>)</li>
+<% end %>
+</ul>
+<% else %>
+<p>There are no tags</p>
+<% end %>

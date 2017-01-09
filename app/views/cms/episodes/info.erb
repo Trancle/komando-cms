@@ -1,0 +1,75 @@
+<% svc = @episode.current_version_or_latest %>
+<dl>
+	<dt>Title</dt>
+	<dd><%= h svc.title %></dd>
+
+	<dt>Description</dt>
+	<dd><div class="info_image" style="max-width: 50%;"><%= ( svc.still_image_virtual_path.nil? ) ? ( '<p>No Image</p>' ) : ( image_tag( svc.still_image_virtual_path, :style => 'float:left;' ) ) %></div><%= h( svc.description ) %></dd>
+
+	<dt>Season Number</dt>
+	<dd><%= ( svc.season_number.nil? ) ? ( 'No season specified' ) : ( h( svc.season_number ) ) %></dd>
+
+	<dt>Episode Number</dt>
+	<dd><%= ( svc.episode_number.nil? ) ? ( 'No episode number specified' ) : ( h( svc.episode_number ) ) %></dd>
+
+	<dt>URL Path</dt>
+	<dd><%= url_for( url_to_episode(@episode.show.scheduled_version_current(@time),svc) ) %></dd>
+
+	<dt>Version Number</dt>
+	<dd><%= @episode.current_version_or_latest.version_number_cache %></dd>
+
+	<dt>Version Created</dt>
+	<dd><%= svc.created_at %></dd>
+
+	<dt>Version Created By</dt>
+	<dd><%= h svc.editor_or_deleted.username %><%= ' - ' + mail_to( svc.editor_or_deleted.email ) unless svc.editor_or_deleted.class.name.eql?'UserDeleted' %></dd>
+</dl>
+
+
+<h3>Summary and Control</h3>
+
+<dl>
+	<dt>Published?</dt>
+	<dd><%= yes_or_no @episode.published %></dd>
+
+	<dt>Published Date</dt>
+	<dd><%= @episode.published_datetime %></dd>
+
+	<dt>Versioning</dt>
+	<dd>
+		<ul>
+<% cv = @episode.current_version %>
+			<li>Current version: <% if cv.nil? %>
+			is not scheduled
+			<% else %>
+				<%= cv.version_number_cache %>, created by <%= link_to( cv.editor.username, :controller => '/admin/users', :action => 'info', :id => @show.scheduled_version_current_cache.editor.id ) %> @ <%= cv.updated_at %>
+			<% end %></li>
+			<li>There are <%= pluralize( @episode.versions.count, 'version') %> total</li>
+		</ul>
+	</dd>
+
+	<dt>Availability</dt>
+	<dd>
+		<p>This episode is currently
+			<% if @episode.available? %>
+				<strong>available</strong> to <strong><%= ( @episode.free? ) ? ( 'all visitors' ) : ( 'members only' ) %></strong>.
+			<% else %>
+				<strong>not available</strong> and is <strong>not visible</strong> to members or non-members.
+			<% end %>
+			</p>
+	</dd>
+
+	<dt>Comments</dt>
+	<dd><p>Comments are <%= ( @episode.are_comments_enabled? ) ? ('enabled') : ('disabled') %><%= ' (disabled at the show level)' unless @episode.show.are_episode_comments_enabled? %> and there are <%= pluralize( @episode.episode_comments.count, 'comment' ) %></p>
+	</dd>
+
+  <dt>Tags</dt>
+  <dd><%= (@episode.tags.empty? ? ('No tags') : ( @episode.tags.map{|t| t.tag}.join(', ') ) ) %></dd>
+
+	<dt>User Tags</dt>
+	<dd><p>User tagging is <%= ( @episode.is_user_tagging_enabled? ) ? ('enabled') : ('disabled') %><%= ' (disabled at the show level)' unless @episode.show.is_episode_user_tagging_enabled? %></p>
+	</dd>
+
+	<dt>Episode parts</dt>
+	<dd><%= pluralize( @episode.episode_parts.count, 'episode part' ) %></dd>
+</dl>

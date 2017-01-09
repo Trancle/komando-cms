@@ -1,0 +1,12 @@
+<dl>
+	<dt><%= label_tag( 'word[value]', 'Expression' ) %></dt>
+	<dd><%= text_area( 'word', 'value' ) %></dd>
+
+	<dt><%= label_tag( 'word[enabled]', 'Enabled?' ) %></dt>
+	<dd><%= check_box( 'word', 'enabled', :class => 'checkbox' ) %>
+	<p>Disabled rules are not evaluated</p></dd>
+
+	<dt><%= label_tag( 'word[comment]', 'Comment' ) %></dt>
+	<dd><%= text_area( 'word', 'comment' ) %> (optional)
+	<p>A comment is free-form. Just explain what your blacklisted word is supposed to stop.</p></dd>
+</dl>

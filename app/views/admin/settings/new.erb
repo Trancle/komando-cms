@@ -1,0 +1,9 @@
+<p><%= @setting.class.friendly_type_description %></p>
+
+<%= error_messages_for :setting %>
+
+<% form_tag( :action => 'create' ) do %>
+	<%= render :partial => 'form' %>
+	<div style="display:none"><%= hidden_field_tag( 'setting_type', @setting_type ) %></div>
+	<p><%= submit('create') %></p>
+<% end %>

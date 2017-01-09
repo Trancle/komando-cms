@@ -1,0 +1,8 @@
+<%= Liquid::Template.parse( @layout ).render(
+	 {
+		'blocks' => @blocks,
+		'page_url' => url_for(:only_path => false),
+        'username' => logged_in_username,
+        'is_ssl' => @controller.request.ssl?
+	} )
+%>

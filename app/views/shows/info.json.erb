@@ -1,0 +1,33 @@
+<%
+r = Com::WojnoSystems::Builder::JSON::Base.new
+r.array!(:episodes) do |x|
+	@pagination.items_for_current_page.each do |episode|
+		e = Com::WojnoSystems::Builder::JSON::Base.new
+		e.created_at episode.created_at.utc.iso8601
+		e.updated_at episode.updated_at.utc.iso8601
+		e.id! episode.id
+		e.is_free episode.free?
+		e.published_datetime episode.published_datetime
+		e.acts_as_ordered_order episode.acts_as_ordered_order
+		if e.episode.episode_version.still_image_virtual_path
+            e.episode_still_image_url episode.current_version.still_image_virtual_path
+            e.episode_still_image_alt episode.current_version.still_image_alt
+            e.episode_still_image_cdn_path ResizedImagesCachePathVirtual.pathname.join( LiquidFilter::ResizeImg.hash_string_to_path( episode.current_version.image_still_hash ).to_s ).to_s if episode.current_version.has_image_still_hash?
+            e.episode_still_image_extension episode.current_version.still_image_ext
+		end
+		e.title episode.current_version.title
+		e.description episode.current_version.description
+		e.url_to_watch url_for( url_to_episode( @show_version, episode.current_version ) )
+		e.show_title @show_version.title
+		e.total_length_in_seconds episode.total_length_in_seconds
+		e.total_length_colonized episode.total_length_colonized
+		e.total_length_in_words distance_of_time_in_words( @time, @time + episode.total_length_in_seconds, true )
+		e.episode_number episode.current_version.episode_number if episode.current_version.episode_number
+		e.season_number episode.current_version.season_number if episode.current_version.season_number
+
+		x << e
+	end
+end
+r.number_of_pages @pagination.count_pages
+r.page_number params[:page] || 1
+%><%= r %>

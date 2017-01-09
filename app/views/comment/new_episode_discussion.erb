@@ -1,0 +1,7 @@
+<div class="episode_comment">
+<%= error_messages_for :episode_comment %>
+<% form_tag( { :action => 'create_episode_discussion', :id => @episode.id } ) do %>
+	<%= render :partial => 'form' %>
+	<p><%= submit( 'comment!' ) %></p>
+<% end %>
+</div>

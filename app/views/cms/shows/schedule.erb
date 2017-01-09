@@ -1,0 +1,14 @@
+<p>This is version scheduling for all time. When you create versions for the information about a show, you need to schedule when it will appear. This allows you to make changes to show information without making it live immediately.</p>
+
+<% unless @pagination.empty? %>
+<ul class="alternate">
+<% @pagination.items_for_current_page.each do |schedule| %>
+	<li>Version #<%= schedule.scheduled_version.version.version_number %> will appear between: <%= mu_ex_date_range_show( schedule ) %></li>
+<% end %>
+</ul>
+
+<% else %>
+
+<p>Sorry, there are no schedules. Your show is, effectively, invisible to the world.</p>
+
+<% end %>

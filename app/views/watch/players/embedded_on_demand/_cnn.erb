@@ -1,0 +1,13 @@
+<% # This is entirely legacy code 
+# THIS IS LEGACY SUPPORT: 6fb3d0be92c69b5949feca71ba8938ec9ae883d7
+managed_file_resource = video_contents.first
+video_id, options = managed_file_resource.legacy_embed_code_parse_parameters( managed_file_resource.type_information.strip )
+url = "http://i.cdn.turner.com/cnn/.element/apps/cvp/3.0/swf/cnn_416x234_embed.swf?context=embed&amp;videoId=#{video_id}"
+%>
+<object id="unique_player_id_required_by_ie_stupidness" type="application/x-shockwave-flash" data="<%= url %>" class="player">
+<param name="allowfullscreen" value="true" />
+<param name="allowscriptaccess" value="always" />
+<param name="wmode" value="transparent" />
+<param name="movie" value="<%= url %>" />
+<param name="bgcolor" value="#000000" />
+</object>

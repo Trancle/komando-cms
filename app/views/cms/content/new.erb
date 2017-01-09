@@ -1,0 +1,9 @@
+<p>First, we'll need to call it something you'll remember. This name is only used for internal use. It will never be seen publicly. This will help you select the right file when attaching it to an ad or an episode part.</p>
+
+<%= error_messages_for :mfrn %>
+
+<% form_tag( { :action => 'create' } ) do %>
+	<%= render :partial => 'pretty_name_form' %>
+
+	<p><%= submit( 'save' ) %></p>
+<% end %>

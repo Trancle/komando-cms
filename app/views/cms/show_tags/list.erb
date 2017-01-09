@@ -1,0 +1,9 @@
+<% if @taggings.empty? %>
+    <p>No tags yet</p>
+<% else %>
+    <ul class="control_list alternate">
+      <% @taggings.sort{|x,y| x.tag.tag <=> y.tag.tag }.each do |tagging| %>
+          <li><span class="name"><%= h tagging.tag.tag %></span><ul class="actions"><li><%= button_to( 'remove', :action => 'destroy', :id => tagging.id ) %></li></ul></li>
+      <% end %>
+    </ul>
+<% end %>

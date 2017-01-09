@@ -1,0 +1,20 @@
+<h1>Show List</h1>
+
+<% unless @pagination.empty? %>
+
+	<%= pagination_buttons( @pagination ) %>
+<ul>
+	<% @pagination.items_for_current_page.each do |show| %>
+		<% current_version = show.scheduled_version_current_cache( Time.now.utc ) %>
+
+		<li><%= public_image_tag( current_version.show_still_image ) if current_version.show_still_image %><%= link_to( current_version.title, :action => 'info', :id => show.id ) %> (<%= current_version.version_number_cache %>)</li>
+
+	<% end %>
+</ul>
+	<%= pagination_buttons( @pagination ) %>
+
+<% else %>
+
+<p>There aren't any shows</p>
+
+<% end %>

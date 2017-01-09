@@ -1,0 +1,56 @@
+<a href="#" class="refresh-comments-button">refresh comments</a>
+<script type="text/javascript">
+  $('.refresh-comments-button').click( function(e) {
+      e.preventDefault();
+      episode_comment_refresh_comments( <%= @episode.id %> );
+  } );
+</script>
+<% if EpisodeComment.can_post_comment?( @controller ) %>
+<% if_has_javascript do %>
+<p><a href="#" class="comment-show-dialog-button">comment!</a>
+  <script type="text/javascript">$('.comment-show-dialog-button').click( function(e) {
+      e.preventDefault();
+      $('#new-episode-comment').show();
+  } );
+  </script></p>
+<div id="new-episode-comment" style="display:none;" class="new-episode-comment">
+  <a href="#" class="new-comment-close-button">X</a>
+  <script type="text/javascript">
+    $('.new-comment-close-button').click(function(e) {
+        e.preventDefault();
+        episode_comment_new_comment_dismiss();
+    });
+  </script>
+<div id="new-episode-comment-errors" style="display:none"></div>
+<% form_tag( { :controller => 'comment', :action => 'create_episode_discussion', :id => @episode.id }, { :id => 'new-episode-comment-form' } ) do %>
+<%= render :partial => 'comment/form' %>
+<%= spinner_named( 'new_episode_comment_submit_spinner' ) %>
+<p id="new_episode_comment_submit_container"><%=submit('comment')%></p>
+<% end %>
+</div>
+<% end %>
+<noscript>
+<p><%= link_to( 'comment!', episode_comment_path( :action => 'new_episode_discussion', :id => @episode.id  ) ) %></p>
+</noscript>
+<% else %>
+<p id="new-episode-comment-login-to-comment"><%= link_to( 'Login to comment', url_for( :controller => 'auth', :r => url_for ) ) %></p>
+<% end %>
+
+<script type="text/javascript">
+  $('#new-episode-comment-form').submit(function(e) {
+      e.preventDefault();
+      episode_comment_new_comment('<%= @episode.id %>');
+  });
+</script>
+
+
+<% unless @episode_comment_pagination.empty? %>
+<dl class="comments">
+<% episode_comments = @episode_comment_pagination.items_for_current_page %>
+	<% episode_comments.each_with_index do |comment,index| %>
+		<%= render :partial => 'comment/info', :locals => { :comment => comment, :options_class => html_list_first_or_last_class( episode_comments, comment ) + ' row-' + ( (index%2).eql?(0) ? 'a' : 'b' ) }  %>
+	<% end %>
+</dl>
+<% else %>
+<p>There are no comments. Be the first!</p>
+<% end %>

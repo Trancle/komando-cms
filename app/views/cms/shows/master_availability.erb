@@ -1,0 +1,17 @@
+<p>General availability is a scheduled time during which this show and all episodes are available on the site, for both premium and free users. Presently, this show will appear only on the site and be available for watching only during the following time frames:</p>
+
+<h2>Available during:</h2>
+
+<% unless @availabilities.empty? %>
+
+<ul class="control_list alternate">
+	<% @availabilities.each do |availability| %>
+		<li><span class="name"><%= mu_ex_date_range_show( availability ) %></span><ul class="actions"><li><%= link_to( 'edit', :action => 'edit_master_availability', :id => availability.id ) %></li><li><%= link_to( 'destroy', :action => 'destroy_master_availability_confirm', :id => availability.id ) %></li></ul></li>
+	<% end %>
+</ul>
+
+<% else %>
+
+	<p>This show will never be seen. Try creating a master schedule!</p>
+
+<% end %>

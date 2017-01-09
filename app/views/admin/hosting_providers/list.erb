@@ -1,0 +1,28 @@
+<p>Listed here are the hosting providers that you have available for your videos for which you pay or otherwise will provide hosting.</p>
+
+<% unless @pagination.empty? %>
+
+<%= pagination_buttons( @pagination ) %>
+
+<ul class="control_list alternate">
+<% @pagination.items_for_current_page.each do |provider| %>
+	<li>
+	<ul class="actions">
+		<li><%= link_to( 'edit', :action => 'edit', :id => provider.id ) %></li>
+<% if provider.deprecated %>
+		<li><%= link_to( 'undeprecate', :action => 'confirm_undeprecate', :id => provider.id ) %></li>
+<% else %>
+		<li><%= link_to( 'deprecate', :action => 'confirm_deprecate', :id => provider.id ) %></li>
+<% end %>
+	</ul>
+	<div class="control_item_title"><h5>Name</h5><p><%= link_to( h( provider.name ), :action => 'info', :id => provider.id ) %></p></div>
+	<div><%= humanized_provider_name_from_class( provider ) %></div>
+	</li>
+<% end %>
+<ul>
+
+<%= pagination_buttons( @pagination ) %>
+
+<% else %>
+<p>There are no hosting providers available. This is normal if all you want to do is embed video. However, if you want to host your own content, you'll need one or more providers who will host your content.</p>
+<% end %>

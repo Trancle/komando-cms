@@ -1,0 +1,19 @@
+<p>Free availability is a time span, such that, when the episode is available via the master availability, it will also be free of charge (no membership required).</p>
+
+<h3>Free Availability</h3>
+
+<p>Presently, this episode will appear only on the site and be available for <i>free</i> watching only during the following time frames:</p>
+
+<% unless @availabilities.empty? %>
+
+<ul class="control_list alternate">
+	<% @availabilities.each do |availability| %>
+		<li><span class="name"><%= mu_ex_date_range_show( availability ) %></span><ul class="actions"><li><%= link_to( 'edit', :action => 'edit_free_availability', :id => availability.id ) %></li><li><%= link_to( 'destroy', :action => 'destroy_free_availability_confirm', :id => availability.id ) %></li></ul></li>
+	<% end %>
+</ul>
+
+<% else %>
+
+	<p>This show will never be free. This may be intentional.</p>
+
+<% end %>

@@ -1,0 +1,11 @@
+<p><%= label_tag( 'mfr[video_id]', 'CBS Content Value' ) %><%= text_field( 'mfr', 'video_id' ) %> (<%= link_to_show_contextual_help_for( 'mfr_video_id', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_video_id' ) do %>
+	<h3>CBS Video ID Help</h3>
+	<p>The CBS Content Value is the special string of numbers that CBS uses to identify videos. All videos on CBS have one. When you go to a video on the CBS site (<a href="http://www.cbsnews.com">www.cbsnews.com</a>), a param named "FlashVars" will include the video's Content Value as "contentValue=VALUE" where VALUE is the string you need to enter above.</p>
+	<h3>What do they look like?</h3>
+	<p>CBS Content Values are a string of numbers. When you visit the page on which you watch the video, the video's Content Value is in the embed code. For example, say you watch the video at the following <a href="http://www.cbsnews.com/video/watch/?id=7385390n">URL</a>. At the bottom right you will see a "SHARE" button. Clicking that button will show you an "Embed this video" text field. Copy this field to a text document so you can see it better. Note: the Video's ID is no longer how CBS's player identifies that video.</p>
+	<blockquote>
+	<%= h( '<embed src="http://cnettv.cnet.com/av/video/cbsnews/atlantis2/cbsnews_player_embed.swf" scale="noscale" salign="lt" type="application/x-shockwave-flash" background="#333333" width="425" height="279" allowFullScreen="true" allowScriptAccess="always"' )%><wbr/>
+ <%= h( 'FlashVars="si=254&&contentValue=' ) %><span class="highlight">50113519</span><%= h( '&shareUrl=http://www.cbsnews.com/video/watch/?id=7385390n" />' ) %></blockquote>
+	<p>The highlighted number above is the video's ID. Yes, it's buried.</p>
+<% end %>

@@ -1,0 +1,24 @@
+<h1>Related Shows</h1>
+
+<h2><%= show_link_name( @show ) %></h2>
+
+<% unless @pagination.empty? %>
+
+<%= pagination_buttons( @pagination ) %>
+
+<ul class="control_list">
+	<% @pagination.items_for_current_page.each do |link| %>
+		<li><span class="name"><%= @show.scheduled_version_current_or_last_version_cache.title %> &mdash;(<%= link.weight %>)&rarr; <%= show_link_name( link.related_show ) %></span><ul class="actions"><li><%= link_to( 'destroy', :action => 'confirm_destroy', :id => link.id ) %></li></ul></li>
+	<% end %>
+</ul>
+
+<%= pagination_buttons( @pagination ) %>
+
+<% else %>
+
+	<p>There are no explicitly related shows.</p>
+
+<% end %>
+
+<%= content_tag('p', link_to( 'add', :action => 'new', :id => @show.id ) ) %>
+<%= content_tag('p', link_to( 'info', :controller => '/cms/shows', :action => 'info', :id => @show.id ) ) %>

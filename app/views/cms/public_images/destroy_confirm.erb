@@ -1,0 +1,5 @@
+<p><strong>WARNING</strong>: You are about to permanently delete this image. It will be unlinked in the database. No image will be displayed for content this references this image (if any). If you need to put this image back, you'll have to re-link it to everywhere it was used.</p>
+
+<%= render :partial => 'info', :locals => { :public_image => @public_image } %>
+
+<%= button( 'destroy', :action => 'destroy', :id => @public_image.id ) %>

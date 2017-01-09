@@ -1,0 +1,6 @@
+<%= error_messages_for :category %>
+
+<% form_tag( :action => 'create' ) do %>
+	<%= render :partial => 'form' %>
+	<p><%= submit( 'create' ) %></p>
+<% end %>

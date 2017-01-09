@@ -1,0 +1,13 @@
+<h2><%= h @show.scheduled_version_current_or_last_version_cache.title %></h2>
+
+<%= error_messages_for :link %>
+
+<% form_tag( :action => 'create_link_show_with_show_category', :id => @show.id ) do %>
+	<dl>
+		<dt><%= label_tag( 'link[category_id]', 'Category ID' ) %></dt>
+		<dd><%= text_field( 'link', 'category_id' ) %></dd>
+	</dl>
+	<p><%= submit( 'link' ) %></p>
+<% end %>
+
+<%= content_tag('p', link_to( 'cancel', :action => 'info', :id => @show.id ) ) %>

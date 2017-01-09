@@ -1,0 +1,12 @@
+<% form_tag( :action => 'create_video_content_embedded_on_demand', :id => @mfrn.id ) do %>
+	<div style="display:none;"><%= hidden_field( 'mfr', 'type' ) %></div>
+
+	<%= render :partial => path_to_configure_form_partial( @mfr ) %>
+
+	<h3>Duration</h3>
+
+	<%= render :partial => 'duration' %>
+
+	<p><%= submit( 'create' ) %></p>
+
+<% end %>

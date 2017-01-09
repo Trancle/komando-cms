@@ -1,0 +1,69 @@
+#!/bin/bash
+# Created by Wojno Systems, Inc. to manage logins
+# Copyright Christopher Richard Wojno 2011
+# Starts the VMS instance(s)
+### BEGIN INIT INFO
+# Provides:          vms-task-runner
+# Required-Start:    $network
+# Required-Stop:     $network
+# Should-Start:
+# Should-Stop:
+# X-Start-Before:
+# X-Start-After:
+# Default-Start:	2 3 4 5
+# Default-Stop:		0 1 6
+# X-Interactive: false
+# Short-Description: VMS Task Runner
+# Description:       Provides the video management service Asynchronous Task Runner/Manager from Wojno Systems, Inc. Required to upload files to providers
+### END INIT INFO
+
+source /etc/vms/task-runner.conf
+
+start() {
+	echo "Starting VMS Task Runner"
+
+	echo "Starting VMS Task Runner"
+	start-stop-daemon --start --exec "${vms_script_runner_bin}" --pidfile "${vms_pid_path}task_runner_daemon.pid" --chuid ${vms_user}:${vms_group} --chdir "${vms_root_path}" --background -- -e "${vms_rails_environment}" "${vms_task_runner_bin}"
+	echo "Started VMS Task Runner"
+}
+
+stop() {
+	echo "Stopping VMS Task Runner"
+	echo "Stopping VMS Task Runner"
+	start-stop-daemon --stop --exec "${vms_script_runner_bin}" --pidfile "${vms_pid_path}task_runner_daemon.pid"
+	echo "Stopped VMS Task Runner"
+}
+
+restart() {
+	echo "Restarting VMS Task Runner"
+	stop
+	start
+}
+
+status() {
+	# Query each instance to see if it's running
+	# Get the PIDS of each lighttpd instance claimed to be running
+	return 0
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	status)
+		echo "Not yet implemented"
+		;;
+	restart)
+		restart
+		;;
+	reload)
+		restart
+		;;
+	*)
+		echo "VMS Task Runner commands: [start|stop|restart]"
+		;;
+esac
+exit $?

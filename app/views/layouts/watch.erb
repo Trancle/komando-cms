@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Watch <%= h @episode_version.title %> @ <%= h( Setting['vms-protected-site-head-title'].value ) %></title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="description" content="<%= h( strip_tags(@episode_version.description) ) %>"/>
+	<meta name="keywords" content="<%= h( @show.keywords + ', ' + @episode.tags.collect{|t| t.tag}.join(', ') ) %>"/>
+	<%= csrf_meta_tag if controller.is_logged_in? %>
+
+	<meta property="og:title" content="<%= @episode_version.title %>"/>
+	<meta property="og:type" content="website"/>
+	<meta property="og:url" content="<%= url_for( url_to_episode(@show_version,@episode_version).merge( :only_path => false ) ) %>"/>
+        <% if @episode_version.still_image_virtual_path %>
+	<meta property="og:image" content="<%= request.protocol + request.host_with_port %><%= @episode_version.still_image_virtual_path %>"/>
+        <% end %>
+	<meta property="og:description" content="<%= h( strip_tags(@episode_version.description) ) %>"/>
+	<meta property="og:locale" content="en_US"/>
+        <% if !Setting["#{Setting.protected_programmatic_prefix}-facebook-admin-id"].nil? and !Setting["#{Setting.protected_programmatic_prefix}-facebook-admin-id"].value_typed.nil? and !Setting["#{Setting.protected_programmatic_prefix}-facebook-admin-id"].value_typed.empty? %>
+        <meta property="fb:admins" content="<%= Setting["#{Setting.protected_programmatic_prefix}-facebook-admin-id"].value_typed %>"/>
+        <% end %>
+
+  <!-- header-head-include -->
+  <%= Liquid::Template.parse( PageLayout.first( :conditions => "programmatic_name = 'header-head-include'" ).scheduled_version_current( @time ).layout ).render({                                                                                                                                                                        'is_ssl' => @controller.request.ssl?}) %>
+  <!-- /header-head-include -->
+
+  <%= javascript_include_tag 'application.js' %>
+
+  <!-- watch-header-include -->
+  <%= Liquid::Template.parse( PageLayout.first( :conditions => "programmatic_name = 'watch-header-include'" ).scheduled_version_current( @time ).layout ).render({                                                                                                                                                                        'is_ssl' => @controller.request.ssl?}) %>
+  <!-- /watch-header-include -->
+</head>
+<body>
+<% if @controller.satisfy_require_administrator_user? and AdministrationVisibilityConfig.visible? %>
+<div id="admin-tools">
+<%= link_to( 'episode info', :controller => '/cms/episodes', :action => 'info', :id => @episode.id ) %>
+<% form_tag( { :controller => '/cms/episodes', :action => 'perform_preview', :id => @episode.id }, {:method => :get} ) do %>
+<% @preview_time = CW::StandAloneTimeHelper.new( :t => Time.now.tomorrow ) %>
+<div><%= datetime_select( 'preview_time', 't' ) %></div>
+<p><%= submit( 'preview' ) %></p>
+<% end %>
+</div>
+<% end %>
+<%= layouts_common_body_include do; yield; end %>
+</body>
+</html>

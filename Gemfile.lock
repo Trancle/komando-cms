@@ -1,0 +1,232 @@
+PATH
+  remote: vendor/gem/arel-2.2.1
+  specs:
+    arel (2.2.0.20110809140134)
+
+PATH
+  remote: vendor/gem/bitgravity-0.0.1
+  specs:
+    bitgravity (0.0.1)
+
+PATH
+  remote: vendor/gem/builder-3.0.0
+  specs:
+    builder (3.0.0)
+
+PATH
+  remote: vendor/gem/cw-acts-as-ordered-1.0.0
+  specs:
+    cw-acts-as-ordered (1.0.0)
+
+PATH
+  remote: vendor/gem/cw-bread-crumbs-1.0.0
+  specs:
+    cw-bread-crumbs (1.0.0)
+
+PATH
+  remote: vendor/gem/cw_action_nav-1.0.0
+  specs:
+    cw_action_nav (1.0.0)
+
+PATH
+  remote: vendor/gem/cw_condition-1.0.0.1
+  specs:
+    cw_condition (1.0.0.1)
+
+PATH
+  remote: vendor/gem/cw_mu_ex_date_range-1.0.1
+  specs:
+    cw_mu_ex_date_range (1.0.1)
+
+PATH
+  remote: vendor/gem/cw_pagination-1.0.0
+  specs:
+    cw_pagination (1.0.0)
+
+PATH
+  remote: vendor/gem/cw_scheduled_version-1.0.0
+  specs:
+    cw_scheduled_version (1.0.0)
+
+PATH
+  remote: vendor/gem/cw_sort_order-1.0.4
+  specs:
+    cw_sort_order (1.0.4)
+
+PATH
+  remote: vendor/gem/daemons-1.1.4
+  specs:
+    daemons (1.1.4)
+
+PATH
+  remote: vendor/gem/erubis-2.7.0
+  specs:
+    erubis (2.7.0)
+
+PATH
+  remote: vendor/gem/hike-1.2.1
+  specs:
+    hike (1.2.1)
+
+PATH
+  remote: vendor/gem/kom-api-client-1.0.1
+  specs:
+    kom-api-client (1.0.1)
+
+PATH
+  remote: vendor/gem/liquid-2.5.0
+  specs:
+    liquid (2.5.0)
+
+PATH
+  remote: vendor/gem/mail-2.3.0
+  specs:
+    mail (2.3.0)
+
+PATH
+  remote: vendor/gem/multi_json-1.0.3
+  specs:
+    multi_json (1.0.3)
+
+PATH
+  remote: vendor/gem/polyglot-0.3.2
+  specs:
+    polyglot (0.3.2)
+
+PATH
+  remote: vendor/gem/rack-1.1.3
+  specs:
+    rack (1.1.3)
+
+PATH
+  remote: vendor/gem/rack-cache-1.0.2
+  specs:
+    rack-cache (1.0.2)
+      rack (>= 0.4)
+
+PATH
+  remote: vendor/gem/rack-mount-0.8.2
+  specs:
+    rack-mount (0.8.2)
+
+PATH
+  remote: vendor/gem/rack-ssl-1.3.2
+  specs:
+    rack-ssl (1.3.2)
+
+PATH
+  remote: vendor/gem/rack-test-0.6.0
+  specs:
+    rack-test (0.6.0)
+      rack (>= 1.0)
+
+PATH
+  remote: vendor/gem/thor-0.14.6
+  specs:
+    thor (0.14.6)
+
+PATH
+  remote: vendor/gem/tilt-1.3.2
+  specs:
+    tilt (1.3.2)
+
+PATH
+  remote: vendor/gem/treetop-1.4.10
+  specs:
+    treetop (1.4.10)
+      polyglot
+      polyglot (>= 0.3.1)
+
+PATH
+  remote: vendor/gem/tzinfo-0.3.29
+  specs:
+    tzinfo (0.3.29)
+
+PATH
+  remote: vendor/gem/ws-json-builder-1.0.1
+  specs:
+    ws-json-builder (1.0.1)
+
+PATH
+  remote: vendor/rails
+  specs:
+    actionmailer (2.3.18)
+      actionpack (= 2.3.18)
+    actionpack (2.3.18)
+      activesupport (= 2.3.18)
+      rack (~> 1.1.0)
+    activerecord (2.3.18)
+      activesupport (= 2.3.18)
+    activeresource (2.3.18)
+      activesupport (= 2.3.18)
+    activesupport (2.3.18)
+    rails (2.3.18)
+      actionmailer (= 2.3.18)
+      actionpack (= 2.3.18)
+      activerecord (= 2.3.18)
+      activeresource (= 2.3.18)
+      activesupport (= 2.3.18)
+      rake (>= 0.8.3)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    bcrypt-ruby (3.1.2)
+    fspath (2.0.4)
+    image_optim (0.8.0)
+      fspath (~> 2.0.3)
+      image_size (~> 1.1.2)
+      in_threads (~> 1.1.1)
+      progress (~> 2.4.0)
+    image_size (1.1.2)
+    in_threads (1.1.1)
+    json (1.8.0)
+    mime-types (1.23)
+    postgres (0.7.9.2008.01.28)
+    progress (2.4.0)
+    rake (10.0.4)
+    rmagick (2.13.2)
+    rubycas-client (2.3.9)
+      activesupport
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  arel (> 2.2.0)!
+  bcrypt-ruby
+  bitgravity (= 0.0.1)!
+  builder (= 3.0.0)!
+  cw-acts-as-ordered (= 1.0.0)!
+  cw-bread-crumbs (= 1.0.0)!
+  cw_action_nav (= 1.0.0)!
+  cw_condition (= 1.0.0.1)!
+  cw_mu_ex_date_range (= 1.0.1)!
+  cw_pagination (= 1.0.0)!
+  cw_scheduled_version (= 1.0.0)!
+  cw_sort_order (= 1.0.4)!
+  daemons (= 1.1.4)!
+  erubis (= 2.7.0)!
+  hike (= 1.2.1)!
+  image_optim (= 0.8.0)
+  json (= 1.8.0)
+  kom-api-client (= 1.0.1)!
+  liquid (= 2.5.0)!
+  mail (= 2.3.0)!
+  mime-types (= 1.23)
+  multi_json (>= 1.0.3)!
+  polyglot (= 0.3.2)!
+  postgres (= 0.7.9.2008.01.28)
+  rack (= 1.1.3)!
+  rack-cache (= 1.0.2)!
+  rack-mount (= 0.8.2)!
+  rack-ssl (= 1.3.2)!
+  rack-test (= 0.6.0)!
+  rails (= 2.3.18)!
+  rmagick (= 2.13.2)
+  rubycas-client
+  thor (= 0.14.6)!
+  tilt (= 1.3.2)!
+  treetop (= 1.4.10)!
+  tzinfo (= 0.3.29)!
+  ws-json-builder (= 1.0.1)!

@@ -1,0 +1,31 @@
+<dl>
+	<dt>Type</dt>
+	<dd><%= @comment.class.name.underscore.humanize %></dd>
+
+	<dt>Location</dt>
+	<dd><%= link_to( h( @comment.episode.show.scheduled_version_current_or_last_version.title ), :controller => 'cms/shows', :action => 'info', :id => @comment.episode.show.id ) %>: <%= link_to( h(@comment.episode.current_version_or_latest.title), :controller => 'cms/episodes', :action => 'info', :id => @comment.episode.id ) %></dd>
+
+	<dt>User</dt>
+	<dd><%= link_to( h( @comment.user_or_anonymous.username ), :controller => 'admin/users', :action => 'info', :id => @comment.user_or_anonymous.id ) %></dd>
+
+	<dt>Parent Comment</dt>
+	<dd><% if @comment.parent %><%= link_to( @comment.parent.title, :controller => 'cms/episode_comments', :action => 'info', :id => @comment.parent.id ) %><% else %>No parent<% end %></dd>
+
+	<dt>Title</dt>
+	<dd><%= h strip_tags( @comment.title ) %></dd>
+
+	<dt>Body</dt>
+	<dd style="border: 1px solid black;"><%= simple_format strip_tags @comment.body %></dd>
+
+	<dt>Visible</dt>
+	<dd><%= yes_or_no @comment.visible %></dd>
+
+	<dt>Created at</dt>
+	<dd><%= @comment.created_at %> (<%= distance_of_time_in_words_to_now( @comment.created_at ) %> ago)</dd>
+
+	<dt>Updated at</dt>
+	<dd><%= @comment.updated_at %> (<%= distance_of_time_in_words_to_now( @comment.updated_at ) %> ago)</dd>
+
+	<dt>Child comments</dt>
+	<dd><%= pluralize( @comment.children.count, 'child comment' ) %></dd>
+</dl>

@@ -1,0 +1,16 @@
+#!/usr/bin/env {YOUR RAILS PATH}/script/runner
+# Above boot straps this file into the Rails application ^ YOU MUST CHANGE THIS
+# Change the above line to match the ABSOLUTE path of your RAILs application followed by "/script/runner"
+
+# FILE LOCATION:
+# It is assumed that this file lives in: RAILS_ROOT/app_task_runner/cw_task_runner_boot_daemon.rb
+# If you change this, you must update: vendor/plugins/cw_task_runner/lib/cw_task_runner_boot.rb
+
+
+# Change the configuration to suite what you need. Generally, this need not be changed
+CONFIGURATION = { :pid_path => 'tmp/pids/task_runner_daemon.pid', :socket_path => 'tmp/sockets/task_runner_daemon.s', :task_runner_request_klass => 'TaskRunnerRequest', :check_for_tasks_interval => 60 }.freeze
+# DO NOT CHANGE BELOW: THIS SHOULD JUST WORK
+# Load the daemon
+require 'vendor/plugins/cw_task_runner/lib/cw_task_runner.rb'
+# Launch the daemon
+TaskRunner.new.run

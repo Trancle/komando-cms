@@ -1,0 +1,6 @@
+<%= error_messages_for :category %>
+
+<% form_tag( :action => 'update', :id => @category.id ) do %>
+	<%= render :partial => 'form' %>
+	<p><%= submit( 'save' ) %></p>
+<% end %>

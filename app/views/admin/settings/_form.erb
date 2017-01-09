@@ -1,0 +1,46 @@
+<dl>
+	<dt><%= label_tag( 'setting[name]', 'Name' ) %></dt>
+	<dd><%= text_field( 'setting', 'name' ) %></dd>
+
+	<dt>
+	<% if @setting.new_record? %>
+	<%= label_tag( 'setting[programmatic_name]', 'Programmatic name' ) %></dt>
+	<dd><%= text_field( 'setting', 'programmatic_name' ) %>
+	<% else %>
+	Programmatic Name (read-only)</dt>
+	<dd><pre><%= h @setting.programmatic_name %></pre>
+	<% end %>
+	</dd>
+
+	<dt>
+	<% unless @setting.protected? %>
+	<%= label_tag( 'setting[description]', 'Description' ) %></dt>
+	<dd><%= text_area( 'setting', 'description' ) %>
+	<% else %>
+	Description (read-only)</dt>
+	<dd><%= h @setting.description %>
+	<% end %>
+	</dd>
+
+	<dt><%= label_tag( 'setting[value]', 'Value' ) %></dt>
+	<dd><%= case @setting.class.name
+		when 'SettingBoolean'
+			check_box_tag( 'setting[value]', '1', @setting.value_typed, :class => 'checkbox' )
+		when 'SettingString'
+			text_area( 'setting', 'value' )
+		else
+			text_field( 'setting', 'value' )
+		end
+	%></dd>
+
+	<dt>Previous Value</dt>
+	<dd><%= case @setting.class.name
+		when 'SettingBoolean'
+			yes_or_no( @setting.previous_value_typed )
+		when 'SettingString'
+			"'#{@setting.previous_value}'"
+		else
+			@setting.previous_value
+		end || h( '<nil>' )
+	%></dd>
+</dl>

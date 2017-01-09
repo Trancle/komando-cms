@@ -1,0 +1,19 @@
+<dl>
+	<dt>Uploaded File name (file name from the uploading system)</dt>
+	<dd><%= h mfr.original_name %></dd>
+	<dt>File Hash (SHA512)</dt>
+	<dd><%= mfr.file_hash %></dd>
+	<dt>File Size</dt>
+	<dd><%= mfr.file_size_in_words %></dd>
+	<dt>MIME type (file extension)</dt>
+	<dd><%= mfr.mime_type %> (<%= mfr.class::MIME_TYPE_TO_EXT[mfr.mime_type] %>)</dd>
+	<dt>Length (seconds)</dt>
+	<dd><%= mfr.colonized_length %>s (<%= mfr.length_in_seconds %>s or about <%= mfr.length_in_words %>)</dd>
+	<dt>Bit rate</dt>
+	<dd><%= mfr.bitrate %>kbps</dd>
+</dl>
+
+<h4>Download</h4>
+
+<p><%= link_to_mfr_download( 'download', mfr.id, {}, { :file_ext => :auto, :controller_name => 'cms/download' } ) %></p>
+

@@ -1,0 +1,2 @@
+class EpisodeCommentDiscussion < EpisodeComment
+end

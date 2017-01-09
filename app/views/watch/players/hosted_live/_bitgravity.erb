@@ -1,0 +1,30 @@
+<%
+   video = video_contents.first
+   uri =  video.universal_mvbr_uri(request.remote_ip,request.env['HTTP_USER_AGENT'])
+   # We need to generate a player based on the size of the container
+   # This should be fairly straight-forward
+   # Use the document.ready callback to ensure the page is loaded and sized before we try to get the size of the player
+   # As we're using the size of the space available to determine the size issued to the player.
+%>
+<div id="bg_live_placeholder_<%= video.id %>"></div>
+<script type="text/javascript">
+    $( document ).ready( function() {
+      // Insert the player to load the video at the proper size
+      var elem = $('#bg_live_placeholder_<%= video.id %>');
+      var parent = $(elem.parent());
+      elem.remove();
+      var w;
+      var h;
+      //alert( new String(elem.parent().width()) + 'x' + new String(elem.parent().height()) );
+      w = parent.width();
+      h = parent.height();
+      if( h <= 1 ) {
+        h = Math.round(w*9/16);
+      }
+      w = new String(w);
+      h = new String(h);
+        parent.append(
+        '<iframe src="<%= uri %>&bghttp_Content-Length=3221225452&autoplay=true&width=' + w + '&height=' + h + '" scrolling="no" frameborder="no" width=' + w + ' height=' + h + '><a href="<%= uri %>&bghttp_Content-Length=3221225452&autoplay=true&width=' + w + '&height=' + h + '">Live</a></iframe>'
+      );
+    } );
+</script>

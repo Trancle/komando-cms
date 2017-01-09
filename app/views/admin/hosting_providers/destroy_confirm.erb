@@ -1,0 +1,6 @@
+<p>Here's the information about this provider for your reference to ensure you're removing the correct one. Please note, you cannot delete a provider that is currently being used to host content.</p>
+
+<%= render :partial => 'info', :locals => { :provider => @provider } %>
+
+<div><%= button( 'destroy', :action => 'destroy', :id => @provider.id ) %></div>
+<p><%= link_to('cancel', :action => 'info', :id => @provider.id ) %></p>

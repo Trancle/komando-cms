@@ -1,0 +1,15 @@
+<h2><%= @page.name %> (<%= @page.programmatic_name %>)</h2>
+
+<%= error_messages_for 'page_version' %>
+
+<% form_tag( { :action => 'update_version', :id => @page.id, :version => @page_old_version.version_number } ) do %>
+	<%= render :partial => 'page_version_form' %>
+	<p><%= submit( 'save' ) %></p>
+	<p><%= submit( 'save and publish', :name => 'save_and_publish' ) %></p>
+<% end %>
+
+<h3>Help with this layout</h3>
+
+<%= @page.description %>
+
+<%= content_tag( :p, link_to( 'cancel', :action => 'info', :id => @page.id ) ) %>

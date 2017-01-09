@@ -1,0 +1,62 @@
+<%= tiny_mce( %w(episode_version_description) ) %>
+
+<fieldset><legend>Episode Version (<%= @episode_version.version_number_cache || 'new' %>)</legend>
+<dl>
+<dt><%= label_tag( 'episode_version[title]', 'Title' ) %></dt>
+<dd><%= text_field( 'episode_version', 'title' ) %></dd>
+
+<dt><%= label_tag( 'episode_version[description]', 'Description' ) %></dt>
+<dd><%= text_area( 'episode_version', 'description' ) %></dd>
+
+<dt><%= label_tag( 'episode_version[season_number]', 'Season number' ) %></dt>
+<dd><%= text_field( 'episode_version', 'season_number' ) %> (optional)</dd>
+
+<dt><%= label_tag( 'episode_version[episode_number]', 'Episode number' ) %></dt>
+<dd><%= text_field( 'episode_version', 'episode_number' ) %> (optional)</dd>
+
+<dt><%= label_tag( 'episode_version[image_still_hash]', 'Hash of image still' ) %></dt>
+<dd><div id="episode_version_image_still_container"><%= image_tag( @episode_version.episode_still_image.virtual_path, :alt => @episode_version.episode_still_image.alt_text, :id => 'episode_version_image_still' ) unless @episode_version.episode_still_image.nil? %></div>
+<div><%= text_area( 'episode_version', 'image_still_hash', :class => 'sha512' ) %>
+
+
+<div id="image-picker" class="picker thumbnail-picker"></div>
+  <script type="text/javascript">
+    $('#image-picker').picker_window( { listUri: '/cms/public_images/list.json', extraData: { "limits[only][type]": "EpisodeStillImage" }, perPage: 20, onPaintItem: function( me, elem, i, page ) {
+        var item = page[i].episode_still_image;
+        $(elem).empty();
+	var img = document.createElement('img');
+	$(img).attr('alt',item.alt_text);
+	$(img).attr('src',item.virtual_path);
+	var p = document.createElement('p');
+	$(p).append(img);
+	$(p).text( item.alt_text );
+	$(elem).append(img);
+	$(elem).append(p);
+    }, onPick: function(elem,index,item) {
+	var i = item.episode_still_image;
+	$('#episode_version_image_still').attr('src', i.virtual_path );
+	$('#episode_version_image_still').attr('alt', i.alt_text );
+      $('#episode_version_image_still_hash').val(i.file_hash);
+    } } );
+  </script>
+
+  <p><a href="#" id="image-pick-start">picker</a><script type="text/javascript">
+      var elem = $("#image-pick-start").parent();
+      $(elem).click(function (e) {
+                  e.preventDefault();
+                  $('#image-picker').picker_window('show');
+              }
+      );
+  </script></p>
+
+
+</div>
+<noscript><p>This is a HASH (not an id). Hashes typically look like: f783bbad28dea58a606c0cf0e... and have 128 characters and numbers in them. You can find the hashes in the <%= link_to( 'public images', :controller => 'cms/public_images' ) %>. This field is pretty smart and will accept the beginning of a hash. Be careful with duplicates as it will assume you mean the first hash match.</p>
+</noscript></dd>
+
+<dt><%= label_tag( 'episode_version[version_comment]', 'Version comment' ) %></dt>
+<dd><%= text_area( 'episode_version', 'version_comment' ) %>
+<p>This should be a short description of what you changed. This helps you identify versions later. Version comments will only appear for administrators.</p></dd>
+</dl>
+
+</fieldset>

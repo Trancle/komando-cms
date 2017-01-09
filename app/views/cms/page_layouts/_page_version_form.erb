@@ -1,0 +1,15 @@
+<fieldset><legend>Version (<%= @page_version.version_number || 'new' %>)</legend>
+
+<dl>
+	<dt><%= label_tag( 'page_version[layout]', 'Layout' ) %></dt>
+	<dd><%= text_area( 'page_version', 'layout', :class => 'tall' ) %>
+		<p>Liquid Layout style syntax. See <%= link_to( 'liquid markup', 'https://github.com/Shopify/liquid/wiki/Liquid-for-Designers' ) %></p>
+	</dd>
+
+	<dt><%= label_tag( 'page_version[version_comment]', 'Version Comment' ) %></dt>
+	<dd><%= text_area( 'page_version', 'version_comment' ) %>
+		<p>This should be a short description of what you changed. This helps you identify versions later. Version comments will only appear for administrators.</p>
+	</dd>
+</dl>
+
+</fieldset>

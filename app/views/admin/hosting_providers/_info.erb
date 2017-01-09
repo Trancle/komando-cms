@@ -1,0 +1,23 @@
+<h2>General Information</h2>
+
+<dl>
+	<dt>Name</dt>
+	<dd><%= h provider.name %></dd>
+	<dt>Description</dt>
+	<dd><p><%= h provider.description %></p></dd>
+	<dt>Type</dt>
+	<dd><%= humanized_provider_name_from_class( provider ) %></dd>
+	<dt>Enabled?</dt>
+	<dd><%= provider.enable %></dd>
+	<dt>Decprecated?</dt>
+	<dd><%= provider.deprecated %></dd>
+	<dt>Created</dt>
+	<dd><%= provider.created_at %></dd>
+	<dt>Updated</dt>
+	<dd><%= provider.updated_at %></dd>
+</dl>
+
+<h2>Type-Specific Configuration</h2>
+
+<%= render :partial => 'admin/hosting_providers/' + VideoContentHostingProvider.subclass_name( provider.class.name ).underscore + '/' + VideoContentHostingProvider.sub_subclass_name( provider.class.name ).underscore + '_info.erb', :locals => { :provider => provider } %>
+

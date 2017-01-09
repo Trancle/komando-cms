@@ -1,0 +1,17 @@
+<h2>Tasks</h2>
+
+<dl>
+	<dt><%= link_to( 'remove unused video', :action => 'remove_unused_video_confirm' ) %> (manually)</dt>
+	<dd>
+		<p>Removes video content that has been in the system longer than <%= pluralize( Setting['vms-protected-new-video-deletion-grace-period-days'].value_typed, 'day' ) %> and is no longer referenced by ad spots, episodes, and shows, or those ad spots, episodes, and show are no longer available and will never be available.</p>
+		<p>There is a grace period of <%= pluralize( Setting['vms-protected-video-deletion-grace-period'].value_typed, 'day' ) %> after a video is no longer available. So, 7 days after a video is no longer available (and will never be at any time in the presently scheduled future), this video will be included for deletion.</p>
+		<p>An automated process should run every day to clean up these files for you. This is designed as a disk-space saving mechanism.</p>
+	</dd>
+
+
+	<dt><%= link_to( 'remove unreferenced video', :action => 'remove_unreferenced_video_content' ) %> (manually)</dt>
+	<dd>
+		<p>Removes video content that has been uploaded but is not referenced by a Video Content Name and is therefore, in the system, but seemingly abandoned. This will clean that up and allow the file to be re-uploaded.</p>
+	</dd>
+
+</dl>

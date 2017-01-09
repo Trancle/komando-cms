@@ -1,0 +1,33 @@
+<dl>
+<dt><%= label_tag('show[published]', 'Published?')%></dt>
+<dd><%= check_box( 'show', 'published', :class => 'checkbox' ) %></dd>
+
+<dt><%= label_tag('show[keywords]', 'Keywords')%></dt>
+<dd><%= text_area( 'show', 'keywords' ) %>
+<p>HTML key words are always separated by commas: ',' and, actually, may span multiple words.</p></dd>
+
+<dt><%= label_tag('show[episode_comments_enabled]', 'Episode comments enabled?')%></dt>
+<dd><%= check_box( 'show', 'episode_comments_enabled', :class => 'checkbox' ) %>
+<p>Uncheck this box to prevent users from attaching comments (discussions and reviews) to any episode under this show.</p>
+</dd>
+
+<dt><%= label_tag('show[episode_user_tagging_enabled]', 'Episode user tagging enabled?')%></dt>
+<dd><%= check_box( 'show', 'episode_user_tagging_enabled', :class => 'checkbox' ) %>
+<p>Uncheck this box to prevent users from adding tags to any episode under this show.</p>
+</dd>
+
+<dt><%= label_tag('show[hide_from_listings]', 'Hide from public Home and Show listings?')%></dt>
+<dd><%= check_box( 'show', 'hide_from_listings', :class => 'checkbox' ) %>
+<p>When checked, this show will not appear on the home page or show-episodes page lineups. This is useful for shows that contain secret content used elsewhere on the site. Typically, this box should <strong>not</strong> be checked.</p>
+
+  <dt><%= label_tag('show[episodes_per_page]', 'Episodes per page')%></dt>
+  <dd><%= text_field( 'show', 'episodes_per_page' ) %>
+    <p>The number of episodes that will be returned to the liquid layout for each "page" of episodes.</p>
+  </dd>
+
+  <dt><%= label_tag('show[number_watch_page_episodes]', 'Episodes per page on Watch Page')%></dt>
+  <dd><%= text_field( 'show', 'number_watch_page_episodes' ) %>
+    <p>The number of episodes that will be returned to the liquid layout on the watch pages.</p>
+  </dd>
+</dl>
+<div style="display:none;"><%= hidden_field_tag( :type, params[:type] || 'Show' ) %></div>

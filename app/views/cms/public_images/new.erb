@@ -1,0 +1,17 @@
+<%= error_messages_for :public_image %>
+
+<% form_tag( { :action => 'create' }, { :multipart => true } ) do %>
+	<h3>Image Type</h3>
+	<dl>
+		<dt><%= radio_button_tag( 'image_type', 'EpisodeStillImage', @image_type.eql?('EpisodeStillImage'), :class => 'radio' ) %><%= label_tag('image_type_episodestillimage', 'Episode Still' ) %></dt>
+		<dd>Used for episodes</dd>
+		<dt><%= radio_button_tag( 'image_type', 'ShowStillImage', @image_type.eql?('ShowStillImage'), :class => 'radio' ) %><%= label_tag('image_type_showstillimage', 'Show Still' ) %></dt>
+		<dd>Used for shows (thumbnails)</dd>
+		<dt><%= radio_button_tag( 'image_type', 'ShowSplashImage', @image_type.eql?('ShowSplashImage'), :class => 'radio' ) %><%= label_tag('image_type_showsplashimage', 'Show Splash' ) %></dt>
+		<dd>Used for shows (splash image on each show's page)</dd>
+	</dl>
+	<%= render :partial => 'form' %>
+	<p><%= submit( 'save' ) %></p>
+<% end %>
+
+<%= content_tag('p', link_to( 'cancel', :action => 'index' ) ) %>

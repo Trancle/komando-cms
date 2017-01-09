@@ -1,0 +1,10 @@
+<h1>New User</h1>
+
+<%= error_messages_for 'user' %>
+
+<% form_tag({:action => 'new'}) do -%>
+    <dl>
+      <%= render :partial => 'form' %>
+      <dd><p><button>create</button></p></dd>
+    </dl>
+<% end %>

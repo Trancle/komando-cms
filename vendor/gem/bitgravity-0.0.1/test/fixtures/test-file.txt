@@ -1,0 +1,5 @@
+Test-file
+
+This is just a test file for the Ruby Gem: bitgravity. You're free to remove it if you find it.
+
+It's just a result of a test that did not complete successfully.

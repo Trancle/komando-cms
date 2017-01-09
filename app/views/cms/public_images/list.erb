@@ -1,0 +1,23 @@
+<% unless @pi_pag.empty? %>
+
+<%= pagination_buttons(@pi_pag) %>
+
+<ul class="control_list alternate">
+	<% @pi_pag.items_for_current_page.each_with_index do |image,index| %>
+
+	<li><%= link_to( public_image_tag( image, :style => 'max-width: 100px; max-height: 100px; min-height: 10px; min-width: 10px;', :alt => h(image.alt_text), :title => h(image.alt_text) ), :action => 'info', :id => image.id ) %> | <span class="name"><%= image.class.name.underscore.humanize %> | <span class="hash"><%= truncate_middle( image.file_hash, :length => 40 ) %></span></span>
+	<ul class="actions">
+		<li><%= link_to( 'edit', :action => 'edit', :id => image.id ) %></li>
+	</ul>
+	</li>
+	
+	<% end %>
+</ul>
+
+<%= pagination_buttons(@pi_pag) %>
+
+<% else %>
+
+<p>There are no stills uploaded as of yet</p>
+
+<% end %>

@@ -1,0 +1,6 @@
+<%= error_messages_for :hpb %>
+
+<% form_tag( { :action => 'create', :type => params[:type] } ) do %>
+    <%= render :partial => 'form' %>
+      <p><%= submit( 'save' ) %></p>
+<% end %>

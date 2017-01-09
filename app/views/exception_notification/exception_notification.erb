@@ -1,0 +1,15 @@
+URI: <%= @uri %>
+
+Controller: '<%= @controller_name %>'
+Params:
+<% unless @params.empty? %><% @params.each_pair do |k,v| %>* '<%= k %>' = '<%= v %>'
+    <% end %><% else %>No params specified<% end %>
+
+<% unless @other_stuff.empty? %>
+Other Stuff:
+<% @other_stuff.each_pair do |k,v| %>* '<%= k %>' = '<%= v %>'
+    <% end %><% end %>
+
+<%= @exception.message %>
+
+<%= @exception.backtrace.join("\r\n") %>

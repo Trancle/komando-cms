@@ -1,0 +1,13 @@
+.pagination-buttons, .pagination-jump {
+	margin-top: 1em;
+}
+.pagination-buttons {
+display: inline-block;
+}
+.pagination-jump {
+	margin-left: 2em;
+display: inline-block;
+}
+.pagination-jump input {
+	margin-bottom: 0;
+}

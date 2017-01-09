@@ -1,0 +1,10 @@
+<dl>
+	<dt>Version</dt>
+	<dd><%= @page_version.version_number %></dd>
+	<dt>Created</dt>
+	<dd><%= @page.created_at %></dd>
+</dl>
+
+<h2>Content</h2>
+
+<pre><%= h(@page.scheduled_version_current_or_last_version.layout) %></pre>

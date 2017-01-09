@@ -1,0 +1,150 @@
+CwTaskRunner
+============
+
+This creates an asynchronous task runner. This is great for long running tasks that you would like to schedule for later instead of stalling the rails process. This is NOT a task SCHEDULER. Tasks run on a first-come, first-served basis. A task is launched once each minute by default, but if you have lots of tasks, then multiple tasks WILL be launched. Be VERY careful as these tasks are the same size as your RAILS process (AKA: huge).
+
+Parts
+=====
+
+1. Your rails Application (herein, the "APP")
+2. The TaskRunnerDaemon (herein, the "DAEMON") cw_task_runner.rb::TaskRunner (not visible in Rails application)
+3. The Tasks (herein, "TASK") that you want to run (You create these by subclassing CW::TaskRunner::Application::TaskRunnerTask) (recommended that you create: RAILS_ROOT + '/app/task_runner_tasks/' and stick them in there).
+4. The TaskProcess (here, "TASK PROCESS") that runs your task (cw_task_runner_process.rb, also not visible to your Rails application)
+
+The DAEMON is supposed to be launched at system start using an init script (like /etc/init.d/your_app_task_runner). This daemon is designed to run continuously until system shutdown. This process listens on a socket. This socket will be used later. Right now, it does nothing.
+
+The DAEMON launches a task launcher thread. This thread checks the Rails database for the existance of runnable task requests. These tasks are then created in a FORKED process and run in a special container (cw_task_runner_task_process.rb:TaskProcess). These containers create a Task class based on the class name you store in the request record (task_class_name). This new instance is passed the options in the database as a YAMLized object (YAML::load called on text in database). The instance then has "run()" called on it.
+
+Be aware: this DAEMON will check your database every 60 seconds (you can change this) for new and old tasks.
+
+Failed Tasks
+============
+
+I don't assume you're perfect. Plus, tasks are VERY hard to test due to the lack of interactivity. You should be able to create a task manually, pass in options, then call run to see what it'll do. That should mimic the behavior of the TaskRunnerDaemon sufficiently (Testing Implementation Note). If your task throws an exception in run, it will be caught and placed in the result. Your task will be attempted again according to tries. It should, therefore, be impossible to have a process DIE while running a task. I'm not too confident there, however. Database connectivity could kill your process. There's no way to store that the process failed because that requires the database.
+
+There is a utility function that will probe the running process ID's as stored in the database. If they do not exist, they will be marked as "crashed". This will effectively re-schedule the processes. In fact, wiping the PID is usually enough to "reschedule" the task. In addition, there is a function in the TaskRunnerRequest module (which will exist as an ActiveRecord class in your Rails Application) that will do this process ID probing and update the database for you.
+
+
+Installation
+============
+
+1. First, copy the plugin into your vendor/plugins directory:
+RAILS_ROOT + /vendor/plugins/cw_task_runner
+
+2. Next, create a model with migration, you can call it whatever you like, but you'll have to re-configure a few values. The fastest impelementation is to NOT use a custom name, just make the model:
+ruby script/generate model task_runner_request
+
+3. Add the module include line to the new model file: app/models/task_runner_request.rb
+class TaskRunnerRequest < ActiveRecord::Base
+	include CW::TaskRunner::Application::TaskRunnerRequest
+end
+
+4. Create the migration: db/migrate/*create_task_runner_requests.rb
+class CreateTaskRunnerRequests < ActiveRecord::Migration
+        include CW::TaskRunner::Application::TaskRunnerRequestMigration
+  def self.up
+    create_task_runner_request_table :task_runner_requests do |t|
+    end
+  end
+
+  def self.down
+    drop_task_runner_request_table :task_runner_requests
+  end
+end
+
+You include the migration module. Then you call them in leiu of the usual create_table and drop_table methods. This creates the table. You can append any extra fields you like for use in your Rails application. The TaskRunner will ignore any extra database fields. To create new fields, use the above template as though create_table were called.
+
+5. rake db:migrate
+
+6. Create a task directory:
+I recommend you create it in:
+app/task_runner_tasks
+
+7. Tell rails to automatically load those task files
+Create a new initializer (the name is not important and has no bearing on the functionality):
+config/initializers/include_cw_task_runner_task_directory.rb.
+
+All this file needs is the following line:
+
+Dir.glob( RAILS_ROOT + '/app/task_runner_tasks/*.rb' ) { |file|	require file }
+
+
+
+This will tell ruby where to find your task files. The trailing slash is important.
+
+8. Create the daemon boot configuration file:
+copy the file: vendor/plugins/cw_task_runner/lib/cw_task_runner_boot_daemon.rb.sample
+and copy it to
+config/cw_task_runner_boot_daemon.rb
+
+9. Update the Shebang line in config/cw_task_runner_boot_daemon.rb
+The configuration file (which, is also the jump off point for the daemon) needs your RAILS root path in order to be run by script/runner (yes, this is how I do it).
+
+Edit the file and replace: {YOUR RAILS PATH} on the first line with the absolute path to your rails application. Yes, this sucks.
+
+You should not need to change ANY other settings. All the defaults should work for you thus far.
+
+10. Create the tmp directories:
+
+If they do not exist, your task runner won't run. Create the following directories under RAILS_ROOT:
+
+tmp/sockets
+tmp/pids
+
+11. Create an init script
+
+This will vary from system to system. I'll write a Gentoo example later, so for now you're on your own.
+
+
+LAUNCHING MANUALLY
+
+If you can't wait and wish to launch the runner NOW, go to your RAILS_ROOT and type:
+vendor/plugins/cw_task_runner/lib/cw_task_runner_boot.rb
+
+That's it. You'll see the process exit almost immediately. The default PID location is tmp/pids/task_runner_daemon.pid
+
+If that doesn't work, make sure that file and the config/cw_task_runner_boot_daemon.rb (step 8) have execute permissions. (hint: use chmod u+x)
+
+
+Example: Use the NoOp task
+==========================
+
+A good way to test the installation is to run the sample NoOp task. It does nothing special. It just returns a text string: "NOOP: OK!" and if you created it from the builder function (this function also demonstrates the use of options), you'll see that it was created from the schedule method in the result_text field. Try it!
+
+CW::TaskRunner::Task::Sample::TaskRunnerNoOpTask.schedule
+
+You'll see it put into the database and, in a few minutes (if your task runner daemon is running... it IS running right? ps xau | grep cw_task_runner_boot_daemon), you'll see that your task is running, and the above mentioned text will be stored in the database. Task checking is done about once every 60 seconds (you can change this).
+
+Here's a snapshot of it in the database, as seen from ruby script/console:
+>> TaskRunnerRequest.all
+=> [#<TaskRunnerRequest id: 3, created_at: "2010-03-08 22:52:24", task_class_name: "CW::TaskRunner::Task::Sample::TaskRunnerNoOpTask", pid: nil, started_at: nil, completed_at: nil, result: nil, tries: 0, try_limit: 5, options: "--- \n:created_from: self.schedule\n", delay_until: nil, result_text: nil>]
+
+And after the task runs:
+>> TaskRunnerRequest.last
+=> #<TaskRunnerRequest id: 3, created_at: "2010-03-08 22:52:24", task_class_name: "CW::TaskRunner::Task::Sample::TaskRunnerNoOpTask", pid: nil, started_at: "2010-03-08 22:56:17", completed_at: "2010-03-08 22:56:24", result: "FINISHED", tries: 1, try_limit: 5, options: "--- \n:created_from: self.schedule\n", delay_until: nil, result_text: "NOOP 3: OK! created from: self.schedule">
+
+As you can see, there's a lot going on here. These records are the core of the control for these tasks. You can do SO much with these :-).
+
+
+Example: Create a custom Task
+=============================
+
+Custom tasks are placed in: app/task_runner_tasks/*.rb
+
+To create one, create a class that inherits from CW::TaskRunner::Application::TaskRunnerTask
+
+You need only overwrite the "run()" method. The options method is provided to you as a convenience and is automatically converted to ruby data structures. All of your Rails models are completely available to you in this environment.
+
+It is highly recommended that you create factory functions for your task. That way, you can have slightly more control over your task options.
+
+To schedule your task to run, simply create a new TaskRunnerRequest record and set the task_class_name field to the string-name of your task class that you want to "run". By default, each task is given 5 tries to run before being ignored by the scheduler.
+
+
+Debugging your tasks
+====================
+
+Your tasks might not be perfect. But fear not, all the errors SHOULD be logged to the log files in log/production|development. There, you can see what happened using the exception.message and backtrace.
+
+
+
+Copyright (c) 2010 Christopher Richard Wojno, released under the MIT license

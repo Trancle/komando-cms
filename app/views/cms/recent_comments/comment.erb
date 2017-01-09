@@ -1,0 +1,17 @@
+<%= error_messages_for 'comment' %>
+
+<h2>Comment Details</h2>
+
+<%= render :partial => 'cms/episode_comments/info' %>
+
+<h2>Report(s)</h2>
+
+<% unless @comment.report_counts.empty? %>
+<ul>
+	<% @comment.report_counts.each_pair do |reason,count| %>
+	<li>Reported as "<%= reason.humanize %>" <%= pluralize( count, 'time' ) %></li>
+	<% end %>
+</ul>
+<% else %>
+<p>There are no reports for this comment.</p>
+<% end %>

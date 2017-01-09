@@ -1,0 +1,11 @@
+{
+    "id": <%= episode.id %>,
+    "title": "<%= episode_version.title.to_json %>",
+    "description": "<%= episode.description.to_json %>",
+    "is_free": <%= episode.free? %>,
+    "still_image_url": "<%= image.virtual_path %>",
+    "still_image_alt": "<%= image.alt_text.to_json %>",
+    "total_length_in_seconds": <%= episode.total_length_in_seconds %>,
+    "total_length_as_hh_mm_ss_colon_separators": "<%= episode.total_length_as_hh_mm_ss.to_json %>",
+    "url_to_watch": "<%= url_to_episode(show_version,episode_version).to_json %>"
+}

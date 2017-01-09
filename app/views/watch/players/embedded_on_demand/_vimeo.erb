@@ -1,0 +1,3 @@
+<iframe src="<%= url_for video_contents.first.src_url %>" frameborder="0" title="<%= h ( (episode.nil?) ? ('Vimeo Video') : ( episode.current_version_or_latest.title ) ) %>" class="player">
+<p><em>We're sorry, there was a problem loading this video. Please see <a href="<%= url_for video_contents.first.watch_url %>">Vimeo</a> for the full video from Vimeo. Sorry for the inconvenience</em></p>
+</iframe>

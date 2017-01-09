@@ -1,0 +1,16 @@
+<p>You are editing a hosting provider's information. Please be aware, that mistakes here could result in viewing disruption to your viewers or a failure to push new content to the CDN.</p>
+
+<%= error_messages_for 'provider' %>
+
+<% form_tag( :action => 'update', :id => @provider.id ) do %>
+	<div class="hidden"><%= hidden_field( 'provider', 'type' ) %></div>
+
+	<h2>General Configuration</h2>
+	<%= render :partial => 'form', :locals => { :provider => @provider } %>
+
+	<h2>Type-specific customizations</h2>
+	<%= render :partial => "admin/hosting_providers/#{VideoContentHostingProvider.subclass_name( @provider.class.name ).underscore}/#{VideoContentHostingProvider.sub_subclass_name( @provider.class.name ).underscore}_form", :locals => { :provider => @provider } %>
+
+	<p><%= submit( 'save' ) %></p>
+
+<% end %>

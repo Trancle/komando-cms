@@ -1,0 +1,81 @@
+.picker {
+	position: absolute;
+    width: 90%;
+	top: 5%;
+	left: 5%;
+	background-color: white;
+    border: 1px solid #000066;
+    padding: 1em;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background-color: #eee;
+}
+.picker .instructions {
+    padding: 0 1em;
+}
+.picker .picker-close {
+	margin: 1em;
+	float: left;
+	border: 1px solid black;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+padding: 0.5em;
+}
+.picker .picker-close:hover {
+	background-color: #dddddd;
+}
+.picker .picker-pagination {
+	list-style: none;
+    text-align: center;
+}
+.picker .picker-pagination li {
+    display: inline-block;
+    margin-left: 1.5em;
+}
+.picker-pagination .disabled, .picker-pagination .disabled:hover {
+    text-decoration: none;
+    color: #000;
+    cursor: default;
+    border: none;
+}
+ .picker .picker-items {
+    list-style: none;
+}
+.picker-pagination .jump input {
+    width: 3em;
+}
+.picker .picker-items li {
+    margin: 1em auto;
+    cursor: pointer;
+    padding: 0.8em;
+    border-bottom: 1px dotted #ccc;
+}
+.picker .picker-items li.selected {
+    background-color: #eecc66;
+}
+.picker .picker-items li:last-child {
+    border-bottom: none;
+}
+.picker .picker-items li:hover {
+    background-color: #ddd;
+}
+
+
+.thumbnail-picker .picker-items {
+	text-align: center;
+}
+.thumbnail-picker .picker-items li {
+        display: inline-block;
+}
+.thumbnail-picker .picker-items li {
+	border: none;
+}
+.thumbnail-picker .picker-items p {
+	max-width: 15em;
+	text-align: center;
+	font-style: italic;
+}
+.thumbnail-picker .picker-items img {
+	text-align: center;
+	margin: 0 auto;
+}

@@ -1,0 +1,30 @@
+<%
+raise "DEPRECATED"
+# Required Args:
+# stream_type = %(Streaming LiveStream)
+# media_url = URL for CDN
+width = 620 if width.nil?
+height = 349 if height.nil?
+volume = 80 if volume.nil?
+player_url = @controller.request.protocol + @controller.request.host_with_port + "/player.swf"
+unique_player_id = 1 if unique_player_id.nil?
+# auto play determined by stream type
+case stream_type
+	when 'Streaming'
+		autoplay = false # Wait for input for progressive downloads
+	when 'LiveStream'
+		true # start playing immediately for live streams
+		autoplay = true
+	else
+		autoplay = false # don't play by default
+end
+	%>
+<object type="application/x-shockwave-flash" data="<%= player_url %>" id="unique_player_id_required_by_ie_stupidness_<%= unique_player_id %>">
+<param name="movie" value="<%= player_url %>" />
+<param name="allowScriptAccess" value="always" />
+<param name="flashVars" value="mediaURL=<%= escape_once media_url %>&amp;buffer=2&amp;streamType=<%= stream_type %>&amp;autoPlay=<%= autoplay ? 'true' : 'false' %>&amp;playerWidth=<%= width %>&amp;playerHeight=<%= height %>&amp;autoHideControls=false&amp;autoHideTime=5&amp;initialVolume=<%= volume %>" />
+<param name="quality" value="high" />
+<param name="allowFullScreen" value="true" />
+<param name="bgcolor" value="#000000" />
+<p>Sorry, but you need Adobe <a href="http://get.adobe.com/flashplayer" rel="external">Flash Player</a> to view our content. Please <a href="http://get.adobe.com/flashplayer" rel="external">download</a> it and install it.</p>
+</object>

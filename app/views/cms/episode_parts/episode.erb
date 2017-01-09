@@ -1,0 +1,23 @@
+<% unless @ep_part_pag.empty? %>
+
+<%= pagination_buttons(@ep_part_pag) %>
+
+<ul class="control_list alternate">
+	<% @ep_part_pag.items_for_current_page.each do |episode_part| %>
+		<li><span class="name"><%= link_to( "Episode Part: " + episode_part.name, :controller => 'cms/episode_parts', :action => 'show', :id => episode_part.id ) %> → <%= link_to( episode_part.video_content_name.pretty_name, :controller => '/cms/content', :action => 'info', :id => episode_part.video_content_name.id ) %></span>
+		<ul class="actions">
+			<li><%= link_to( 'ad insertion', :controller => '/cms/ad_insertion_locations', :action => 'episode_part', :id => episode_part.id ) %></li>
+			<li><%= link_to( 'edit', :action => 'edit', :id => episode_part.id ) %></li>
+			<li><%= link_to( 'destroy', :action => 'destroy_confirm', :id => episode_part.id ) %></li>
+		</ul>
+		</li>
+	<% end %>
+</ul>
+
+<%= pagination_buttons(@ep_part_pag) %>
+
+<% else %>
+
+<p>There are no episode parts for this episode</p>
+
+<% end %>

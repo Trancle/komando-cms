@@ -1,0 +1,12 @@
+<%= error_messages_for :mfr %>
+
+<% form_tag( :action => 'update_video_content', :id => @mfr.id ) do %>
+
+	<%= render :partial => path_to_configure_form_partial( @mfr ), :locals => { :mfr => @mfr } %>
+
+	<dl><dt><%= label( 'mfr', 'colonized_length' ) %></dt>
+	<dd><%= text_field('mfr', 'colonized_length' ) %></dd>
+	</dl>
+	<p><%= submit( 'save' ) %></p>
+
+<% end %>

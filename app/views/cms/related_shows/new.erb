@@ -1,0 +1,14 @@
+<h1>Related Show to another show</h1>
+
+<h2><%= show_link_name( @show ) %></h2>
+
+<p>The above show will be linked to another show as being "related." This is useful for offering viewers a list of "You might also like..." shows. Please note, this linkage is one-way; meaning, shows linked to this show will not show up as being related. You must explicitly link two shows together independently if you want them to reference each other.</p>
+
+<%= error_messages_for :link %>
+
+<% form_tag( :action => 'create', :id => @show.id ) do %>
+	<%= render :partial => 'form' %>
+	<p><%= submit( 'create' ) %></p>
+<% end %>
+
+<%= content_tag('p', link_to( 'cancel' , :action => 'show', :id => @show.id ) ) %>

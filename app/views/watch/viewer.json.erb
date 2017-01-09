@@ -1,0 +1,25 @@
+<% current_version = @episode.current_version
+r = Com::WojnoSystems::Builder::JSON::Base.new
+r.object!(:episode) do |x|
+	x.created_at @episode.created_at.utc.iso8601
+	x.updated_at @episode.updated_at.utc.iso8601
+	x.id! @episode.id
+	x.published_datetime @episode.published_datetime
+	x.show_id @episode.show_id
+	x.is_free @episode.free?
+	x.object!(:episode_version) do |v|
+		v.created_at current_version.created_at
+		v.updated_at current_version.updated_at
+		v.description current_version.description
+		v.episode_number current_version.episode_number
+		v.episode_still_image_id current_version.episode_still_image_id
+		v.id! current_version.id
+		v.season_number current_version.season_number
+		v.title current_version.title
+		v.url_title current_version.url_title
+		v.still_image_virtual_path current_version.still_image_virtual_path
+		v.still_image_cdn_uri current_version.episode_still_image.cdn_uri if current_version.episode_still_image
+		v.still_image_alt current_version.still_image_alt
+	end
+end
+%><%= r %>

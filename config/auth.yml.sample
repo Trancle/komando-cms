@@ -1,0 +1,14 @@
+# Only used when CwAuthenticationFile and CwAuthorizationFile are used
+--- 
+admin:
+  uid: 1
+  enabled: false
+  admin: true
+  password: adminadmin
+  email: chris@wojnosystems.com
+admin2:
+  uid: 2
+  enabled: false
+  admin: true
+  password: adminadmin
+  email: chris@wojnosystems.com

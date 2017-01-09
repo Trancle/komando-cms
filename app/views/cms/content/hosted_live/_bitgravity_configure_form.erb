@@ -1,0 +1,41 @@
+<dl>
+<dt><%= label_tag('mfr[stream_name]', 'Stream Name' ) %></dt>
+<dd><%= text_field( 'mfr', 'stream_name' ) %>
+<p>(<%= link_to_show_contextual_help_for( 'mfr_stream_name', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_stream_name' ) do %>
+	<h3>Stream Name</h3>
+	<p>This is the stream name. This is the last component in the path when the URL to your live stream is finally assembled. Right now, your path looks like: "<%= h mfr.video_content_hosting_provider.http_url %>/" and "<%= h mfr.video_content_hosting_provider.hls_url %>" and whatever you enter here will be placed at the end of that. This is the name Flash Media Server will give to your stream when you want to download it. So when you're streaming TO your Flash Media Server, make sure the stream name matches this stream name.</p>
+<% end %>
+	</dd>
+
+
+<dt><%= label_tag('mfr[bitrate]', 'Bitrate' ) %></dt>
+<dd><%= text_field( 'mfr', 'bitrate' ) %>
+<p>(<%= link_to_show_contextual_help_for( 'mfr_bitrate', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_bitrate' ) do %>
+	<h3>Bitrate</h3>
+	<p>This is intended to be the maximum average bitrate for this stream. The actual bitrate will wander quite a bit, depending what is going on in the frame. However, this gives us an idea of how much data is being passed through to make a good guess as to which quality to give to viewers. This value can be set or read from your Flash Media Encoding server settings. Ask your video technician for more information about this.</p>
+<% end %>
+	</dd>
+
+
+<dt><%= label_tag('mfr[width]', 'Width (px)' ) %></dt>
+<dd><%= text_field( 'mfr', 'width' ) %>
+<p>(<%= link_to_show_contextual_help_for( 'mfr_width', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_width' ) do %>
+	<h3>Width (px)</h3>
+	<p>The number of pixels (or lines) that this video consumes on the x or horizontal axis.</p>
+<% end %>
+	</dd>
+
+
+<dt><%= label_tag('mfr[height]', 'Height (px)' ) %></dt>
+<dd><%= text_field( 'mfr', 'height' ) %>
+<p>(<%= link_to_show_contextual_help_for( 'mfr_height', "What's this?" ) %>)</p>
+<% contextual_help_for( 'mfr_height' ) do %>
+	<h3>Height (px)</h3>
+	<p>The number of pixels (or lines) that this video consumes on the y or vertical axis.</p>
+<% end %>
+	</dd>
+
+</dl>

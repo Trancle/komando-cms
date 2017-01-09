@@ -1,0 +1,29 @@
+<% unless @mfrn.video_contents.empty? %>
+
+<div>
+<% @mfrn.video_contents.each do |mfr| %>
+
+<div class="video-contents-info">
+
+<h3>Content Details</h3>
+
+<%= render( :partial => path_to_info_partial( mfr ), :locals => { :mfr => mfr } ) %>
+
+<dl>
+	<dt>Duration</dt>
+	<dd><%= mfr.colonized_length %> (about <%= mfr.length_in_words %>) or (<%= mfr.length_in_seconds %> seconds)</dd>
+
+	<dt>Created at:</dt>
+	<dd><%= mfr.created_at %> (<%= distance_of_time_in_words_to_now( mfr.created_at ) %> ago)</dd>
+</dl>
+<p><%= link_to( 'details/preview', :action => 'video_content_info', :id => mfr.id ) %></p>
+
+</div><!-- .video-contents-info -->
+
+<% end %>
+
+<% else %>
+
+<p>There is no content attached to this content piece.</p>
+
+<% end %>

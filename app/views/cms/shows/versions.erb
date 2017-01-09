@@ -1,0 +1,18 @@
+
+<% unless @show_version_pag.empty? %>
+
+	<%= pagination_buttons( @show_version_pag ) %>
+
+	<ul class="control_list alternate">
+	<% @show_version_pag.items_for_current_page.each do |version| %>
+		<li><span class="name"><%= version.version_number_cache %>: <%= h version.version_comment %></span><ul class="actions"><li><%= link_to( 'create from', :action => 'edit_version', :id => @show.id, :version => version.version_number_cache ) %></li><li><%= link_to( 'schedule', :action => 'new_schedule', :id => @show.id, 'show_version[version]' => version.version_number_cache ) %></li></ul></li>
+	<% end %>
+	</ul>
+
+	<%= pagination_buttons( @show_version_pag ) %>
+
+<% else %>
+
+<p>There aren't any versions</p>
+
+<% end %>

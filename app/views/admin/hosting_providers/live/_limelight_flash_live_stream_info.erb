@@ -1,0 +1,44 @@
+<h3>Configuration for watching from CDN: Connectivity</h3>
+<dl>
+		<dt>Stream Protocol</dt>
+		<dd><%= h provider.stream_protocol %></dd>
+
+		<dt>Stream Host</dt>
+		<dd><%= h provider.stream_host %></dd>
+
+		<dt>Stream Application Name</dt>
+		<dd><%= h provider.stream_application_name %></dd>
+
+		<dt>Stream URI</dt>
+		<dd><%= h provider.stream_uri %></dd>
+
+		<dt>Test Stream URI</dt>
+		<dd><p>Below is a sample stream URI assuming that the Flash Live Stream Name is "ZtestZstreamZ".</p>
+		<pre><%= h provider.stream_uri( "ZtestZstreamZ" ) %></pre></dd>
+</dl>
+
+<h3>Configuration for watching from CDN: Security</h3>
+
+<dl>
+	<dt>Use Media Vault?</dt>
+	<dd><%= h provider.use_media_vault? %></dd>
+
+	<% if provider.use_media_vault? %>
+	<dt>Media Vault Secret</dt>
+	<dd><%= confidential_field_data( 'provider', 'media_vault_secret' ) { '"' + @provider.media_vault_secret.to_s + '" (no quotes)' } %> (<%= confidential_field_reveal_control( 'provider', 'media_vault_secret' ) %>)</dd>
+
+	<dt>Media Vault Security: Enforce Referrer?</dt>
+	<dd><%= h provider.media_vault_security_enforce_referrer %></dd>
+
+	<dt>Media Vault Security: Enforce IP Address</dt>
+	<dd><%= h provider.media_vault_security_enforce_ip %></dd>
+
+	<dt>Media Vault Security: Enforce time?</dt>
+	<dd><%= h provider.media_vault_security_enforce_time %></dd>
+
+	<% if provider.media_vault_security_enforce_time %>
+	<dt>Media Vault Security: Time Interval (Seconds)</dt>
+	<dd><%= h provider.media_vault_security_time_interval_in_seconds %></dd>
+	<% end %>
+	<% end %>
+</dl>

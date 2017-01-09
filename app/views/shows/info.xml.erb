@@ -1,0 +1,1 @@
+<%= @pagination.items_for_current_page.to_xml( :only => [:created_at,:updated_at,:id,:published_datetime,:acts_as_ordered_order], :methods => [:is_free] ) %>

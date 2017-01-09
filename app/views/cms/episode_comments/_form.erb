@@ -1,0 +1,32 @@
+<dl>
+	<dt>Type</dt>
+	<dd><%= @comment.class.name.underscore.humanize %></dd>
+
+	<dt>Location</dt>
+	<dd><%= link_to( h( @comment.episode.show.scheduled_version_current_or_last_version.title ), :controller => 'cms/shows', :action => 'info', :id => @comment.episode.show.id ) %>: <%= link_to( h(@comment.episode.current_version_or_latest.title), :controller => 'cms/episodes', :action => 'info', :id => @comment.episode.id ) %></dd>
+
+	<dt>User</dt>
+	<dd><%= link_to( h( @comment.user_or_anonymous.username ), :controller => 'admin/users', :action => 'info', :id => @comment.user_or_anonymous.id ) %></dd>
+
+	<dt>Parent Comment</dt>
+	<dd><% if @comment.parent %><%= link_to( @comment.parent.title, :action => 'info', :id => @comment.parent.id ) %><% else %>No parent<% end %></dd>
+
+	<dt><%= label_tag( 'comment[title]', 'Title' ) %></dt>
+	<dd><%= text_field( 'comment', 'title' ) %></dd>
+
+	<dt><%= label_tag( 'comment[body]', 'Body' ) %></dt>
+	<dd><%= text_area( 'comment', 'body' ) %>
+	<p>Please note: All HTML and links are stripped from all comments and titles. This is for safety</p>
+	</dd>
+
+	<dt><%= label_tag( 'comment[visible]', 'Visible?' ) %></dt>
+	<dd><%= check_box( 'comment', 'visible', :class => 'checkbox' ) %>
+	<p>If the comment is marked as invisible, then no child comment will appear publicly. Be careful!</p>
+	</dd>
+
+	<dt>Created at</dt>
+	<dd><%= @comment.created_at %> (<%= distance_of_time_in_words_to_now( @comment.created_at ) %> ago)</dd>
+
+	<dt>Updated at</dt>
+	<dd><%= @comment.updated_at %> (<%= distance_of_time_in_words_to_now( @comment.updated_at ) %> ago)</dd>
+</dl>

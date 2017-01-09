@@ -1,0 +1,11 @@
+<% unless pagination.empty? %>
+<%= pagination_buttons( pagination ) %>
+<ul class="control_list">
+	<% pagination.items_for_current_page.each do |task| %>
+	<li><span class="name"><%= link_to( task.task_class_name, :action => 'info', :id => task.id ) %>: <%= task.created_at %></span><ul class="actions"><li><%= task.complete? ? 'complete' : ( task.running? ? 'running' : ( (task.failed?) ? 'failed' : 'not running' ) ) %></li><% if task.failed? %><li><%= button( 'retry', :action => 'add_retries', :id => task.id, :times => 1 ) %></li><% end %></ul></li>
+	<% end %>
+</ul>
+<%= pagination_buttons( pagination ) %>
+<% else %>
+<p>There are no tasks.</p>
+<% end %>

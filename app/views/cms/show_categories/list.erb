@@ -1,0 +1,11 @@
+<% unless @pagination.empty? %>
+<%= pagination_buttons(@pagination) %>
+<ul class="control_list alternate">
+	<% @pagination.items_for_current_page.each do |category| %>
+		<li><span class="name"><%= link_to( category.name, :action => 'info', :id => category.id ) %></span><ul class="actions"><li><%= link_to( 'edit', :action => 'edit', :id => category.id ) %></li><li><%= link_to( 'remove', :action => 'confirm_destroy', :id => category.id ) %></li></ul></li>
+	<% end %>
+</ul>
+<%= pagination_buttons(@pagination) %>
+<% else %>
+	<p>There are no show categories. Why not make a few?</p>
+<% end %>

@@ -1,0 +1,170 @@
+<p>This is Limelight Network's Core Storage product. Files are delivered via FTP to the CDN after being uploaded to VMS. Files are delivered to viewers via their array of Adobe Flash Streaming Servers or HTTP servers (for devices without Flash). This assumes you already have an account with password configured for both HTTP and Flash service and that your Flash and HTTP services share the same FTP storage repository.</p>
+
+<p>If you are unsure of any of this information or if your services are configured as above, please verify before proceeding. This affects how VMS communicates with your CDN. If the configuration or information provided below is wrong, VMS will get confused and will be unable to upload your content and your visitors will not be able to watch your videos!</p>
+
+<fieldset><legend>Origin</legend>
+<p><%= label_tag( 'provider[origin_ftp_username]', 'FTP Username' ) %>
+	<%= text_field( 'provider', 'origin_ftp_username' ) %> (<%= link_to_show_contextual_help_for( 'provider_origin_ftp_username', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_origin_ftp_username' ) do %>
+	<h3>Provider FTP Username</h3>
+	<p>This is the username provided to you by Limelight Networks for access to the Core Storage FTP site. If you do not have one, please contact Limelight for it.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[origin_ftp_password]', 'FTP Password' ) %>
+	<%= text_field( 'provider', 'origin_ftp_password' ) %> (<%= link_to_show_contextual_help_for( 'provider_origin_ftp_password', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_origin_ftp_password' ) do %>
+	<h3>Provider FTP Password</h3>
+	<p>This is the password provided to you by Limelight Networks for access to the Core Storage FTP site. If you do not have one, please contact Limelight for it.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[origin_ftp_host]', 'FTP Hostname' ) %>
+	<%= text_field( 'provider', 'origin_ftp_host' ) %> (<%= link_to_show_contextual_help_for( 'provider_origin_ftp_host', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_origin_ftp_host' ) do %>
+	<h3>Provider FTP Hostname</h3>
+	<p>This is the name or IP address of a server provided to you by Limelight Networks to while your files are to be FTP'ed. If you do not have one, please contact Limelight for it.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[origin_ftp_port]', 'FTP Port' ) %>
+	<%= text_field( 'provider', 'origin_ftp_port' ) %> (<%= link_to_show_contextual_help_for( 'provider_origin_ftp_port', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_origin_ftp_port' ) do %>
+	<h3>Provider FTP Port</h3>
+	<p>This is just in case Limelight gives you FTP access on a non-standard port. The default and standard port is 21. You shouldn't need to change this unless your set up is different for some reason.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[origin_ftp_host_path]', 'FTP Host Base Path' ) %>
+	<%= text_field( 'provider', 'origin_ftp_host_path' ) %> (<%= link_to_show_contextual_help_for( 'provider_origin_ftp_host_path', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_origin_ftp_host_path' ) do %>
+	<h3>Provider FTP Host Path</h3>
+	<p>The "host path" is the directory on the FTP server that VMS will stash your content. This allows you to use the same CDN for multiple instnaces of VMS or for multiple purposes. Limelight also requires that content requiring Media Vault security be placed in the 's' directory. So if you don't want users accessing your videos, best to specify a subdirectory of that folder here.</p>
+<% end %>
+</fieldset>
+
+
+<fieldset><legend>Flash Distribution</legend>
+<p><%= label_tag( 'provider[download_flash_host]', 'Distribution Server Name' ) %>
+	<%= text_field( 'provider', 'download_flash_host' ) %> (<%= link_to_show_contextual_help_for( 'provider_download_flash_host', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_download_flash_host' ) do %>
+	<h3>Provider Flash Distribution Server</h3>
+	<p>This is the hostname of where your users' browsers will go to pull your video content so they are able to watch it. Limelight calls this the "Server Name" for On Demand products. This is NOT the "origin." Limelight will provide this to you.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[download_flash_application_name]', 'Distribution Application Name' ) %>
+	<%= text_field( 'provider', 'download_flash_application_name' ) %> (<%= link_to_show_contextual_help_for( 'provider_download_flash_application_name', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_download_flash_application_name' ) do %>
+	<h3>Provider Flash Distribution Application Name</h3>
+	<p>Limelight calls this your "Application Name." This is the name of your Flash On Demand server instance. Limelight will provide this to you.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[download_flash_path_prefix]', 'Distribution Path Prefix' ) %>
+	<%= text_field( 'provider', 'download_flash_path_prefix' ) %> (<%= link_to_show_contextual_help_for( 'download_flash_path_prefix', "What's this?" ) %>)</p>
+<% contextual_help_for( 'download_flash_path_prefix' ) do %>
+	<h3>Provider Flash Distribution Path Prefix</h3>
+	<p>Limelight allows you to configure a sub-path below your Flash Application name. This commonly includes "_s" or "_u" for secure and unsecure, but these folders are yours to configure. Please consult Limelight if you're not sure what to put here.</p>
+<% end %>
+</fieldset>
+
+
+
+
+<fieldset><legend>HTTP Distribution</legend>
+<p><%= label_tag( 'provider[download_http_host]', 'Distribution Server Name' ) %>
+	<%= text_field( 'provider', 'download_http_host' ) %> (<%= link_to_show_contextual_help_for( 'provider_download_http_host', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_download_http_host' ) do %>
+	<h3>Provider HTTP Distribution Server</h3>
+	<p>This is the hostname of where your users' browsers will go to pull your video content so they are able to watch it. Limelight calls this the "Server Name" for On Demand products. This is NOT the "origin." Limelight will provide this to you.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[download_http_application_name]', 'Distribution Application Name' ) %>
+	<%= text_field( 'provider', 'download_http_application_name' ) %> (<%= link_to_show_contextual_help_for( 'provider_download_http_application_name', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_download_http_application_name' ) do %>
+	<h3>Provider HTTP Distribution Application Name</h3>
+	<p>Limelight calls this your "Application Name." This is the name of your Flash On Demand server instance. Limelight will provide this to you.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[download_http_path_prefix]', 'Distribution Application Name' ) %>
+	<%= text_field( 'provider', 'download_http_path_prefix' ) %> (<%= link_to_show_contextual_help_for( 'download_http_path_prefix', "What's this?" ) %>)</p>
+<% contextual_help_for( 'download_http_path_prefix' ) do %>
+	<h3>Provider HTTP Distribution Path Prefix</h3>
+	<p>Limelight allows you to configure a sub-path below your Flash Application name. This commonly includes "_s" or "_u" for secure and unsecure, but these folders are yours to configure. Please consult Limelight if you're not sure what to put here. This can be the same as the Provider Flash Distribution Path Prefix, or different, depending on how you've set up your Media Vault. Ideally, they should match.</p>
+<% end %>
+</fieldset>
+
+<fieldset><legend>Path Generation Constraints</legend>
+<p>The following values limit how folders are generated on the remote storage location. This configuration is also used to access those files. Therefore, existing records cannot be changed. Doing so would invalidate the current structure and cause your files to not be playable.</p>
+
+<h3>Why is ths important?</h3>
+<p>These values are important because most systems have a limit of about 10,000 files per directory. Exceeding this value causes file look ups to be VERY slow. To keep your videos downloading speedily, we break them up into folders. However, more folders adds an additional burden on your storage requirements. If you find that the playback is starting to slow down, we may need to convert from one folder-level system to another. Please see your VMS technical support representative for more information.</p>
+
+<p><%= label_tag( 'provider[storage_folder_max_depth]', 'Storage directory maximum depth' ) %>
+<% if provider.new_record? %>
+	<%= text_field( 'provider', 'storage_folder_max_depth' ) %>
+<% else %>
+	<%= provider.storage_folder_max_depth %>
+<% end %>
+
+ (<%= link_to_show_contextual_help_for( 'storage_folder_max_depth', "What's this?" ) %>)
+	
+	</p>
+<% contextual_help_for( 'storage_folder_max_depth' ) do %>
+	<h3>Storage directory maximum depth</h3>
+	<p>The maximum number of directories that can be dyanimcally generated for a given file hash. For example, if this value is 0, then no directories will be created on the provider store and all files will be stored in the root directory as their full name. Setting this value to -1 will disable directory limits and diretories will be split using the Storage Directory Max Name Length, instead. A good value for this is 2 for a small number of files, and 3 for larger numbers of files.</p>
+<% end %>
+
+
+<p><%= label_tag( 'provider[storage_folder_max_name_length]', 'Storage directory maximum name length' ) %>
+<% if provider.new_record? %>
+	<%= text_field( 'provider', 'storage_folder_max_name_length' ) %>
+<% else %>
+	<%= provider.storage_folder_max_name_length %>
+<% end %>
+
+ (<%= link_to_show_contextual_help_for( 'storage_folder_max_name_length', "What's this?" ) %>)
+	
+	</p>
+<% contextual_help_for( 'storage_folder_max_name_length' ) do %>
+	<h3>Storage directory maximum name length</h3>
+	<p>This value is used to split the given file's UID into a pathname. As the pathname is split into directories, any given directory's length of characters is limited by this value. Assigning this a value of 0 disables splitting and will yield no directories. Assigning this a value of 1 will split the path into as many directories as there are letters in the file, except for the last letter which will be used as the file's name. A good choice for this is 4 for small numbers of files, 3 for larger numbers of files.</p>
+<% end %>
+
+</fieldset>
+
+
+<fieldset><legend>Media Vault</legend>
+<p><%= label_tag( 'provider[media_vault_enable]', 'Use Media Vault?' ) %>
+	<%= check_box( 'provider', 'media_vault_enable' ) %> (<%= link_to_show_contextual_help_for( 'provider_media_vault_enable', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_media_vault_enable' ) do %>
+	<h3>Provider Media Vault Enable</h3>
+	<p>This turns on all the special security settings for Media Vault. If you have Media Vault, you will need to enable this setting to enable the security settings below. Disabling this setting allows users to access your content without time or IP address constraints. People will be able to embed your videos without your consent. Do <strong>NOT</strong> toggle this unless you know you want to do so.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[media_vault_secret]', 'Media Vault Secret' ) %>
+	<%= text_field( 'provider', 'media_vault_secret' ) %> (<%= link_to_show_contextual_help_for( 'provider_media_vault_secret', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_media_vault_secret' ) do %>
+	<h3>Provider Media Vault Secret</h3>
+	<p>This is a password. This is provided to you by Limelight. This secret is used to generate the special URLs that stop users from accessing your content without your implicit consent (via your website running VMS). You may leave this blank if you are not using Media Vault (enabled above).</p>
+<% end %>
+
+<fieldset><legend>Time restrictions</legend>
+<p><%= label_tag( 'provider[media_vault_security_enforce_time]', 'Media Vault Security: Enforce time?' ) %>
+	<%= check_box( 'provider', 'media_vault_security_enforce_time' ) %> (<%= link_to_show_contextual_help_for( 'provider_media_vault_security_enforce_time', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_media_vault_security_enforce_time' ) do %>
+	<h3>Provider Media Vault Security: Enforce time?</h3>
+	<p>When enabled (and it is highly recommended that you do so if you're using Media Vault), every request to the video page has a set life-span. If disabed, videos are downloadable forever later. DO NOT DISABLE THIS SETTING (even for a short while) if you plan to limit the amount of time a user is able to watch the video. This time restriction prevents video theft as well as the link is only good for a, ideally, short period of time. If you disable this, even temporarily, a clean URL, without time limits, will be exposed. The ONLY way to re-enforce the time limits for sure is to change your Media Vault Secret after re-enabling this setting. Please note: you MUST arrange for this change with Limelight and have them change it at the same time you change this value. If you do not coordinate the change, an outage will occur.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[media_vault_security_time_interval_in_seconds]', 'Media Vault Security: Time Interval (Seconds)' ) %>
+	<%= text_field( 'provider', 'media_vault_security_time_interval_in_seconds' ) %> (<%= link_to_show_contextual_help_for( 'provider_media_vault_security_time_interval_in_seconds', "What's this?" ) %>)</p>
+<% contextual_help_for( 'provider_media_vault_security_time_interval_in_seconds' ) do %>
+	<h3>Provider Media Vault Security: Time Interval</h3>
+	<p>If the time is being enforced, this controls how long users have to initiate a connection with Limelight before the link is no longer valid. This should be set to a "reasonable" value. Typically, 5 minutes (300 seconds) is a good setting for short videos. Ideally, it should be long enough for your user to play the entire video, plus a few minutes for pausing and advertisements. If you set this too short, the progressive loading will fail. Progressive loading allows your viewers to skip scrub to an arbitrary time within your video.</p>
+<% end %>
+
+<p><%= label_tag( 'provider[media_vault_security_time_clock_skew_in_seconds]', 'Media Vault Security: Time Clock Skew Buffer (Seconds)' ) %>
+	<%= text_field( 'provider', 'media_vault_security_time_clock_skew_in_seconds' ) %> (<%= link_to_show_contextual_help_for( 'media_vault_security_time_clock_skew_in_seconds', "What's this?" ) %>)</p>
+<% contextual_help_for( 'media_vault_security_time_clock_skew_in_seconds' ) do %>
+	<h3>Provider Media Vault Security: Clock Skew</h3>
+	<p>Specify the number of seconds to pad in before the start time and after the end time. This allows for a configurable amount of clock skew between servers. This time skew will exists between the VMS server and Limelight's core servers. If your users cannot see a video every so often, odds are, this may be the issue. Try adding 10-20 seconds of skew.</p>
+<% end %>
+</fieldset>
+
+</fieldset>

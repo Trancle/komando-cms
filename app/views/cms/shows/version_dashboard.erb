@@ -1,0 +1,38 @@
+<p>Here, you can edit the title, description, and availability notes for this show. You can then schedule those changes to appear at a time you choose.</p>
+
+<h3>Summary</h3>
+<p>There are <%= pluralize( @show.versions.count, 'version') %> of the information below. Below is what is in effect right now.</p>
+
+<% svc = @show.scheduled_version_current_or_last_version_cache %>
+<dl>
+	<dt>Title</dt>
+	<dd><div class="info_image"><%= ( svc.show_splash_image.nil? ) ? ( '<p>No Image</p>' ) : ( image_tag( svc.show_splash_image.virtual_path, :style => 'float:left;' ) ) %></div><%= h svc.title %></dd>
+
+	<dt>Description</dt>
+	<dd><div class="info_image"><%= ( svc.show_still_image.nil? ) ? ( '<p>No Image</p>' ) : ( image_tag( svc.show_still_image.virtual_path, :style => 'float:left;' ) ) %></div><%= h( svc.description ) %></dd>
+
+	<dt>Availability Notes</dt>
+	<dd><%= ( svc.availability_notes.empty? ) ? ( 'No notes specified' ) : ( '<pre>' + h( svc.availability_notes ) + '</pre>' ) %></dd>
+
+	<% if !svc.page_injected_html.nil? and !svc.page_injected_html.empty? %>
+	<dt>Injected HTML (text/html)</dt>
+	<dd><pre><%= h svc.page_injected_html %></pre></dd>
+	<% end %>
+
+	<% if !svc.page_injected_css.nil? and !svc.page_injected_css.empty? %>
+	<dt>Injected CSS (text/css)</dt>
+	<dd><pre><%= h svc.page_injected_css %></pre></dd>
+	<% end %>
+
+	<% if !svc.page_injected_javascript.nil? and !svc.page_injected_javascript.empty? %>
+	<dt>Injected Javascript (text/javascript)</dt>
+	<dd><pre><%= h svc.page_injected_javascript %></pre></dd>
+	<% end %>
+
+	<dt>Version Created</dt>
+	<dd><%= svc.created_at %></dd>
+
+	<dt>Version Created By</dt>
+	<dd><%= h svc.editor_or_deleted.username %><%= ' - ' + mail_to( svc.editor_or_deleted.email ) unless svc.editor_or_deleted.class.name.eql?'UserDeleted' %></dd>
+
+</dl>

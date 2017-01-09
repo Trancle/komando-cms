@@ -1,0 +1,6 @@
+secret: SECRET_FROM_BIT_GRAVITY
+hostname: sub-host.cdn.bitgravity.com
+company_id: companyid
+secure_urls:
+  - /secure
+client_ip_address: 10.0.0.1

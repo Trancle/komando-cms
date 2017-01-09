@@ -1,0 +1,9 @@
+<dl>
+<% mfr.embed_attrs.data.each_key do |k| %>
+	<dt><%= h k.humanize %></dt>
+	<dd><%= h mfr.send(k) %></dd>
+<% end %>
+	<dt>Embed URL</dt>
+	<dd><p>The following URL will be used when embedding the video. It contains the above settings to make the video play and embed as you choose.</p>
+	<pre><%= h mfr.data_url %></pre><dd>
+</dl>

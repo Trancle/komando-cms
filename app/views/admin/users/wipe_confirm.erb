@@ -1,0 +1,5 @@
+<p>This action will eliminate the user from <strong>this</strong> side of the database. Only what the VMS stores will be erased. This will invalidate any sessions the user has, presently. Things related to this user, such as comments and ban schedules, shall also be deleted. This cannot be un-done. This account will be re-created when the user logs in next.</p>
+
+<%= render :partial => 'info' %>
+
+<div><%= button( 'wipe', :action => 'wipe', :id => @user.id ) %></div>
